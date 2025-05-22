@@ -45,21 +45,85 @@ export default function LocationStep({ data, onUpdate, onNext, onBack }: Props) 
     };
   }, []);
 
+  // useEffect(() => {
+  //   if (!position) {
+  //     navigator.geolocation.getCurrentPosition(
+  //       (pos) => {
+  //         const coords = {
+  //           lat: pos.coords.latitude,
+  //           lng: pos.coords.longitude,
+  //         };
+  //         setPosition(coords);
+  //         onUpdate({ location: coords });
+  //       },
+  //       () => {
+  //         setManualWarning(true);
+  //       },
+  //     );
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
+
   useEffect(() => {
     if (!position) {
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          const coords = {
-            lat: pos.coords.latitude,
-            lng: pos.coords.longitude,
-          };
-          setPosition(coords);
-          onUpdate({ location: coords });
-        },
-        () => {
-          setManualWarning(true);
-        },
-      );
+      // First, check if permissions API is available
+      if (navigator.permissions) {
+        navigator.permissions
+          .query({ name: 'geolocation' })
+          .then((result) => {
+            if (result.state === 'granted' || result.state === 'prompt') {
+              navigator.geolocation.getCurrentPosition(
+                (pos) => {
+                  const coords = {
+                    lat: pos.coords.latitude,
+                    lng: pos.coords.longitude,
+                  };
+                  setPosition(coords);
+                  onUpdate({ location: coords });
+                },
+                () => {
+                  setManualWarning(true);
+                },
+                { enableHighAccuracy: true, timeout: 10000 },
+              );
+            } else {
+              setManualWarning(true);
+            }
+          })
+          .catch(() => {
+            // Fallback if Permissions API is not supported
+            navigator.geolocation.getCurrentPosition(
+              (pos) => {
+                const coords = {
+                  lat: pos.coords.latitude,
+                  lng: pos.coords.longitude,
+                };
+                setPosition(coords);
+                onUpdate({ location: coords });
+              },
+              () => {
+                setManualWarning(true);
+              },
+              { enableHighAccuracy: true, timeout: 10000 },
+            );
+          });
+      } else {
+        // Directly call getCurrentPosition if Permissions API is not supported
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            const coords = {
+              lat: pos.coords.latitude,
+              lng: pos.coords.longitude,
+            };
+            setPosition(coords);
+            onUpdate({ location: coords });
+          },
+          () => {
+            setManualWarning(true);
+          },
+          { enableHighAccuracy: true, timeout: 10000 },
+        );
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
