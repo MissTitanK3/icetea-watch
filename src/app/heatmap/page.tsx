@@ -6,6 +6,8 @@ import { AGENCY_OPTIONS } from '@/constants/agencies';
 import Link from 'next/link';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { Report } from '@/types/wizard';
+import { useTranslations } from '@/lib/il8n/useTranslations';
+import { TranslationKey } from '@/lib/il8n/translations';
 
 const Map = dynamic(() => import('@/components/map/HeatLayer'), { ssr: false });
 
@@ -17,6 +19,7 @@ const timeOptions = [
 ];
 
 export default function HeatmapPage() {
+  const { t } = useTranslations();
   const [timeWindow, setTimeWindow] = useState(48); // default 48h
   const [agencyFilter, setAgencyFilter] = useState<string[]>([]);
   const [reports, setReports] = useState<Report[]>([]);
@@ -75,13 +78,13 @@ export default function HeatmapPage() {
         <Link
           href="/"
           className="flex-1 max-w-[20%] px-4 py-3 rounded border text-base font-medium text-left bg-gray-700 text-white border-gray-700">
-          Home
+          {t('home')}
         </Link>
-        <h2 className="text-2xl font-bold">Community Report Heatmap</h2>
+        <h2 className="text-2xl font-bold">{t('reportTitle')}</h2>
         <Link
           href="https://wikipedia.org"
           className="flex-1 max-w-[20%] px-4 py-3 rounded border text-base font-medium text-center uppercase text-red-500">
-          Quick Exit
+          {t('quickExit')}
         </Link>
       </div>
 
@@ -113,18 +116,18 @@ export default function HeatmapPage() {
                   if (isAllActive) {
                     setAgencyFilter([agency]);
                   } else if (agencyFilter.includes(agency)) {
-                    const updated = agencyFilter.filter((a) => a !== agency);
-                    setAgencyFilter(updated);
+                    setAgencyFilter(agencyFilter.filter((a) => a !== agency));
                   } else {
                     setAgencyFilter([...agencyFilter, agency]);
                   }
                 }}
                 className={`flex-1 min-w-[40%] px-4 py-3 rounded border text-base font-medium text-left transition
-    ${
-      isActive ? 'bg-green-900 text-white border-green-800' : 'bg-gray-700 text-white border-gray-300 hover:bg-gray-200'
-    }
-  `}>
-                {agency}
+        ${
+          isActive
+            ? 'bg-green-900 text-white border-green-800'
+            : 'bg-gray-700 text-white border-gray-300 hover:bg-gray-200'
+        }`}>
+                {t(`agency.${agency}` as TranslationKey)}
               </button>
             );
           })}
@@ -132,9 +135,7 @@ export default function HeatmapPage() {
       </div>
       {loading ? <LoadingSpinner text="Loading reports…" /> : <Map reports={filtered} />}
 
-      <p className="text-xs text-gray-500 max-w-md pt-2">
-        ⚠️ Do not geotag individuals. This map is for broad community awareness only.
-      </p>
+      <p className="text-xs text-gray-500 max-w-md pt-2">{t('warning')}</p>
     </div>
   );
 }

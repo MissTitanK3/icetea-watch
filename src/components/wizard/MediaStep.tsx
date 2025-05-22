@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { ReportFormData } from '@/types/wizard';
 import { addReportToQueue } from '@/utils/reportQueue';
 import { supabase } from '@/utils/supabase/client';
+import { useTranslations } from '@/lib/il8n/useTranslations';
 
 // Generate a UUID
 const generateUUID = () => crypto.randomUUID();
@@ -13,6 +14,7 @@ type Props = {
 };
 
 export default function MediaStep({ data, onBack }: Props) {
+  const { t } = useTranslations();
   // const [file, setFile] = useState<File | null>(data.media_url || null);
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const [finished, setFinished] = useState(false);
@@ -81,8 +83,8 @@ export default function MediaStep({ data, onBack }: Props) {
   return (
     <div className="space-y-4">
       <div>
-        <h3 className="text-lg font-semibold">Do you have photo or video?</h3>
-        <p className="text-sm text-gray-600">Optional, but helps with credibility.</p>
+        <h3 className="text-lg font-semibold">{t('haveMedia')}</h3>
+        <p className="text-sm text-gray-600">{t('optionalNote')}</p>
       </div>
 
       <div className="flex items-center gap-2">
@@ -96,16 +98,16 @@ export default function MediaStep({ data, onBack }: Props) {
             onUpdate({ media_url: selectedFile });
           }}
         /> */}
-        <p>When we get community funding, we will be able to add photo and video submissions</p>
+        <p>{t('mediaFundingNotice')}</p>
       </div>
       <div
         onMouseEnter={() => setTooltipVisible(true)}
         onMouseLeave={() => setTooltipVisible(false)}
         className="relative text-sm text-gray-600 underline cursor-help">
-        Why upload?
+        {t('whyUpload')}
         {tooltipVisible && (
           <div className="absolute top-full mt-1 w-72 p-2 bg-white border shadow text-xs text-left z-10">
-            Media is never shown publicly. Only verified community partners can review reports. EXIF data is stripped.
+            {t('mediaPrivacyNote')}
           </div>
         )}
       </div>
@@ -117,10 +119,10 @@ export default function MediaStep({ data, onBack }: Props) {
       ) : (
         <div className="flex justify-between pt-4">
           <button onClick={onBack} className="px-4 py-2 border rounded">
-            Back
+            {t('back')}
           </button>
           <button className="px-4 py-2 bg-green-600 text-white rounded" disabled={finished} onClick={handleFinish}>
-            Finish
+            {t('finish')}
           </button>
         </div>
       )}

@@ -2,12 +2,10 @@
 import dynamic from 'next/dynamic';
 
 import { useRef, useEffect, useState } from 'react';
-// import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
 import { ReportFormData } from '@/types/wizard';
-// import { Map as LeafletMap } from 'leaflet'; // Add this
-// import type { LatLng } from 'leaflet'; // And this
 import { Map as LeafletMap } from 'leaflet';
 import ReportDistanceGuard from './ReportDistanceGuard';
+import { useTranslations } from '@/lib/il8n/useTranslations';
 
 // Import dynamically with SSR off
 const MapWrapper = dynamic(() => import('@/components/map/MapWrapper'), {
@@ -24,6 +22,7 @@ type Props = {
 type LatLng = { lat: number; lng: number };
 
 export default function LocationStep({ data, onUpdate, onNext, onBack }: Props) {
+  const { t } = useTranslations();
   const [position, setPosition] = useState<LatLng | null>(data.location || null);
   const [address, setAddress] = useState('');
   const [zoom, setZoom] = useState(13);
@@ -77,13 +76,11 @@ export default function LocationStep({ data, onUpdate, onNext, onBack }: Props) 
   return (
     <div className="space-y-4">
       <div>
-        <h3 className="text-lg font-semibold">Where did it happen?</h3>
-        <p className="text-sm text-gray-600">Tap the map or allow GPS.</p>
+        <h3 className="text-lg font-semibold">{t('locationPrompt')}</h3>
+        <p className="text-sm text-gray-600">{t('tapMapOrGPS')}</p>
       </div>
 
-      {manualWarning && (
-        <div className="text-sm text-red-600">No GPS detected. Type an address and we’ll estimate the location.</div>
-      )}
+      {manualWarning && <div className="text-sm text-red-600">{t('gpsError')}</div>}
 
       {manualWarning && (
         <div className="flex gap-2">
@@ -95,7 +92,7 @@ export default function LocationStep({ data, onUpdate, onNext, onBack }: Props) 
             className="flex-1 p-2 border rounded"
           />
           <button onClick={handleAddressSubmit} className="px-4 py-2 bg-blue-600 text-white rounded">
-            Submit
+            {t('submit')}
           </button>
         </div>
       )}
@@ -117,13 +114,11 @@ export default function LocationStep({ data, onUpdate, onNext, onBack }: Props) 
         <ReportDistanceGuard targetLocation={data.location} onDistanceChange={(dist) => setDistanceFromUser(dist)} />
       )}
 
-      {zoom > 16 && (
-        <div className="text-sm text-yellow-600">For safety, zoom out if this location is too specific.</div>
-      )}
+      {zoom > 16 && <div className="text-sm text-yellow-600">{t('zoomOutForSafety')}</div>}
 
       <div className="flex justify-between pt-4">
         <button onClick={onBack} className="px-4 py-2 border rounded">
-          Back
+          {t('back')}
         </button>
         <button
           onClick={onNext}
@@ -131,7 +126,7 @@ export default function LocationStep({ data, onUpdate, onNext, onBack }: Props) 
           className={`px-4 py-2 rounded ${
             canContinue ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-500 cursor-not-allowed'
           }`}>
-          Continue
+          {t('next')}
         </button>
       </div>
     </div>

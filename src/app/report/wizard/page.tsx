@@ -8,13 +8,15 @@ import MediaStep from '@/components/wizard/MediaStep';
 import { ReportFormData } from '@/types/wizard';
 import { getQueuedReports } from '@/utils/reportQueue';
 import Link from 'next/link';
+import { useTranslations } from '@/lib/il8n/useTranslations';
+import { TranslationKey } from '@/lib/il8n/translations';
 
 const steps = ['Agency', 'Location', 'Media'];
 
 function FormDataPreview({
   formData,
-  queuedReports,
-}: {
+}: // queuedReports,
+{
   formData: ReportFormData;
   queuedReports: {
     id: string;
@@ -22,29 +24,33 @@ function FormDataPreview({
     timestamp: string;
   }[];
 }) {
+  const { t } = useTranslations();
   return (
     <div className="p-4 rounded border text-sm space-y-2">
-      <h3 className="font-semibold text-base">Live Report Preview</h3>
+      <h3 className="font-semibold text-base">{t('liveReportPreview')}</h3>
 
       <div>
-        <strong>Agencies:</strong> {formData.agency_type.length > 0 ? formData.agency_type.join(', ') : 'None selected'}
+        <strong>{t('agencies')}:</strong>{' '}
+        {formData.agency_type.length > 0
+          ? formData.agency_type.map((agency) => t(`agency.${agency}` as TranslationKey)).join(', ')
+          : t('noneSelected')}
       </div>
 
       {formData.agency_other && (
         <div>
-          <strong>Other Agency:</strong> {formData.agency_other}
+          <strong>{t('otherAgency')}:</strong> {formData.agency_other}
         </div>
       )}
 
       <div>
-        <strong>Location:</strong>{' '}
-        {formData.location ? `${formData.location.lat.toFixed(5)}, ${formData.location.lng.toFixed(5)}` : 'Not set'}
+        <strong>{t('location')}</strong>{' '}
+        {formData.location ? `${formData.location.lat.toFixed(5)}, ${formData.location.lng.toFixed(5)}` : t('notSet')}
       </div>
 
       <div>
-        <strong>Media:</strong> {formData.media_url ? formData.media_url.name : 'No file uploaded'}
+        <strong>{t('media')}</strong> {formData.media_url ? formData.media_url.name : t('noFileUploaded')}
       </div>
-      {queuedReports?.length > 0 && (
+      {/* {queuedReports?.length > 0 && (
         <div className="mt-4 border-t pt-4">
           <h4 className="text-sm font-semibold">Queued Reports</h4>
           <p className="text-xs text-gray-500 mb-2">These will be submitted when connection is restored.</p>
@@ -57,12 +63,13 @@ function FormDataPreview({
             ))}
           </ul>
         </div>
-      )}
+      )} */}
     </div>
   );
 }
 
 export default function WizardPage() {
+  const { t } = useTranslations();
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState<ReportFormData>({
     agency_type: [],
@@ -103,13 +110,13 @@ export default function WizardPage() {
         <Link
           href="/"
           className="flex-1 max-w-[20%] px-4 py-3 rounded border text-base font-medium text-left bg-gray-700 text-white border-gray-700">
-          Home
+          {t('home')}
         </Link>
-        <h2 className="text-xl font-bold">Report Wizard</h2>
+        <h2 className="text-xl font-bold">{t('reportWizard')}</h2>
         <Link
           href="https://wikipedia.org"
           className="flex-1 max-w-[20%] px-4 py-3 rounded border text-base font-medium text-center uppercase text-red-500">
-          Quick Exit
+          {t('quickExit')}
         </Link>
       </div>
 
