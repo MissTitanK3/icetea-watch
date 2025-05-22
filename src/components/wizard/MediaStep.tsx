@@ -12,8 +12,8 @@ type Props = {
   onBack: () => void;
 };
 
-export default function MediaStep({ data, onUpdate, onBack }: Props) {
-  const [file, setFile] = useState<File | null>(data.media_url || null);
+export default function MediaStep({ data, onBack }: Props) {
+  // const [file, setFile] = useState<File | null>(data.media_url || null);
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const [finished, setFinished] = useState(false);
   const [countdown, setCountdown] = useState(3);
@@ -86,7 +86,7 @@ export default function MediaStep({ data, onUpdate, onBack }: Props) {
       </div>
 
       <div className="flex items-center gap-2">
-        <label className="block text-sm font-medium">Upload:</label>
+        {/* <label className="block text-sm font-medium">Upload:</label>
         <input
           type="file"
           accept="image/*,video/*"
@@ -95,11 +95,9 @@ export default function MediaStep({ data, onUpdate, onBack }: Props) {
             setFile(selectedFile);
             onUpdate({ media_url: selectedFile });
           }}
-        />
+        /> */}
+        <p>When we get community funding, we will be able to add photo and video submissions</p>
       </div>
-
-      <p className="text-xs text-gray-500">This step is optional. You can skip it if you don’t have media.</p>
-
       <div
         onMouseEnter={() => setTooltipVisible(true)}
         onMouseLeave={() => setTooltipVisible(false)}
@@ -112,7 +110,7 @@ export default function MediaStep({ data, onUpdate, onBack }: Props) {
         )}
       </div>
 
-      {file && <div className="text-sm text-green-600">Selected file: {file.name}</div>}
+      {/* {file && <div className="text-sm text-green-600">Selected file: {file.name}</div>} */}
 
       {finished ? (
         <div className="text-green-700 text-sm pt-4">✅ Report complete. Redirecting in {countdown}...</div>
