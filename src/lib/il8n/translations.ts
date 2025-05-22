@@ -72,7 +72,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     agencies: 'Agencies:',
     reported: 'Reported:',
     timeAgo: ' ago',
-    findMe: 'Find Me',
+    findMe: 'Where am I?',
     locationDenied: 'Location access was denied or is unavailable.',
 
     // Wizard
@@ -133,7 +133,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     agencies: 'Agencias:',
     reported: 'Reportado:',
     timeAgo: ' hace',
-    findMe: 'Encuéntrame',
+    findMe: '¿Dónde estoy?',
     locationDenied: 'El acceso a la ubicación fue denegado o no está disponible.',
 
     // Wizard
