@@ -40,6 +40,8 @@ export type TranslationKey =
   | 'media'
   | 'notSet'
   | 'noFileUploaded'
+  | 'findMe'
+  | 'locationDenied'
   | 'agency.ICE'
   | 'agency.Police'
   | 'agency.Sheriff'
@@ -70,6 +72,9 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     agencies: 'Agencies:',
     reported: 'Reported:',
     timeAgo: ' ago',
+    findMe: 'Find Me',
+    locationDenied: 'Location access was denied or is unavailable.',
+
     // Wizard
     reportWizard: 'Report Wizard',
     whoDidYouSee: 'Who did you see?',
@@ -128,6 +133,9 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     agencies: 'Agencias:',
     reported: 'Reportado:',
     timeAgo: ' hace',
+    findMe: 'Encuéntrame',
+    locationDenied: 'El acceso a la ubicación fue denegado o no está disponible.',
+
     // Wizard
     reportWizard: 'Asistente de Reporte',
     whoDidYouSee: '¿A quién viste?',
