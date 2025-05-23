@@ -185,7 +185,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
 
     // Request Language Support
     languageSupportInvite:
-      'If your language isn&apos;t supported yet, you&apos;re welcome to help translate! Use the template below and email it to:',
+      "If your language isn't supported yet, you're welcome to help translate! Use the template below and email it to:",
     translationTemplate: 'Translation Template',
     existingTranslations: 'Existing Translations',
     includesReference: 'This includes English and Spanish for reference.',
