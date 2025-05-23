@@ -74,19 +74,19 @@ export default function HeatmapPage() {
 
   return (
     <div className="space-y-4 w-full text-center">
-      <div className="flex justify-between">
+      <div className="flex justify-evenly">
         <Link
           href="/"
-          className="flex-1 max-w-[20%] px-4 py-3 rounded border text-base font-medium text-left bg-gray-700 text-white border-gray-700">
+          className="flex-1 max-w-[40%] px-4 py-3 rounded border text-base font-medium text-left bg-gray-700 text-white border-gray-700">
           {t('home')}
         </Link>
-        <h2 className="text-2xl font-bold">{t('reportTitle')}</h2>
         <Link
           href="https://wikipedia.org"
-          className="flex-1 max-w-[20%] px-4 py-3 rounded border text-base font-medium text-center uppercase text-red-500">
+          className="flex-1 max-w-[40%] px-4 py-3 rounded border text-base font-medium text-center uppercase text-red-500">
           {t('quickExit')}
         </Link>
       </div>
+      <h2 className="text-2xl font-bold">{t('reportTitle')}</h2>
 
       <div className="flex gap-4 flex-wrap items-center w-full">
         <div className="flex flex-wrap gap-2 w-full">

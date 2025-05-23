@@ -8,9 +8,9 @@ import Link from 'next/link';
 export default function Home() {
   const { t } = useTranslations();
   return (
-    <div className="flex flex-col gap-4 text-center py-20">
-      <h1 className="text-4xl font-bold">{t('homeTitle')}</h1>
+    <div className="flex flex-col gap-4 text-center ">
       <LanguageSwitcher />
+      <h1 className="text-4xl font-bold">{t('homeTitle')}</h1>
       <p className="text-lg">{t('privacyTagline')}</p>
       <div className="flex justify-center gap-4 mt-8 flex-col">
         <Link href="/report/wizard" className="px-6 py-2 bg-blue-600 text-white rounded-xl">

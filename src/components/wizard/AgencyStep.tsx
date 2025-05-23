@@ -64,7 +64,7 @@ export default function AgencyStep({ data, onUpdate, onNext, onBack }: Props) {
           placeholder={t('placeholderAgencyExample')}
           value={other}
           onChange={(e) => setOther(e.target.value)}
-          className="w-full p-2 py-8 text-3xl border rounded"
+          className="w-full p-2 py-8 text-2xl border rounded"
         />
       </div>
 
