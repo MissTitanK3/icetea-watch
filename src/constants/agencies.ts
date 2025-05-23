@@ -6,4 +6,5 @@ export const AGENCY_OPTIONS = [
   'Immigration Court',
   'Detention Facility',
   'Unmarked',
+  'Military',
 ];

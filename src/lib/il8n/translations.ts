@@ -71,6 +71,7 @@ export type TranslationKey =
   | 'agency.Border Patrol'
   | 'agency.Immigration Court'
   | 'agency.Unmarked'
+  | 'agency.Military'
   | 'agency.Detention Facility';
 
 export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
@@ -91,6 +92,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     'agency.Immigration Court': 'Immigration Court',
     'agency.Detention Facility': 'Detention Facility',
     'agency.Unmarked': 'Unmarked',
+    'agency.Military': 'Military',
 
     // Heatlayer
     visibleReports: 'Visible Reports',
@@ -191,6 +193,8 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     'agency.Immigration Court': 'Tribunal de Inmigración',
     'agency.Detention Facility': 'Centro de Detención',
     'agency.Unmarked': 'Sin identificar',
+    'agency.Military': 'Militar',
+
     // Heatlayer
     visibleReports: 'Reportes visibles',
     noReports: 'No hay reportes en la vista actual.',
