@@ -42,6 +42,27 @@ export type TranslationKey =
   | 'noFileUploaded'
   | 'findMe'
   | 'locationDenied'
+  | 'kyrTitle'
+  | 'kyrIntro'
+  | 'kyrSection1Title'
+  | 'kyrSection1Bullet1'
+  | 'kyrSection1Bullet2'
+  | 'kyrSection1Bullet3'
+  | 'kyrSection1Bullet4'
+  | 'kyrSection1Bullet5'
+  | 'kyrSection2Title'
+  | 'kyrSection2Intro'
+  | 'kyrSection2Bullet1'
+  | 'kyrSection2Bullet2'
+  | 'kyrSection2Bullet3'
+  | 'kyrSection2Bullet4'
+  | 'kyrSection2Bullet5'
+  | 'kyrSection2Bullet6'
+  | 'kyrSection2Bullet7'
+  | 'kyrSection2Bullet8'
+  | 'kyrSection2Bullet9'
+  | 'kyrSection2Note1'
+  | 'kyrSection2Note2'
   | 'agency.ICE'
   | 'agency.Police'
   | 'agency.Sheriff'
@@ -111,6 +132,41 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     quickExit: 'Quick Exit',
     warning: '⚠️ Do not geotag individuals. This map is for broad community awareness only.',
     finish: 'Finish',
+
+    // Know your rights
+    kyrTitle: 'Know Your Rights',
+    kyrIntro:
+      'All individuals in the United States have rights, regardless of immigration status. The following information can help you protect yourself and your family, and defend your rights.',
+
+    kyrSection1Title: '1. Create a safety plan',
+    kyrSection1Bullet1: 'Identify your emergency contacts and memorize their phone numbers.',
+    kyrSection1Bullet2: 'Provide your child’s school or day care with an emergency contact to pick up your child.',
+    kyrSection1Bullet3:
+      'Provide written authorization for your emergency contact to make medical and legal decisions for your child.',
+    kyrSection1Bullet4:
+      'Tell your loved ones that if you are detained by ICE, they can try to find you using ICE’s detainee locator: https://locator.ice.gov/odls/#/search',
+    kyrSection1Bullet5: 'Learn about guardianship options if you are a parent in Illinois or Indiana (PDF guides).',
+
+    kyrSection2Title: '2. Defend your rights',
+    kyrSection2Intro:
+      'All persons in the United States have constitutional protections, including the right to remain silent. During any interaction with law enforcement:',
+    kyrSection2Bullet1:
+      'Stay calm. Do not run, argue, resist, or fight the officer. Keep your hands visible. Notify them before reaching for anything.',
+    kyrSection2Bullet2: 'Do not lie about your immigration status or provide false documents.',
+    kyrSection2Bullet3:
+      'At a traffic stop, ask whether the officer is from ICE or CBP. Immigration officers sometimes call themselves “police.”',
+    kyrSection2Bullet4:
+      'If you are documented: Carry proof of status (e.g., green card or work permit) if you are over 18.',
+    kyrSection2Bullet5:
+      'If you are undocumented: You can remain silent. Do not answer questions about your immigration status.',
+    kyrSection2Bullet6: 'If someone knocks on your door: Don’t open it. ICE needs a judge-signed warrant to enter.',
+    kyrSection2Bullet7: 'If outdoors and ICE is nearby: Move indoors if possible.',
+    kyrSection2Bullet8: 'If you are a citizen and feel safe: Record or document the event without interfering.',
+    kyrSection2Bullet9: 'Do not post unverified alerts or put yourself in harm’s way.',
+
+    kyrSection2Note1: 'ICE “warrants” are not signed by judges. They do not give agents permission to enter your home.',
+    kyrSection2Note2:
+      'Teach children not to open the door. Officers cannot enter without consent unless they have a proper warrant.',
   },
   es: {
     // Homepage
@@ -172,6 +228,40 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     quickExit: 'Salida rápida',
     finish: 'Finalizar',
     warning: '⚠️ No geolocalices a individuos. Este mapa es solo para conciencia comunitaria.',
+
+    // Know your rights
+    kyrTitle: 'Conozca sus derechos',
+    kyrIntro:
+      'Todas las personas en los Estados Unidos tienen derechos, sin importar su estatus migratorio. Esta información puede ayudarle a protegerse y proteger a su familia.',
+
+    kyrSection1Title: '1. Cree un plan de seguridad',
+    kyrSection1Bullet1: 'Identifique sus contactos de emergencia y memorice sus números.',
+    kyrSection1Bullet2: 'Proporcione a la escuela o guardería de su hijo/a un contacto de emergencia para recogerlo/a.',
+    kyrSection1Bullet3:
+      'Autorice por escrito a su contacto de emergencia para tomar decisiones médicas y legales por su hijo/a.',
+    kyrSection1Bullet4:
+      'Diga a sus seres queridos que, si lo detiene ICE, pueden intentar encontrarlo usando este localizador: https://locator.ice.gov/odls/#/search',
+    kyrSection1Bullet5: 'Lea más sobre tutela legal para inmigrantes en Illinois e Indiana (PDF).',
+
+    kyrSection2Title: '2. Defienda sus derechos',
+    kyrSection2Intro:
+      'Todas las personas en EE. UU. tienen protecciones constitucionales, incluido el derecho a guardar silencio. Durante cualquier interacción con autoridades:',
+    kyrSection2Bullet1:
+      'Mantenga la calma. No corra, discuta ni pelee. Mantenga sus manos visibles y anuncie cualquier movimiento.',
+    kyrSection2Bullet2: 'No mienta sobre su estatus migratorio ni entregue documentos falsos.',
+    kyrSection2Bullet3:
+      'En un control de tránsito, pregunte si el oficial es de ICE o CBP. A veces se hacen pasar por "policía".',
+    kyrSection2Bullet4: 'Si tiene estatus legal: Lleve siempre prueba de su estatus si es mayor de 18 años.',
+    kyrSection2Bullet5:
+      'Si no tiene papeles: Puede guardar silencio. No está obligado a responder preguntas sobre su estatus.',
+    kyrSection2Bullet6: 'Si tocan su puerta: No la abra. ICE necesita una orden firmada por un juez para entrar.',
+    kyrSection2Bullet7: 'Si está afuera y ve a ICE: Muévase a un lugar seguro bajo techo.',
+    kyrSection2Bullet8: 'Si es ciudadano y se siente seguro: Grabe o anote lo que observe sin interferir.',
+    kyrSection2Bullet9: 'No publique información no verificada ni se arriesgue innecesariamente.',
+
+    kyrSection2Note1: 'Las "órdenes" de ICE no están firmadas por jueces y no permiten entrar a su casa.',
+    kyrSection2Note2:
+      'Enseñe a sus hijos a no abrir la puerta. Los agentes no pueden entrar sin su consentimiento o una orden judicial válida.',
   },
   // Add more languages as needed
 };

@@ -1,5 +1,6 @@
 'use client';
 import CopyEmail from '@/components/CopyEmail';
+import KnowYourRights from '@/components/KnowYourRights';
 import LanguageSwitcher from '@/components/language-toggle/LToggle';
 import { useTranslations } from '@/lib/il8n/useTranslations';
 import Link from 'next/link';
@@ -30,6 +31,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <KnowYourRights />
     </div>
   );
 }
