@@ -46,6 +46,10 @@ export type TranslationKey =
   | 'copiedToClipboard'
   | 'kyrTitle'
   | 'kyrIntro'
+  | 'languageSupportInvite'
+  | 'translationTemplate'
+  | 'includesReference'
+  | 'existingTranslations'
   | 'kyrSection1Title'
   | 'kyrSection1Bullet1'
   | 'kyrSection1Bullet2'
@@ -65,6 +69,7 @@ export type TranslationKey =
   | 'kyrSection2Bullet9'
   | 'kyrSection2Note1'
   | 'kyrSection2Note2'
+  | 'requestLanguageSupport'
   | 'agency.ICE'
   | 'agency.Police'
   | 'agency.Sheriff'
@@ -82,6 +87,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     startReport: 'Start Report',
     viewHeatmap: 'View Heatmap',
     supportProject: 'Support The Project (ko-fi)',
+    requestLanguageSupport: 'Request Language Support',
 
     // Heatmap
     reportTitle: 'Community Report Heatmap',
@@ -176,6 +182,13 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     kyrSection2Note1: 'ICE “warrants” are not signed by judges. They do not give agents permission to enter your home.',
     kyrSection2Note2:
       'Teach children not to open the door. Officers cannot enter without consent unless they have a proper warrant.',
+
+    // Request Language Support
+    languageSupportInvite:
+      'If your language isn&apos;t supported yet, you&apos;re welcome to help translate! Use the template below and email it to:',
+    translationTemplate: 'Translation Template',
+    existingTranslations: 'Existing Translations',
+    includesReference: 'This includes English and Spanish for reference.',
   },
   es: {
     // Homepage
@@ -184,6 +197,8 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     startReport: 'Iniciar reporte',
     viewHeatmap: 'Ver mapa de calor',
     supportProject: 'Apoya el proyecto (ko-fi)',
+    requestLanguageSupport: 'Solicitar soporte de idioma',
+
     // Heatmap
     reportTitle: 'Mapa de Reportes Comunitarios',
     'agency.ICE': 'ICE',
@@ -276,6 +291,13 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     kyrSection2Note1: 'Las "órdenes" de ICE no están firmadas por jueces y no permiten entrar a su casa.',
     kyrSection2Note2:
       'Enseñe a sus hijos a no abrir la puerta. Los agentes no pueden entrar sin su consentimiento o una orden judicial válida.',
+
+    // Request Language Support
+    languageSupportInvite:
+      'Si tu idioma aún no está disponible, ¡puedes ayudar a traducir! Usa la plantilla a continuación y envíala por correo a:',
+    translationTemplate: 'Plantilla de traducción',
+    existingTranslations: 'Traducciones existentes',
+    includesReference: 'Esto incluye inglés y español como referencia.',
   },
   // Add more languages as needed
 };
