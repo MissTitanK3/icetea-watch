@@ -3,6 +3,7 @@
 import { TranslationKey } from '@/lib/il8n/translations';
 import { useTranslations } from '@/lib/il8n/useTranslations';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const KYR_GROUPS = {
   section1: [
@@ -61,6 +62,12 @@ export default function KnowYourRights() {
         <Image src="/ICE-admin-warrant-sample.jpg" height={500} width={375} alt="Ice Admin Warrant" />
         <Image src="/ICE-Detainer-Sample.jpg" height={500} width={375} alt="Ice Admin Warrant" />
         <Image src="/Judicial-warrant-sample2.jpg" height={500} width={375} alt="Ice Admin Warrant" />
+      </div>
+      <div className="mt-6 border-t py-4 space-y-3 text-lg text-center mx-auto w-full flex flex-col justify-center items-center bg-red-600 text-white rounded-2xl">
+        <p>Source:</p>
+        <Link href="https://immigrantjustice.org/know-your-rights/ice-encounter" target="_blank">
+          https://immigrantjustice.org/know-your-rights/ice-encounter
+        </Link>
       </div>
     </section>
   );
