@@ -11,8 +11,9 @@ type Props = {
   data: ReportFormData;
   onUpdate: (values: Partial<ReportFormData>) => void;
   onNext: () => void;
+  onBack: () => void;
 };
-export default function AgencyStep({ data, onUpdate, onNext }: Props) {
+export default function AgencyStep({ data, onUpdate, onNext, onBack }: Props) {
   const [selected, setSelected] = useState<string[]>(data.agency_type || []);
   const [other, setOther] = useState<string>(data.agency_other || '');
   const { t } = useTranslations();
@@ -43,7 +44,7 @@ export default function AgencyStep({ data, onUpdate, onNext }: Props) {
               key={agency}
               type="button"
               onClick={() => toggle(agency)}
-              className={`flex items-center justify-between px-4 py-2 rounded border transition
+              className={`flex items-center justify-between px-4 py-6 rounded border transition
                 ${
                   isSelected
                     ? 'bg-blue-600 text-white border-blue-700'
@@ -63,16 +64,22 @@ export default function AgencyStep({ data, onUpdate, onNext }: Props) {
           placeholder={t('placeholderAgencyExample')}
           value={other}
           onChange={(e) => setOther(e.target.value)}
-          className="w-full p-2 border rounded"
+          className="w-full p-2 py-8 text-3xl border rounded"
         />
       </div>
 
-      <div className="pt-4">
+      <div className="flex justify-between pt-4">
+        <button
+          onClick={onBack}
+          className="px-16 py-3 text-lg border rounded-2xl hover:bg-gray-100 hover:text-black transition">
+          {t('back')}
+        </button>
+
         <button
           onClick={onNext}
           disabled={!canContinue}
-          className={`px-4 py-2 rounded ${
-            canContinue ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+          className={`px-16 py-3 text-lg rounded-2xl transition ${
+            canContinue ? 'bg-blue-600 text-white hover:bg-blue-700' : 'bg-gray-300 text-gray-500 cursor-not-allowed'
           }`}>
           {t('next')}
         </button>

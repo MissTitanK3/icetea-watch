@@ -19,7 +19,7 @@ export default function Home() {
         <Link href="/heatmap" className="px-6 py-2 border rounded-xl">
           {t('viewHeatmap')}
         </Link>
-        <Link href="https://ko-fi.com/techwitch" className="px-6 py-2 border rounded-xl">
+        <Link href="https://ko-fi.com/techwitch" className="px-6 py-2 border rounded-xl" target="_blank">
           {t('supportProject')}
         </Link>
         <div className="flex flex-col text-center py-20 justify-center m-auto">

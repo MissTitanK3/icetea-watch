@@ -94,9 +94,9 @@ export default function WizardPage() {
   const renderStep = () => {
     switch (currentStep) {
       case 0:
-        return <AgencyStep data={formData} onNext={next} onUpdate={updateForm} />;
+        return <LocationStep data={formData} onNext={next} onUpdate={updateForm} />;
       case 1:
-        return <LocationStep data={formData} onNext={next} onBack={back} onUpdate={updateForm} />;
+        return <AgencyStep data={formData} onNext={next} onUpdate={updateForm} onBack={back} />;
       case 2:
         return <MediaStep data={formData} onBack={back} onUpdate={updateForm} />;
       default:

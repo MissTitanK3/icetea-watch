@@ -42,6 +42,8 @@ export type TranslationKey =
   | 'noFileUploaded'
   | 'findMe'
   | 'locationDenied'
+  | 'copyToClipboard'
+  | 'copiedToClipboard'
   | 'kyrTitle'
   | 'kyrIntro'
   | 'kyrSection1Title'
@@ -68,6 +70,7 @@ export type TranslationKey =
   | 'agency.Sheriff'
   | 'agency.Border Patrol'
   | 'agency.Immigration Court'
+  | 'agency.Unmarked'
   | 'agency.Detention Facility';
 
 export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
@@ -87,6 +90,8 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     'agency.Border Patrol': 'Border Patrol',
     'agency.Immigration Court': 'Immigration Court',
     'agency.Detention Facility': 'Detention Facility',
+    'agency.Unmarked': 'Unmarked',
+
     // Heatlayer
     visibleReports: 'Visible Reports',
     noReports: 'No reports in current view.',
@@ -132,6 +137,8 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     quickExit: 'Quick Exit',
     warning: '⚠️ Do not geotag individuals. This map is for broad community awareness only.',
     finish: 'Finish',
+    copyToClipboard: 'Copy To Clipboard',
+    copiedToClipboard: 'Copied To Clipboard!',
 
     // Know your rights
     kyrTitle: 'Know Your Rights',
@@ -183,6 +190,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     'agency.Border Patrol': 'Patrulla Fronteriza',
     'agency.Immigration Court': 'Tribunal de Inmigración',
     'agency.Detention Facility': 'Centro de Detención',
+    'agency.Unmarked': 'Sin identificar',
     // Heatlayer
     visibleReports: 'Reportes visibles',
     noReports: 'No hay reportes en la vista actual.',
@@ -228,6 +236,8 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     quickExit: 'Salida rápida',
     finish: 'Finalizar',
     warning: '⚠️ No geolocalices a individuos. Este mapa es solo para conciencia comunitaria.',
+    copyToClipboard: 'Copiar al portapapeles',
+    copiedToClipboard: '¡Copiado al portapapeles!',
 
     // Know your rights
     kyrTitle: 'Conozca sus derechos',

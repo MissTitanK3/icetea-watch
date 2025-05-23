@@ -1,7 +1,9 @@
 'use client';
+import { useTranslations } from '@/lib/il8n/useTranslations';
 import { useState } from 'react';
 
 export default function CopyEmail({ email = 'icetea@peoplesrebellion.org' }: { email?: string }) {
+  const { t } = useTranslations();
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -15,12 +17,12 @@ export default function CopyEmail({ email = 'icetea@peoplesrebellion.org' }: { e
   };
 
   return (
-    <div className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 p-2 rounded-lg shadow-sm w-fit">
-      <span className="text-sm font-mono text-gray-800 dark:text-gray-200">{email}</span>
+    <div className="flex flex-col items-center gap-2 bg-gray-100 dark:bg-gray-800 p-2 rounded-lg shadow-sm w-fit">
+      <span className="text-2xl font-mono text-gray-800 dark:text-gray-200">{email}</span>
       <button
         onClick={handleCopy}
-        className="text-xs bg-accent text-white px-2 py-1 rounded hover:bg-accent/80 transition">
-        {copied ? 'Copied!' : 'Copy'}
+        className="text-l bg-accent bg-amber-900 px-8 py-4 mt-4 rounded hover:bg-amber-200 hover:text-black transition">
+        {copied ? t('copiedToClipboard') : t('copyToClipboard')}
       </button>
     </div>
   );

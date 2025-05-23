@@ -16,12 +16,11 @@ type Props = {
   data: ReportFormData;
   onUpdate: (values: Partial<ReportFormData>) => void;
   onNext: () => void;
-  onBack: () => void;
 };
 
 type LatLng = { lat: number; lng: number };
 
-export default function LocationStep({ data, onUpdate, onNext, onBack }: Props) {
+export default function LocationStep({ data, onUpdate, onNext }: Props) {
   const { t } = useTranslations();
   const [position, setPosition] = useState<LatLng | null>(data.location || null);
   const [address, setAddress] = useState('');
@@ -44,25 +43,6 @@ export default function LocationStep({ data, onUpdate, onNext, onBack }: Props) 
       map.off('zoomend', handleZoom);
     };
   }, []);
-
-  // useEffect(() => {
-  //   if (!position) {
-  //     navigator.geolocation.getCurrentPosition(
-  //       (pos) => {
-  //         const coords = {
-  //           lat: pos.coords.latitude,
-  //           lng: pos.coords.longitude,
-  //         };
-  //         setPosition(coords);
-  //         onUpdate({ location: coords });
-  //       },
-  //       () => {
-  //         setManualWarning(true);
-  //       },
-  //     );
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
 
   useEffect(() => {
     if (!position) {
@@ -180,15 +160,12 @@ export default function LocationStep({ data, onUpdate, onNext, onBack }: Props) 
 
       {zoom > 16 && <div className="text-sm text-yellow-600">{t('zoomOutForSafety')}</div>}
 
-      <div className="flex justify-between pt-4">
-        <button onClick={onBack} className="px-4 py-2 border rounded">
-          {t('back')}
-        </button>
+      <div className="flex justify-center pt-4">
         <button
           onClick={onNext}
           disabled={!canContinue}
-          className={`px-4 py-2 rounded ${
-            canContinue ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+          className={`px-16 py-3 text-lg rounded-2xl transition ${
+            canContinue ? 'bg-blue-600 text-white hover:bg-blue-700' : 'bg-gray-300 text-gray-500 cursor-not-allowed'
           }`}>
           {t('next')}
         </button>

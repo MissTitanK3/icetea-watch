@@ -118,10 +118,17 @@ export default function MediaStep({ data, onBack }: Props) {
         <div className="text-green-700 text-sm pt-4">✅ Report complete. Redirecting in {countdown}...</div>
       ) : (
         <div className="flex justify-between pt-4">
-          <button onClick={onBack} className="px-4 py-2 border rounded">
+          <button
+            onClick={onBack}
+            className="px-16 py-3 text-lg border rounded-2xl hover:bg-gray-100 hover:text-black transition">
             {t('back')}
           </button>
-          <button className="px-4 py-2 bg-green-600 text-white rounded" disabled={finished} onClick={handleFinish}>
+          <button
+            className={`px-16 py-3 text-lg rounded-2xl transition ${
+              !finished ? 'bg-blue-600 text-white hover:bg-blue-700' : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+            }`}
+            disabled={finished}
+            onClick={handleFinish}>
             {t('finish')}
           </button>
         </div>
