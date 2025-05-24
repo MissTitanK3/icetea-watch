@@ -133,7 +133,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     otherAgency: 'Other Agency:',
     noneSelected: 'None selected',
     location: 'Location:',
-    media: 'Meldia:',
+    media: 'Media:',
     notSet: 'Not Set',
     noFileUploaded: 'No file uploaded',
 

@@ -63,7 +63,7 @@ export default function AgencyStep() {
           placeholder={t('placeholderAgencyExample')}
           value={formData.agency_other}
           onChange={(e) => handleOtherChange(e.target.value)}
-          className="w-full p-2 py-8 text-2xl border rounded"
+          className="w-full p-2 py-8 text-l border rounded"
         />
       </div>
     </div>

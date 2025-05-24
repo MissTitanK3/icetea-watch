@@ -202,7 +202,6 @@ export default function HeatMap({ reports }: { reports: Report[] }) {
         </div>
       </div>
 
-      {/* ✅ Put this outside the map */}
       <div className="text-sm space-y-2 mt-4">
         <h3 className="font-semibold">
           {t('visibleReports')} ({visibleReports.length})
@@ -211,22 +210,22 @@ export default function HeatMap({ reports }: { reports: Report[] }) {
           <p className="text-gray-500">{t('noReports')}</p>
         ) : (
           <ul className="divide-y divide-gray-200">
-            {visibleReports.map((r) => (
-              <li key={r.id} className="py-2">
-                <div>
-                  <strong>{t('agencies')}</strong>{' '}
-                  {[...(r.agency_type || []), r.agency_other]
-                    .filter(Boolean)
-                    .map((agency) => t(`agency.${agency}` as TranslationKey))
-                    .join(', ')}
-                </div>
-                <div>
-                  <strong>{t('reported')}</strong> {formatAge(r.timestamp)}
-                  {t('timeAgo')}
-                </div>
-                <div className="text-gray-500 text-xs">{new Date(r.timestamp).toLocaleString()}</div>
-              </li>
-            ))}
+            {visibleReports.map((r) => {
+              const translatedAgencies = (r.agency_type || []).map((agency) => t(`agency.${agency}` as TranslationKey));
+
+              return (
+                <li key={r.id} className="py-2">
+                  <div>
+                    <strong>{t('agencies')}</strong>{' '}
+                    {[...translatedAgencies, r.agency_other].filter(Boolean).join(', ')}
+                  </div>
+                  <div>
+                    <strong>{t('reported')}</strong> {formatAge(r.timestamp)} {t('timeAgo')}
+                  </div>
+                  <div className="text-gray-500 text-xs">{new Date(r.timestamp).toLocaleString()}</div>
+                </li>
+              );
+            })}
           </ul>
         )}
       </div>
