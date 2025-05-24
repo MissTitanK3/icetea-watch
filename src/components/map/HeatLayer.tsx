@@ -58,10 +58,12 @@ export function HeatLayer({ points }: { points: [number, number, number?][] }) {
         blur: 20, // higher = softer edges
         maxZoom: 17,
         gradient: {
-          0.0: 'rgba(255, 0, 0, 0)', // transparent red
-          0.4: 'orange',
-          0.65: 'yellow',
-          1.0: 'white',
+          0.0: 'rgba(0, 255, 255, 0)', // transparent cyan
+          0.2: '#00ffff', // cyan
+          0.4: '#00ff00', // lime green
+          0.6: '#ffff00', // yellow
+          0.8: '#ff6600', // orange
+          1.0: '#ffffff', // white
         },
       })
       .addTo(map);
@@ -175,28 +177,29 @@ export default function HeatMap({ reports }: { reports: Report[] }) {
   if (!isMounted) return <div className="h-[500px]">Loading map…</div>;
 
   return (
-    <div className="rounded overflow-hidden">
+    <div className="rounded overflow-hidden z-0">
       <button
         onClick={handleFindMe}
         className=" bg-green-800 px-10 py-2 font-bold my-5 rounded-md shadow hover:bg-accent-dark transition">
         📍 {t('findMe') ?? 'Find Me'}
       </button>
-
-      <div className="h-[500px] rounded overflow-hidden">
-        <MapContainer center={center} zoom={12} scrollWheelZoom style={{ height: '100%', width: '100%' }}>
-          <MapRefForwarder
-            onMapReady={(map) => {
-              mapRef.current = map;
-            }}
-          />
-          <TileLayer
-            attribution="© OpenStreetMap contributors"
-            url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-          />
-          <HeatLayer points={heatPoints} />
-          <VisibleReportsTracker reports={reports} onChange={setVisibleReports} />
-          <SetMapCenter center={center} />
-        </MapContainer>
+      <div className="relative">
+        <div className="h-[500px]">
+          <MapContainer center={center} zoom={12} scrollWheelZoom style={{ height: '100%', width: '100%', zIndex: 0 }}>
+            <MapRefForwarder
+              onMapReady={(map) => {
+                mapRef.current = map;
+              }}
+            />
+            <TileLayer
+              attribution="© OpenStreetMap contributors"
+              url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+            />
+            <HeatLayer points={heatPoints} />
+            <VisibleReportsTracker reports={reports} onChange={setVisibleReports} />
+            <SetMapCenter center={center} />
+          </MapContainer>
+        </div>
       </div>
 
       {/* ✅ Put this outside the map */}

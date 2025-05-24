@@ -3,6 +3,8 @@ import { LanguageProvider } from '@/lib/il8n/provider';
 import './globals.css';
 import type { Metadata } from 'next';
 import { Analytics } from '@vercel/analytics/next';
+import BottomNav from '@/components/BottomNav';
+import { WizardProvider } from '@/components/wizard/WizardContext';
 
 export const metadata: Metadata = {
   title: 'ICE Tea Watch',
@@ -12,11 +14,17 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className=" bg-zinc-900 text-white">
+      <body className="bg-zinc-900 text-white">
         <Analytics />
-        <LanguageProvider>
-          <main className="max-w-4xl mx-auto p-4">{children}</main>
-        </LanguageProvider>
+        <WizardProvider>
+          <LanguageProvider>
+            {/* MAIN PAGE CONTENT */}
+            <div className="max-w-4xl mx-auto p-4 min-h-screen pb-24">{children}</div>
+
+            {/* FIXED BOTTOM NAVBAR - keep outside main */}
+            <BottomNav />
+          </LanguageProvider>
+        </WizardProvider>
       </body>
     </html>
   );

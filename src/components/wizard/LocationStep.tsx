@@ -2,38 +2,33 @@
 import dynamic from 'next/dynamic';
 
 import { useRef, useEffect, useState } from 'react';
-import { ReportFormData } from '@/types/wizard';
 import { Map as LeafletMap } from 'leaflet';
 import ReportDistanceGuard from './ReportDistanceGuard';
 import { useTranslations } from '@/lib/il8n/useTranslations';
+import { useWizard } from './WizardContext';
 
 // Import dynamically with SSR off
 const MapWrapper = dynamic(() => import('@/components/map/MapWrapper'), {
   ssr: false,
 });
 
-type Props = {
-  data: ReportFormData;
-  onUpdate: (values: Partial<ReportFormData>) => void;
-  onNext: () => void;
-};
-
 type LatLng = { lat: number; lng: number };
 
-export default function LocationStep({ data, onUpdate, onNext }: Props) {
+export default function LocationStep() {
   const { t } = useTranslations();
-  const [position, setPosition] = useState<LatLng | null>(data.location || null);
+  const { setCanContinue, formData, setFormData } = useWizard();
+  const [position, setPosition] = useState<LatLng | null>(formData.location || null);
   const [address, setAddress] = useState('');
   const [zoom, setZoom] = useState(13);
   const [manualWarning, setManualWarning] = useState(false);
-  const [distanceFromUser, setDistanceFromUser] = useState<number | null>(null); // ⬅️ new
+  const [distanceFromUser, setDistanceFromUser] = useState<number | null>(null);
 
   const mapRef = useRef<LeafletMap | null>(null);
 
   useEffect(() => {
-    if (!mapRef.current) return;
-    const map = mapRef.current;
+    if (!mapRef.current) return undefined;
 
+    const map = mapRef.current;
     const handleZoom = () => {
       setZoom(map.getZoom());
     };
@@ -46,76 +41,42 @@ export default function LocationStep({ data, onUpdate, onNext }: Props) {
 
   useEffect(() => {
     if (!position) {
-      // First, check if permissions API is available
+      const fallback = () =>
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            const coords = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+            setPosition(coords);
+            setFormData((prev) => ({ ...prev, location: coords }));
+          },
+          () => setManualWarning(true),
+          { enableHighAccuracy: true, timeout: 10000 },
+        );
+
       if (navigator.permissions) {
         navigator.permissions
           .query({ name: 'geolocation' })
           .then((result) => {
-            if (result.state === 'granted' || result.state === 'prompt') {
-              navigator.geolocation.getCurrentPosition(
-                (pos) => {
-                  const coords = {
-                    lat: pos.coords.latitude,
-                    lng: pos.coords.longitude,
-                  };
-                  setPosition(coords);
-                  onUpdate({ location: coords });
-                },
-                () => {
-                  setManualWarning(true);
-                },
-                { enableHighAccuracy: true, timeout: 10000 },
-              );
-            } else {
-              setManualWarning(true);
-            }
+            if (result.state === 'granted' || result.state === 'prompt') fallback();
+            else setManualWarning(true);
           })
-          .catch(() => {
-            // Fallback if Permissions API is not supported
-            navigator.geolocation.getCurrentPosition(
-              (pos) => {
-                const coords = {
-                  lat: pos.coords.latitude,
-                  lng: pos.coords.longitude,
-                };
-                setPosition(coords);
-                onUpdate({ location: coords });
-              },
-              () => {
-                setManualWarning(true);
-              },
-              { enableHighAccuracy: true, timeout: 10000 },
-            );
-          });
+          .catch(fallback);
       } else {
-        // Directly call getCurrentPosition if Permissions API is not supported
-        navigator.geolocation.getCurrentPosition(
-          (pos) => {
-            const coords = {
-              lat: pos.coords.latitude,
-              lng: pos.coords.longitude,
-            };
-            setPosition(coords);
-            onUpdate({ location: coords });
-          },
-          () => {
-            setManualWarning(true);
-          },
-          { enableHighAccuracy: true, timeout: 10000 },
-        );
+        fallback();
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleAddressSubmit = async () => {
-    // Replace this with real geocoding in production
-    const fakeCoords = { lat: 47.6062, lng: -122.3321 }; // Seattle fallback
-    setPosition(fakeCoords);
-    onUpdate({ location: fakeCoords });
-  };
+  useEffect(() => {
+    const valid = !!position && (distanceFromUser === null || distanceFromUser <= 2);
+    setCanContinue(valid);
+  }, [position, distanceFromUser, setCanContinue]);
 
-  const canContinue = !!position && (distanceFromUser === null || distanceFromUser <= 2);
+  const handleAddressSubmit = async () => {
+    const coords = { lat: 47.6062, lng: -122.3321 }; // Placeholder
+    setPosition(coords);
+    setFormData((prev) => ({ ...prev, location: coords }));
+  };
 
   return (
     <div className="space-y-4">
@@ -149,27 +110,20 @@ export default function LocationStep({ data, onUpdate, onNext }: Props) {
             onZoomChange={setZoom}
             onSelect={(coords) => {
               setPosition(coords);
-              onUpdate({ location: coords });
+              setFormData((prev) => ({ ...prev, location: coords }));
             }}
           />
         )}
       </div>
-      {data.location && (
-        <ReportDistanceGuard targetLocation={data.location} onDistanceChange={(dist) => setDistanceFromUser(dist)} />
+
+      {formData.location && (
+        <ReportDistanceGuard
+          targetLocation={formData.location}
+          onDistanceChange={(dist) => setDistanceFromUser(dist)}
+        />
       )}
 
       {zoom > 16 && <div className="text-sm text-yellow-600">{t('zoomOutForSafety')}</div>}
-
-      <div className="flex justify-center pt-4">
-        <button
-          onClick={onNext}
-          disabled={!canContinue}
-          className={`px-16 py-3 text-lg rounded-2xl transition ${
-            canContinue ? 'bg-blue-600 text-white hover:bg-blue-700' : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-          }`}>
-          {t('next')}
-        </button>
-      </div>
     </div>
   );
 }

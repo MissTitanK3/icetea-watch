@@ -6,7 +6,13 @@ const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 export async function GET() {
-  const { data: wizard, error } = await supabase.from('wizard').select('*');
+  const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+
+  const { data: wizard, error } = await supabase
+    .from('wizard')
+    .select('*')
+    .gte('timestamp', sevenDaysAgo)
+    .order('timestamp', { ascending: false });
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
