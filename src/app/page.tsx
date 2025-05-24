@@ -20,9 +20,7 @@ export default function Home() {
           {t('requestLanguageSupport')}
         </Link>
         <div className="flex flex-col text-center py-20 justify-center m-auto">
-          <h4>
-            If you have any trouble with the app, email us and let us know whats going on! That way we can fix it.
-          </h4>
+          <h4>{t('troubleWithApp')}</h4>
           <div className="flex flex-col text-center py-5 justify-center m-auto">
             <CopyEmail />
           </div>

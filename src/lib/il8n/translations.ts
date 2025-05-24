@@ -3,6 +3,7 @@ export type TranslationKey =
   | 'homeTitle'
   | 'reportTitle'
   | 'privacyTagline'
+  | 'troubleWithApp'
   | 'startReport'
   | 'viewHeatmap'
   | 'supportProject'
@@ -88,6 +89,8 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     viewHeatmap: 'View Heatmap',
     supportProject: 'Support The Project (ko-fi)',
     requestLanguageSupport: 'Request Language Support',
+    troubleWithApp:
+      'If you have any trouble with the app, email us and let us know whats going on! That way we can fix it.',
 
     // Heatmap
     reportTitle: 'Community Report Heatmap',
@@ -198,6 +201,8 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     viewHeatmap: 'Ver mapa de calor',
     supportProject: 'Apoya el proyecto (ko-fi)',
     requestLanguageSupport: 'Solicitar soporte de idioma',
+    troubleWithApp:
+      'Si tienes algún problema con la app, envíanos un correo y cuéntanos qué pasa. ¡Así podremos solucionarlo!',
 
     // Heatmap
     reportTitle: 'Mapa de Reportes Comunitarios',

@@ -78,11 +78,6 @@ export default function WizardPage() {
     <div className="space-y-6">
       <div className="flex justify-evenly items-center">
         <Link
-          href="/"
-          className="flex-1 max-w-[40%] px-4 py-3 rounded border text-base font-medium text-left bg-gray-700 text-white border-gray-700">
-          {t('home')}
-        </Link>
-        <Link
           href="https://wikipedia.org"
           className="flex-1 max-w-[40%] px-4 py-3 rounded border text-base font-medium text-center uppercase text-red-500">
           {t('quickExit')}
