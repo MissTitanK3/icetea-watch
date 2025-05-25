@@ -47,6 +47,25 @@ export type TranslationKey =
   | 'copiedToClipboard'
   | 'kyrTitle'
   | 'kyrIntro'
+  | 'arrestFormTitle'
+  | 'locationLabel'
+  | 'timeLabel'
+  | 'nameLabel'
+  | 'dobLabel'
+  | 'anumberLabel'
+  | 'agencyLabel'
+  | 'warrantLabel'
+  | 'entryLabel'
+  | 'contactLabel'
+  | 'kidsLabel'
+  | 'healthLabel'
+  | 'identityLabel'
+  | 'courtHistoryLabel'
+  | 'nextStepsLabel'
+  | 'callsLabel'
+  | 'lawyerLabel'
+  | 'arrestSubTitle'
+  | 'arrestDesc'
   | 'languageSupportInvite'
   | 'translationTemplate'
   | 'includesReference'
@@ -192,6 +211,27 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     translationTemplate: 'Translation Template',
     existingTranslations: 'Existing Translations',
     includesReference: 'This includes English and Spanish for reference.',
+
+    // Questions
+    arrestFormTitle: 'ICE Arrest Intake Form',
+    arrestSubTitle: 'If Someone is Arrested by ICE',
+    arrestDesc: 'Ask these questions to get the most important information quickly.',
+    locationLabel: 'Where are you right now?',
+    timeLabel: 'When were you taken?',
+    nameLabel: 'Full name',
+    dobLabel: 'Date of birth',
+    anumberLabel: 'A-number (if known)',
+    agencyLabel: 'Who arrested you? (ICE, police, etc.)',
+    warrantLabel: 'Did they show a warrant? Was it signed by a judge?',
+    entryLabel: 'Did they enter your home or stop you in public?',
+    contactLabel: 'Who should we contact for you?',
+    kidsLabel: 'Do you have children or dependents who need care?',
+    healthLabel: 'Any medical conditions, medications, or disabilities?',
+    identityLabel: 'Are you especially at risk in detention?',
+    courtHistoryLabel: 'Have you had any court date or removal order before?',
+    nextStepsLabel: 'Have they told you what happens next?',
+    callsLabel: 'Are they letting you make calls?',
+    lawyerLabel: 'Do you already have a lawyer? If yes, who?',
   },
   es: {
     // Homepage
@@ -303,6 +343,26 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     translationTemplate: 'Plantilla de traducción',
     existingTranslations: 'Traducciones existentes',
     includesReference: 'Esto incluye inglés y español como referencia.',
+    // Questions
+    arrestFormTitle: 'Formulario de Detención por ICE',
+    arrestSubTitle: 'Si Alguien es Arrestado por ICE',
+    arrestDesc: 'Haz estas preguntas para obtener la información más importante rápidamente.',
+    locationLabel: '¿Dónde estás ahora?',
+    timeLabel: '¿Cuándo te detuvieron?',
+    nameLabel: 'Nombre completo',
+    dobLabel: 'Fecha de nacimiento',
+    anumberLabel: 'Número A (si lo sabes)',
+    agencyLabel: '¿Quién te arrestó? (ICE, policía, etc.)',
+    warrantLabel: '¿Mostraron una orden judicial? ¿Firmada por un juez?',
+    entryLabel: '¿Entraron a tu casa o te detuvieron en público?',
+    contactLabel: '¿A quién debemos contactar por ti?',
+    kidsLabel: '¿Tienes hijos o dependientes que necesiten cuidado?',
+    healthLabel: '¿Condiciones médicas, medicamentos o discapacidades?',
+    identityLabel: '¿Estás en riesgo especial en detención?',
+    courtHistoryLabel: '¿Has tenido una cita en corte o una orden de deportación antes?',
+    nextStepsLabel: '¿Te han dicho qué pasará ahora?',
+    callsLabel: '¿Te permiten hacer llamadas?',
+    lawyerLabel: '¿Tienes abogado? Si sí, ¿quién?',
   },
   // Add more languages as needed
 };

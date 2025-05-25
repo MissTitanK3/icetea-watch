@@ -8,35 +8,33 @@ import LoadingSpinner from '@/components/LoadingSpinner';
 import { Report } from '@/types/wizard';
 import { useTranslations } from '@/lib/il8n/useTranslations';
 import { TranslationKey } from '@/lib/il8n/translations';
+import TimeRangeSlider from '@/components/TimeRangeSlider';
+import { LatLngExpression } from 'leaflet';
+import { useFindMe } from '@/lib/useFindMe';
 
 const Map = dynamic(() => import('@/components/map/HeatLayer'), { ssr: false });
 
-const timeOptions = [
-  { label: '1h', hours: 1 },
-  { label: '24h', hours: 24 },
-  { label: '48h', hours: 48 },
-  { label: '7d', hours: 168 },
-];
-
 export default function HeatmapPage() {
   const { t } = useTranslations();
-  const [timeWindow, setTimeWindow] = useState(48); // default 48h
   const [agencyFilter, setAgencyFilter] = useState<string[]>([]);
   const [reports, setReports] = useState<Report[]>([]);
+  const [visibleReports, setVisibleReports] = useState<Report[]>([]);
   const [loading, setLoading] = useState(true);
+  const [center, setCenter] = useState<LatLngExpression>([47.6062, -122.3321]); // Default: Seattle
+  const { handleFindMe, isLocating, error } = useFindMe((coords) => {
+    setCenter(coords);
+  });
+
+  const isAllActive = agencyFilter.length === 0;
 
   useEffect(() => {
-    const storedTime = localStorage.getItem('timeWindow');
     const storedAgency = localStorage.getItem('agencyFilter');
-
-    if (storedTime) setTimeWindow(parseInt(storedTime));
     if (storedAgency) setAgencyFilter(JSON.parse(storedAgency));
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('timeWindow', timeWindow.toString());
     localStorage.setItem('agencyFilter', JSON.stringify(agencyFilter));
-  }, [timeWindow, agencyFilter]);
+  }, [agencyFilter]);
 
   useEffect(() => {
     async function fetchReports() {
@@ -45,6 +43,7 @@ export default function HeatmapPage() {
         const json = await res.json();
         if (json.wizard) {
           setReports(json.wizard);
+          setVisibleReports(json.wizard); // initialize with all
         } else {
           console.error(json.error);
         }
@@ -58,19 +57,10 @@ export default function HeatmapPage() {
     fetchReports();
   }, []);
 
-  const now = new Date();
-
-  const filtered = reports.filter((r) => {
-    const hasValidLocation = r.location && typeof r.location.lat === 'number' && typeof r.location.lng === 'number';
-    if (!hasValidLocation) return false;
-
-    const age = (now.getTime() - new Date(r.timestamp).getTime()) / (1000 * 60 * 60);
-    const matchesTime = age <= timeWindow;
-    const matchesAgency = agencyFilter.length === 0 || r.agency_type.some((a) => agencyFilter.includes(a));
-    return matchesTime && matchesAgency;
-  });
-
-  const isAllActive = agencyFilter.length === 0;
+  useEffect(() => {
+    handleFindMe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="space-y-4 w-full text-center">
@@ -81,28 +71,30 @@ export default function HeatmapPage() {
           {t('quickExit')}
         </Link>
       </div>
+
       <h2 className="text-2xl font-bold">{t('reportTitle')}</h2>
 
+      {error && <p className="text-red-500 text-sm">{error}</p>}
+
       <div className="flex gap-4 flex-wrap items-center w-full">
-        <div className="flex flex-wrap gap-2 w-full">
-          {timeOptions?.map((t) => (
-            <button
-              key={t.label}
-              onClick={() => setTimeWindow(t.hours)}
-              className={`flex-1 min-w-[20%] px-4 py-3 rounded border text-base font-medium text-left transition
-        ${
-          timeWindow === t.hours
-            ? 'bg-gray-700 text-white border-gray-700'
-            : 'bg-gray-100 text-black border-gray-300 hover:bg-gray-200'
-        }
-      `}>
-              {t.label}
-            </button>
-          ))}
-        </div>
+        <TimeRangeSlider
+          reports={reports}
+          onChange={(range) => {
+            const now = Date.now();
+            const filtered = reports.filter((r) => {
+              const ageHr = (now - new Date(r.timestamp).getTime()) / (1000 * 60 * 60);
+              const matchesTime = ageHr >= range[0] && ageHr <= range[1];
+              const matchesAgency = isAllActive || r.agency_type.some((a) => agencyFilter.includes(a));
+              const hasLocation =
+                r.location && typeof r.location.lat === 'number' && typeof r.location.lng === 'number';
+              return matchesTime && matchesAgency && hasLocation;
+            });
+            setVisibleReports(filtered);
+          }}
+        />
 
         <div className="flex flex-wrap gap-2 w-full">
-          {AGENCY_OPTIONS?.map((agency) => {
+          {AGENCY_OPTIONS.map((agency) => {
             const isActive = isAllActive || agencyFilter.includes(agency);
             return (
               <button
@@ -117,18 +109,25 @@ export default function HeatmapPage() {
                   }
                 }}
                 className={`flex-1 min-w-[40%] px-4 py-3 rounded border text-base font-medium text-left transition
-        ${
-          isActive
-            ? 'bg-green-900 text-white border-green-800'
-            : 'bg-gray-700 text-white border-gray-300 hover:bg-gray-200'
-        }`}>
+                  ${
+                    isActive
+                      ? 'bg-green-900 text-white border-green-800'
+                      : 'bg-gray-700 text-white border-gray-300 hover:bg-gray-200'
+                  }`}>
                 {t(`agency.${agency}` as TranslationKey)}
               </button>
             );
           })}
         </div>
       </div>
-      {loading ? <LoadingSpinner text="Loading reports…" /> : <Map reports={filtered} />}
+      <button
+        onClick={handleFindMe}
+        disabled={isLocating}
+        className="bg-green-800 px-10 py-2 font-bold rounded-md shadow hover:bg-accent-dark transition disabled:opacity-50">
+        {isLocating ? 'Locating...' : `📍 ${t('findMe') ?? 'Find Me'}`}
+      </button>
+
+      {loading ? <LoadingSpinner text="Loading reports…" /> : <Map reports={visibleReports} center={center} />}
 
       <p className="text-xs text-gray-500 max-w-md pt-2">{t('warning')}</p>
     </div>

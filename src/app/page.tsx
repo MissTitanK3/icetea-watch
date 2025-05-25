@@ -2,13 +2,14 @@
 import CopyEmail from '@/components/CopyEmail';
 import KnowYourRights from '@/components/KnowYourRights';
 import LanguageSwitcher from '@/components/language-toggle/LToggle';
+import ICEArrestQuestions from '@/components/Questions';
 import { useTranslations } from '@/lib/il8n/useTranslations';
 import Link from 'next/link';
 
 export default function Home() {
   const { t } = useTranslations();
   return (
-    <div className="flex flex-col gap-4 text-center ">
+    <div className="flex flex-col gap-4 w-full">
       <LanguageSwitcher />
       <h1 className="text-4xl font-bold">{t('homeTitle')}</h1>
       <p className="text-lg">{t('privacyTagline')}</p>
@@ -24,6 +25,7 @@ export default function Home() {
           <div className="flex flex-col text-center py-5 justify-center m-auto">
             <CopyEmail />
           </div>
+          <ICEArrestQuestions />
         </div>
       </div>
       <KnowYourRights />

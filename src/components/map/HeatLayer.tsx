@@ -76,113 +76,17 @@ export function HeatLayer({ points }: { points: [number, number, number?][] }) {
   return null;
 }
 
-export default function HeatMap({ reports }: { reports: Report[] }) {
+export default function HeatMap({ reports, center }: { reports: Report[]; center: LatLngExpression }) {
   const { t } = useTranslations();
-  const [isMounted, setIsMounted] = useState(false);
   const [visibleReports, setVisibleReports] = useState<Report[]>(reports);
-  const [center, setCenter] = useState<LatLngExpression>([47.6062, -122.3321]); // Default: Seattle
+
   const mapRef = useRef<L.Map | null>(null);
-
-  function handleFindMe() {
-    const success = (pos: GeolocationPosition) => {
-      const coords: LatLngExpression = [pos.coords.latitude, pos.coords.longitude];
-      setCenter(coords);
-
-      // Optional: animate map zoom and center
-      const map = mapRef.current;
-      if (map) {
-        map.setView(coords, 15, { animate: true });
-      }
-    };
-
-    const failure = () => {
-      alert(t('locationDenied') ?? 'Unable to retrieve location.');
-    };
-
-    if (navigator.permissions) {
-      navigator.permissions
-        .query({ name: 'geolocation' })
-        .then((result) => {
-          if (result.state === 'granted' || result.state === 'prompt') {
-            navigator.geolocation.getCurrentPosition(success, failure, {
-              enableHighAccuracy: true,
-              timeout: 10000,
-            });
-          } else {
-            failure();
-          }
-        })
-        .catch(() => {
-          navigator.geolocation.getCurrentPosition(success, failure, {
-            enableHighAccuracy: true,
-            timeout: 10000,
-          });
-        });
-    } else {
-      navigator.geolocation.getCurrentPosition(success, failure, {
-        enableHighAccuracy: true,
-        timeout: 10000,
-      });
-    }
-  }
-
-  useEffect(() => {
-    setIsMounted(true);
-
-    const tryGetLocation = () => {
-      const success = (pos: GeolocationPosition) => {
-        const coords: LatLngExpression = [pos.coords.latitude, pos.coords.longitude];
-        setCenter(coords);
-      };
-
-      const failure = () => {
-        console.warn('Geolocation failed or was denied. Falling back to default.');
-      };
-
-      if (navigator.permissions) {
-        navigator.permissions
-          .query({ name: 'geolocation' })
-          .then((result) => {
-            if (result.state === 'granted' || result.state === 'prompt') {
-              navigator.geolocation.getCurrentPosition(success, failure, {
-                enableHighAccuracy: true,
-                timeout: 10000,
-              });
-            } else {
-              failure();
-            }
-          })
-          .catch(() => {
-            // If Permissions API fails, fallback to geolocation
-            navigator.geolocation.getCurrentPosition(success, failure, {
-              enableHighAccuracy: true,
-              timeout: 10000,
-            });
-          });
-      } else {
-        // No Permissions API support
-        navigator.geolocation.getCurrentPosition(success, failure, {
-          enableHighAccuracy: true,
-          timeout: 10000,
-        });
-      }
-    };
-
-    tryGetLocation();
-  }, []);
 
   // Convert reports to LatLng tuples for the heat layer
   const heatPoints = reports.map<[number, number, number?]>((r) => [r.location.lat, r.location.lng]);
 
-  if (!isMounted) return <div className="h-[500px]">Loading map…</div>;
-
   return (
     <div className="rounded overflow-hidden z-0">
-      <button
-        onClick={handleFindMe}
-        className=" bg-green-800 px-10 py-2 font-bold my-5 rounded-md shadow hover:bg-accent-dark transition">
-        📍 {t('findMe') ?? 'Find Me'}
-      </button>
       <div className="relative">
         <div className="h-[500px]">
           <MapContainer center={center} zoom={12} scrollWheelZoom style={{ height: '100%', width: '100%', zIndex: 0 }}>

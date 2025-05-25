@@ -1,0 +1,173 @@
+'use client';
+
+import { useEffect, useState, useRef } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
+import { Range } from 'react-range';
+
+const MAX = 168;
+const STEP = 6;
+const BIN_COUNT = MAX / STEP;
+
+type Props = {
+  reports: { timestamp: string }[];
+  onChange: (range: [number, number]) => void;
+};
+
+export default function TimeRangeSlider({ reports, onChange }: Props) {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const parseIntOrDefault = (value: string | null, fallback: number) =>
+    Math.max(0, Math.min(MAX, parseInt(value || '', 10) || fallback));
+
+  const initialFrom = parseIntOrDefault(searchParams.get('from'), 0);
+  const initialTo = parseIntOrDefault(searchParams.get('to'), MAX);
+
+  const [range, setRange] = useState<[number, number]>([
+    Math.min(initialFrom, initialTo),
+    Math.max(initialFrom, initialTo),
+  ]);
+
+  const debounceTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Build histogram bins
+  const bins = Array(BIN_COUNT).fill(0);
+  reports.forEach((r) => {
+    const ageHr = (Date.now() - new Date(r.timestamp).getTime()) / (1000 * 60 * 60);
+    const bin = Math.floor(ageHr / STEP);
+    if (bin >= 0 && bin < bins.length) bins[bin]++;
+  });
+  const maxBin = Math.max(...bins, 1); // prevent divide-by-zero
+
+  const getBinColor = (count: number) => {
+    const intensity = count / maxBin;
+    if (intensity > 0.75) return 'bg-red-500';
+    if (intensity > 0.5) return 'bg-orange-400';
+    if (intensity > 0.25) return 'bg-yellow-300';
+    return 'bg-blue-300';
+  };
+
+  // Debounced URL update
+  const updateUrl = (from: number, to: number) => {
+    if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
+    debounceTimeout.current = setTimeout(() => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set('from', String(from));
+      params.set('to', String(to));
+      router.replace(`?${params.toString()}`, { scroll: false });
+    }, 300);
+  };
+
+  const handleSliderChange = (values: [number, number]) => {
+    setRange(values);
+    onChange(values);
+    updateUrl(values[0], values[1]);
+  };
+
+  const setPreset = (hoursAgo: number) => {
+    const newRange: [number, number] = [0, hoursAgo];
+    setRange(newRange);
+    onChange(newRange);
+    updateUrl(0, hoursAgo);
+  };
+
+  useEffect(() => {
+    const urlFrom = parseIntOrDefault(searchParams.get('from'), 0);
+    const urlTo = parseIntOrDefault(searchParams.get('to'), MAX);
+    const normalized: [number, number] = [Math.min(urlFrom, urlTo), Math.max(urlFrom, urlTo)];
+
+    // Only update state if values actually changed
+    if (normalized[0] !== range[0] || normalized[1] !== range[1]) {
+      setRange(normalized);
+      onChange(normalized);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
+
+  return (
+    <div className="my-4 flex flex-col justify-center m-auto">
+      {/* Presets */}
+      <div className="flex gap-2 mb-4">
+        <button
+          onClick={() => setPreset(24)}
+          className="px-3 py-1 bg-gray-700 text-white rounded hover:bg-gray-600 text-sm">
+          Last 24h
+        </button>
+        <button
+          onClick={() => setPreset(72)}
+          className="px-3 py-1 bg-gray-700 text-white rounded hover:bg-gray-600 text-sm">
+          Last 3d
+        </button>
+        <button
+          onClick={() => setPreset(168)}
+          className="px-3 py-1 bg-gray-700 text-white rounded hover:bg-gray-600 text-sm">
+          Last 7d
+        </button>
+      </div>
+
+      {/* Label */}
+      <label className="block font-semibold mb-15">
+        Showing reports from {Math.floor(range[0] / 24)}d {range[0] % 24}h → {Math.floor(range[1] / 24)}d{' '}
+        {range[1] % 24}h ago
+      </label>
+
+      {/* Range Slider */}
+      <Range
+        values={range}
+        step={STEP}
+        min={0}
+        max={MAX}
+        onChange={(values) => handleSliderChange(values as [number, number])}
+        renderTrack={({ props, children }) => (
+          <div {...props} className="w-full h-2 bg-gray-700 rounded relative" style={props.style}>
+            <div
+              className="absolute top-0 bottom-0 bg-blue-500 rounded"
+              style={{
+                left: `${(range[0] / MAX) * 100}%`,
+                width: `${((range[1] - range[0]) / MAX) * 100}%`,
+              }}
+            />
+            {children}
+          </div>
+        )}
+        renderThumb={({ props, value, isDragged }) => {
+          const { key, ...safeProps } = props;
+          return (
+            <div
+              key={key}
+              {...safeProps}
+              className={`relative z-10 flex items-center justify-center w-5 h-5 rounded-full border-2 transition
+      ${isDragged ? 'border-blue-600 bg-blue-500 scale-110' : 'border-blue-400 bg-white'}
+      focus:outline-none focus:ring-2 focus:ring-blue-500`}>
+              {/* Label above the thumb */}
+              <div
+                className="absolute -top-7 text-xs font-medium text-white bg-gray-800 px-2 py-1 rounded shadow"
+                style={{ whiteSpace: 'nowrap' }}>
+                {Math.floor(value / 24)}d {value % 24}h
+              </div>
+            </div>
+          );
+        }}
+      />
+
+      {/* Histogram */}
+      <div className="mt-4">
+        <div className="flex items-end h-16 gap-[1px]">
+          {bins.map((count, i) => (
+            <div
+              key={i}
+              title={`${count} reports`}
+              style={{ height: `${(count / maxBin) * 100}%` }}
+              className={`flex-1 transition-all duration-300 ${getBinColor(count)}`}
+            />
+          ))}
+        </div>
+        <div className="flex justify-between text-[10px] text-gray-400 mt-1 px-1">
+          {[0, 24, 48, 72, 96, 120, 144, 168].map((h) => (
+            <span key={h}>{h / 24}d</span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
