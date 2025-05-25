@@ -54,7 +54,7 @@ export default function LocationStep() {
   }, [position, distanceFromUser, setCanContinue]);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 z-0">
       <div className="w-full flex flex-col justify-center items-center">
         <div className="pt-2">
           <h3 className="text-lg font-semibold">{t('locationPrompt')}</h3>
@@ -72,7 +72,7 @@ export default function LocationStep() {
 
       {error && <div className="text-sm text-red-600">{error}</div>}
 
-      <div className="h-[500px] rounded overflow-hidden">
+      <div className="h-[500px] rounded overflow-hidden z-0">
         {position && (
           <MapWrapper
             position={position}

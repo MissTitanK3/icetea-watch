@@ -55,7 +55,7 @@ export default function MapWrapper({ position, zoom, onZoomChange, onSelect }: P
       center={position}
       zoom={zoom}
       scrollWheelZoom={true}
-      style={{ height: '100%', width: '100%' }}
+      style={{ height: '100%', width: '100%', zIndex: 0 }}
       ref={(ref) => {
         if (ref) mapRef.current = ref;
       }}>
