@@ -93,7 +93,7 @@ export default function LocationStep() {
         />
       )}
 
-      {zoom > 16 && <div className="text-sm text-yellow-600">{t('zoomOutForSafety')}</div>}
+      {/* {zoom > 16 && <div className="text-sm text-yellow-600">{t('zoomOutForSafety')}</div>} */}
     </div>
   );
 }
