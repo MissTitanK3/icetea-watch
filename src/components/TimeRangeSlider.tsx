@@ -5,15 +5,14 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { Range } from 'react-range';
 
 const MAX = 168;
-const STEP = 6;
-const BIN_COUNT = MAX / STEP;
+const STEP = 4;
 
 type Props = {
-  reports: { timestamp: string }[];
+  reports?: { timestamp: string }[];
   onChange: (range: [number, number]) => void;
 };
 
-export default function TimeRangeSlider({ reports, onChange }: Props) {
+export default function TimeRangeSlider({ onChange }: Props) {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -29,23 +28,6 @@ export default function TimeRangeSlider({ reports, onChange }: Props) {
   ]);
 
   const debounceTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  // Build histogram bins
-  const bins = Array(BIN_COUNT).fill(0);
-  reports.forEach((r) => {
-    const ageHr = (Date.now() - new Date(r.timestamp).getTime()) / (1000 * 60 * 60);
-    const bin = Math.floor(ageHr / STEP);
-    if (bin >= 0 && bin < bins.length) bins[bin]++;
-  });
-  const maxBin = Math.max(...bins, 1); // prevent divide-by-zero
-
-  const getBinColor = (count: number) => {
-    const intensity = count / maxBin;
-    if (intensity > 0.75) return 'bg-red-500';
-    if (intensity > 0.5) return 'bg-orange-400';
-    if (intensity > 0.25) return 'bg-yellow-300';
-    return 'bg-blue-300';
-  };
 
   // Debounced URL update
   const updateUrl = (from: number, to: number) => {
@@ -87,7 +69,7 @@ export default function TimeRangeSlider({ reports, onChange }: Props) {
   return (
     <div className="my-4 flex flex-col justify-center m-auto">
       {/* Presets */}
-      <div className="flex gap-2 mb-4">
+      <div className="flex gap-2 mb-4 justify-evenly">
         <button
           onClick={() => setPreset(24)}
           className="px-3 py-1 bg-gray-700 text-white rounded hover:bg-gray-600 text-sm">
@@ -149,25 +131,6 @@ export default function TimeRangeSlider({ reports, onChange }: Props) {
           );
         }}
       />
-
-      {/* Histogram */}
-      <div className="mt-4">
-        <div className="flex items-end h-16 gap-[1px]">
-          {bins.map((count, i) => (
-            <div
-              key={i}
-              title={`${count} reports`}
-              style={{ height: `${(count / maxBin) * 100}%` }}
-              className={`flex-1 transition-all duration-300 ${getBinColor(count)}`}
-            />
-          ))}
-        </div>
-        <div className="flex justify-between text-[10px] text-gray-400 mt-1 px-1">
-          {[0, 24, 48, 72, 96, 120, 144, 168].map((h) => (
-            <span key={h}>{h / 24}d</span>
-          ))}
-        </div>
-      </div>
     </div>
   );
 }
