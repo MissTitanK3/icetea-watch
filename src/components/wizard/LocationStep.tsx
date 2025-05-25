@@ -72,7 +72,7 @@ export default function LocationStep() {
 
       {error && <div className="text-sm text-red-600">{error}</div>}
 
-      <div className="h-64 rounded overflow-hidden">
+      <div className="h-[500px] rounded overflow-hidden">
         {position && (
           <MapWrapper
             position={position}
