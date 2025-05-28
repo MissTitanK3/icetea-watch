@@ -97,7 +97,28 @@ export type TranslationKey =
   | 'agency.Immigration Court'
   | 'agency.Unmarked'
   | 'agency.Military'
-  | 'agency.Detention Facility';
+  | 'agency.Detention Facility'
+  | 'transparencyTitle'
+  | 'transparencyWhyTitle'
+  | 'transparencyWhyText'
+  | 'transparencyCollectTitle'
+  | 'transparencyCollectList1'
+  | 'transparencyCollectList2'
+  | 'transparencyCollectList3'
+  | 'transparencyCollectList4'
+  | 'transparencyCollectList5'
+  | 'transparencyAnonNote'
+  | 'transparencyTypesTitle'
+  | 'transparencyRecentReports'
+  | 'transparencyInspectTitle'
+  | 'transparencyInspectDesktop'
+  | 'transparencyInspectMobile'
+  | 'transparencyQueuedExplain'
+  | 'transparencyFormDataExplain'
+  | 'transparencyReportExplain'
+  | 'githubCardTitle'
+  | 'githubCardText'
+  | 'githubCardLink';
 
 export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
   en: {
@@ -232,6 +253,34 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     nextStepsLabel: 'Have they told you what happens next?',
     callsLabel: 'Are they letting you make calls?',
     lawyerLabel: 'Do you already have a lawyer? If yes, who?',
+
+    // Transparency
+    transparencyTitle: 'Transparency & Data Use',
+    transparencyWhyTitle: 'Why Transparency Matters',
+    transparencyWhyText:
+      'ICE Tea Watch is a community tool built to protect, not to surveil. We believe in radical transparency — that means you deserve to know what data we collect, why, and how it’s used.',
+    transparencyCollectTitle: 'What We Collect',
+    transparencyCollectList1: 'Agency type — who you saw',
+    transparencyCollectList2: 'Optional "Other" agency name',
+    transparencyCollectList3: 'Approximate location (~1km fuzzed)',
+    transparencyCollectList4: 'Optional media (photo/video)',
+    transparencyCollectList5: 'Timestamp',
+    transparencyAnonNote: '🛡️ Reports are anonymous. We don’t store your name, phone, or IP.',
+    transparencyTypesTitle: 'How We Define a Report (In Code)',
+    transparencyRecentReports: 'Explore Recent Reports',
+    transparencyInspectTitle: 'See It Yourself',
+    transparencyInspectDesktop:
+      'On desktop, right-click → Inspect → Network tab → look for a POST to /api/report. This shows you exactly what’s being sent.',
+    transparencyInspectMobile: 'Want to verify on mobile? Try using HTTP Toolkit.',
+    transparencyQueuedExplain: "This keeps your data on your device until you're ready to submit.",
+    transparencyFormDataExplain:
+      'This is what your device creates when you fill out the report form. No personal info is included.',
+    transparencyReportExplain: 'This is the final format saved in our secure Supabase database.',
+
+    // Github Card
+    githubCardTitle: 'Source Code on GitHub',
+    githubCardText: 'Want to verify everything for yourself? Browse the source, open an issue, or contribute.',
+    githubCardLink: 'View on GitHub',
   },
   es: {
     // Homepage
@@ -363,6 +412,35 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     nextStepsLabel: '¿Te han dicho qué pasará ahora?',
     callsLabel: '¿Te permiten hacer llamadas?',
     lawyerLabel: '¿Tienes abogado? Si sí, ¿quién?',
+
+    // Transparency
+    transparencyTitle: 'Transparencia y Uso de Datos',
+    transparencyWhyTitle: 'Por Qué Importa la Transparencia',
+    transparencyWhyText:
+      'ICE Tea Watch es una herramienta comunitaria construida para proteger, no para vigilar. Creemos en la transparencia radical — eso significa que mereces saber qué datos recogemos, por qué, y cómo se usan.',
+    transparencyCollectTitle: 'Qué Recogemos',
+    transparencyCollectList1: 'Tipo de agencia — a quién viste',
+    transparencyCollectList2: 'Nombre opcional de "Otra" agencia',
+    transparencyCollectList3: 'Ubicación aproximada (~1 km de margen)',
+    transparencyCollectList4: 'Medios opcionales (foto/video)',
+    transparencyCollectList5: 'Marca de tiempo',
+    transparencyAnonNote: '🛡️ Los reportes son anónimos. No almacenamos tu nombre, teléfono ni IP.',
+    transparencyTypesTitle: 'Cómo Definimos un Reporte (En Código)',
+    transparencyRecentReports: 'Explorar Reportes Recientes',
+    transparencyInspectTitle: 'Verifica Tú Mismo',
+    transparencyInspectDesktop:
+      'En computadora, haz clic derecho → Inspeccionar → pestaña Red → busca un POST a /api/report. Ahí puedes ver exactamente lo que se envía.',
+    transparencyInspectMobile: '¿Quieres verificar desde el móvil? Prueba usando HTTP Toolkit.',
+    transparencyQueuedExplain: 'Esto guarda tu información en tu dispositivo hasta que estés listo/a para enviarla.',
+    transparencyFormDataExplain:
+      'Esto es lo que tu dispositivo genera cuando llenas el formulario. No incluye información personal.',
+    transparencyReportExplain:
+      'Este es el formato final guardado de forma segura en nuestra base de datos en Supabase.',
+
+    // Github Card
+    githubCardTitle: 'Código fuente en GitHub',
+    githubCardText: '¿Quieres verificar todo por ti mismo/a? Explora el código, abre un problema o contribuye.',
+    githubCardLink: 'Ver en GitHub',
   },
   // Add more languages as needed
 };
