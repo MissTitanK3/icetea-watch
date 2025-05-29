@@ -21,21 +21,6 @@ function CopyTemplateButton({ text }: { text: string }) {
   );
 }
 
-// function ColorizedJson({ json }: { json: string }) {
-//   return (
-//     <pre className="bg-gray-900 text-green-200 p-4 rounded overflow-x-auto text-sm max-h-96 border">
-//       {json.split('\n').map((line, i) => {
-//         return (
-//           <div key={i} className="whitespace-pre">
-//             <span className="text-gray-500">{line.slice(0, line.indexOf('"'))}</span>
-//             <span className="text-yellow-400">{line.slice(line.indexOf('"'), line.indexOf(':') + 1)}</span>
-//             <span className="text-white">{line.slice(line.indexOf(':') + 1)}</span>
-//           </div>
-//         );
-//       })}
-//     </pre>
-//   );
-// }
 function ColorizedJson({ json }: { json: string }) {
   return (
     <pre className="bg-gray-900 text-sm text-white font-mono p-4 rounded border overflow-x-auto max-h-96 leading-relaxed">

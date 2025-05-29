@@ -51,9 +51,6 @@ export function HeatLayer({ points }: { points: [number, number, number?][] }) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const heat = (L as any)
       .heatLayer(points, {
-        // radius: 25,
-        // blur: 15,
-        // maxZoom: 17,
         radius: 35, // increase for wider glow
         blur: 20, // higher = softer edges
         maxZoom: 17,

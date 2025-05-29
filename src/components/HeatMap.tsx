@@ -6,8 +6,6 @@ import { LatLngLiteral } from 'leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-// import HeatLayer from './HeatLayer'; // ✅ Import HeatLayer
-
 type Report = {
   id: string;
   agency_type: string[];
@@ -35,13 +33,6 @@ export default function HeatmapMap({ reports }: { reports: Report[] }) {
   }, []);
 
   const center: LatLngLiteral = { lat: 47.6062, lng: -122.3321 };
-
-  // 🔥 Convert reports into [number, number, number?][] format
-  // const heatPoints: [number, number, number?][] = reports.map((r) => [
-  //   r.report_location.lat,
-  //   r.report_location.lng,
-  //   0.8, // You can adjust intensity if needed
-  // ]);
 
   if (!isMounted) return <div className="h-[500px]">Loading map…</div>;
 
