@@ -118,6 +118,17 @@ export type TranslationKey =
   | 'transparencyReportExplain'
   | 'githubCardTitle'
   | 'githubCardText'
+  | 'dismissalTitle'
+  | 'dismissalIntroStart'
+  | 'dismissalIntroHighlight1'
+  | 'dismissalIntroMid'
+  | 'dismissalIntroHighlight2'
+  | 'dismissalPoint1'
+  | 'dismissalPoint2'
+  | 'dismissalPoint3'
+  | 'dismissalProtection'
+  | 'dismissalSupport'
+  | 'dismissalFlowchartAlt'
   | 'githubCardLink';
 
 export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
@@ -131,6 +142,21 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     requestLanguageSupport: 'Request Language Support',
     troubleWithApp:
       'If you have any trouble with the app, email us and let us know whats going on! That way we can fix it.',
+
+    // Court Appearance
+    // in your translation JSON or TS object
+    dismissalTitle: '⚠️ Court Dismissal Doesn’t Mean You’re Safe',
+    dismissalIntroStart: 'If someone’s case is',
+    dismissalIntroHighlight1: 'dismissed in immigration court',
+    dismissalIntroMid: ', it means the judge is closing the case — but it does',
+    dismissalIntroHighlight2: 'not mean they are protected from deportation',
+    dismissalPoint1: 'ICE can still detain and deport someone through expedited removal.',
+    dismissalPoint2: 'Dismissals often happen for technical or policy reasons — not because status is secure.',
+    dismissalPoint3: 'If someone has no lawful status, they may still be at risk even after a dismissal.',
+    dismissalProtection:
+      'The only way to be fully protected is to secure lawful status (asylum, green card, etc.). Even then, it’s important to stay aware of changing laws and ICE tactics.',
+    dismissalSupport: 'Community support, rapid response, and accurate reporting can protect our people.',
+    dismissalFlowchartAlt: 'Flowchart showing how dismissal does not prevent deportation',
 
     // Heatmap
     reportTitle: 'Community Report Heatmap',
@@ -292,6 +318,23 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     requestLanguageSupport: 'Solicitar soporte de idioma',
     troubleWithApp:
       'Si tienes algún problema con la app, envíanos un correo y cuéntanos qué pasa. ¡Así podremos solucionarlo!',
+
+    // Court Appearance
+    dismissalTitle: '⚠️ El cierre del caso en la corte no significa que estés a salvo',
+    dismissalIntroStart: 'Si el caso de alguien es',
+    dismissalIntroHighlight1: 'cerrado en la corte de inmigración',
+    dismissalIntroMid: ', significa que el juez está cerrando el caso — pero eso no',
+    dismissalIntroHighlight2: 'significa que esa persona esté protegida contra la deportación',
+    dismissalPoint1: 'ICE todavía puede detener y deportar a alguien mediante la deportación expedita.',
+    dismissalPoint2:
+      'Los cierres de caso a menudo ocurren por razones técnicas o políticas — no porque la persona tenga un estatus legal seguro.',
+    dismissalPoint3:
+      'Si alguien no tiene estatus migratorio legal, aún puede estar en riesgo incluso después del cierre del caso.',
+    dismissalProtection:
+      'La única forma de estar completamente protegide es obtener estatus legal (asilo, residencia, etc.). Aun así, es importante estar al tanto de los cambios en las leyes y las tácticas de ICE.',
+    dismissalSupport:
+      'El apoyo comunitario, la respuesta rápida y los reportes precisos pueden proteger a nuestra gente.',
+    dismissalFlowchartAlt: 'Diagrama que muestra que el cierre de un caso no evita la deportación',
 
     // Heatmap
     reportTitle: 'Mapa de Reportes Comunitarios',

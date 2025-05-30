@@ -1,5 +1,6 @@
 'use client';
 import CopyEmail from '@/components/CopyEmail';
+import CourtAppearance from '@/components/CourtAppearance';
 import KnowYourRights from '@/components/KnowYourRights';
 import LanguageSwitcher from '@/components/language-toggle/LToggle';
 import ICEArrestQuestions from '@/components/Questions';
@@ -28,6 +29,7 @@ export default function Home() {
           <div className="flex flex-col text-center py-5 justify-center m-auto">
             <CopyEmail />
           </div>
+          <CourtAppearance />
           <ICEArrestQuestions />
         </div>
       </div>
