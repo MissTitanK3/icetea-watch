@@ -19,9 +19,21 @@ function MapRefForwarder({ onMapReady }: { onMapReady: (map: L.Map) => void }) {
 
 function SetMapCenter({ center }: { center: LatLngExpression }) {
   const map = useMap();
+  const previous = useRef<LatLngExpression | null>(null);
+
   useEffect(() => {
-    map.setView(center);
+    const [newLat, newLng] = center as [number, number];
+    const currentCenter = map.getCenter();
+
+    // Check if coordinates are significantly different to avoid micro-jumps
+    const distanceMoved = map.distance(currentCenter, L.latLng(newLat, newLng));
+
+    if (!previous.current || distanceMoved > 10) {
+      map.flyTo(center, map.getZoom(), { animate: true, duration: 1 });
+      previous.current = center;
+    }
   }, [center, map]);
+
   return null;
 }
 

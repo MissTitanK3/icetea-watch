@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useEffect } from 'react';
-import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from 'react-leaflet';
 import { LatLngLiteral, Map as LeafletMap } from 'leaflet';
 
 import L from 'leaflet';
@@ -29,6 +29,17 @@ function ClickHandler({ onSelect }: { onSelect: (pos: LatLngLiteral) => void }) 
       onSelect(e.latlng);
     },
   });
+  return null;
+}
+
+function FlyToCenter({ center }: { center: LatLngLiteral }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (!center) return;
+    map.flyTo(center, map.getZoom(), { animate: true, duration: 1 });
+  }, [center, map]);
+
   return null;
 }
 
@@ -62,6 +73,7 @@ export default function MapWrapper({ position, zoom, onZoomChange, onSelect }: P
         attribution="© OpenStreetMap contributors"
         url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
       />
+      <FlyToCenter center={position} />
       <ClickHandler onSelect={onSelect} />
       <Marker position={position} />
     </MapContainer>
