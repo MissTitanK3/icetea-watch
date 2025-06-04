@@ -107,6 +107,9 @@ export type TranslationKey =
   | 'transparencyCollectList3'
   | 'transparencyCollectList4'
   | 'transparencyCollectList5'
+  | 'transparencyCollectList6'
+  | 'transparencyCollectList7'
+  | 'transparencyCollectList8'
   | 'transparencyAnonNote'
   | 'transparencyTypesTitle'
   | 'transparencyRecentReports'
@@ -129,7 +132,30 @@ export type TranslationKey =
   | 'dismissalProtection'
   | 'dismissalSupport'
   | 'dismissalFlowchartAlt'
-  | 'githubCardLink';
+  | 'githubCardLink'
+  | 'officerMovement'
+  | 'moving'
+  | 'stationary'
+  | 'directionOfTravel'
+  | 'emergencyIndicators'
+  | 'lights'
+  | 'sirens'
+  | 'haveMedia'
+  | 'optionalNote'
+  | 'mediaFundingNotice'
+  | 'whyUpload'
+  | 'mediaPrivacyNote'
+  | 'direction.North'
+  | 'direction.NorthEast'
+  | 'direction.East'
+  | 'direction.SouthEast'
+  | 'direction.South'
+  | 'direction.SouthWest'
+  | 'direction.West'
+  | 'direction.NorthWest'
+  | 'yes'
+  | 'no'
+  | 'transparencyOfficerNote';
 
 export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
   en: {
@@ -142,9 +168,11 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     requestLanguageSupport: 'Request Language Support',
     troubleWithApp:
       'If you have any trouble with the app, email us and let us know whats going on! That way we can fix it.',
-
+    yes: 'Yes',
+    no: 'No',
+    noneSelected: 'None selected',
+    notSet: 'Not set',
     // Court Appearance
-    // in your translation JSON or TS object
     dismissalTitle: '⚠️ Court Dismissal Doesn’t Mean You’re Safe',
     dismissalIntroStart: 'If someone’s case is',
     dismissalIntroHighlight1: 'dismissed in immigration court',
@@ -194,13 +222,28 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
       'Media is never shown publicly. Only verified community partners can review reports. EXIF data is stripped.',
     optionalNote: 'Optional, but helps with credibility.',
 
+    // Wizards
+    officerMovement: 'Officer Movement',
+    moving: 'Moving',
+    stationary: 'Stationary',
+    directionOfTravel: 'Direction of travel',
+    'direction.North': 'North',
+    'direction.NorthEast': 'Northeast',
+    'direction.East': 'East',
+    'direction.SouthEast': 'Southeast',
+    'direction.South': 'South',
+    'direction.SouthWest': 'Southwest',
+    'direction.West': 'West',
+    'direction.NorthWest': 'Northwest',
+    emergencyIndicators: 'Emergency Indicators',
+    lights: 'Lights',
+    sirens: 'Sirens',
+
     // FormPreview
     liveReportPreview: 'Live Report Preview',
     otherAgency: 'Other Agency:',
-    noneSelected: 'None selected',
     location: 'Location:',
     media: 'Media:',
-    notSet: 'Not Set',
     noFileUploaded: 'No file uploaded',
 
     locationPrompt: 'Where did it happen?',
@@ -291,6 +334,10 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     transparencyCollectList3: 'Approximate location (~1km fuzzed)',
     transparencyCollectList4: 'Optional media (photo/video)',
     transparencyCollectList5: 'Timestamp',
+    transparencyCollectList6: 'Whether the officer was moving or stationary',
+    transparencyCollectList7: 'Direction the officer was traveling (if moving)',
+    transparencyCollectList8: 'Whether emergency lights or sirens were activated',
+
     transparencyAnonNote: '🛡️ Reports are anonymous. We don’t store your name, phone, or IP.',
     transparencyTypesTitle: 'How We Define a Report (In Code)',
     transparencyRecentReports: 'Explore Recent Reports',
@@ -307,6 +354,8 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     githubCardTitle: 'Source Code on GitHub',
     githubCardText: 'Want to verify everything for yourself? Browse the source, open an issue, or contribute.',
     githubCardLink: 'View on GitHub',
+    transparencyOfficerNote:
+      'We collect officer movement, direction, and emergency signal use to help contextualize agency behavior and build better patterns for community safety. These are optional, and no identifying info about users is stored.',
   },
   es: {
     // Homepage
@@ -318,6 +367,11 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     requestLanguageSupport: 'Solicitar soporte de idioma',
     troubleWithApp:
       'Si tienes algún problema con la app, envíanos un correo y cuéntanos qué pasa. ¡Así podremos solucionarlo!',
+
+    yes: 'Sí',
+    no: 'No',
+    noneSelected: 'Ninguno seleccionado',
+    notSet: 'No establecido',
 
     // Court Appearance
     dismissalTitle: '⚠️ El cierre del caso en la corte no significa que estés a salvo',
@@ -371,14 +425,27 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     mediaPrivacyNote:
       'Los archivos nunca se muestran públicamente. Solo socios comunitarios verificados pueden revisar los reportes. Los datos EXIF se eliminan.',
     optionalNote: 'Opcional, pero mejora la credibilidad.',
+    officerMovement: 'Movimiento del oficial',
+    moving: 'En movimiento',
+    stationary: 'Estacionado',
+    directionOfTravel: 'Dirección del viaje',
+    'direction.North': 'Norte',
+    'direction.NorthEast': 'Noreste',
+    'direction.East': 'Este',
+    'direction.SouthEast': 'Sureste',
+    'direction.South': 'Sur',
+    'direction.SouthWest': 'Suroeste',
+    'direction.West': 'Oeste',
+    'direction.NorthWest': 'Noroeste',
+    emergencyIndicators: 'Indicadores de emergencia',
+    lights: 'Luces',
+    sirens: 'Sirenas',
 
     // FormPreview
     liveReportPreview: 'Vista previa del reporte en vivo',
     otherAgency: 'Otra agencia:',
-    noneSelected: 'Ninguno seleccionado',
     location: 'Ubicación:',
     media: 'Archivo:',
-    notSet: 'No establecido',
     noFileUploaded: 'No se subió ningún archivo',
 
     locationPrompt: '¿Dónde ocurrió?',
@@ -467,6 +534,10 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     transparencyCollectList3: 'Ubicación aproximada (~1 km de margen)',
     transparencyCollectList4: 'Medios opcionales (foto/video)',
     transparencyCollectList5: 'Marca de tiempo',
+    transparencyCollectList6: 'Whether the officer was moving or stationary',
+    transparencyCollectList7: 'Direction the officer was traveling (if moving)',
+    transparencyCollectList8: 'Whether emergency lights or sirens were activated',
+
     transparencyAnonNote: '🛡️ Los reportes son anónimos. No almacenamos tu nombre, teléfono ni IP.',
     transparencyTypesTitle: 'Cómo Definimos un Reporte (En Código)',
     transparencyRecentReports: 'Explorar Reportes Recientes',
@@ -484,6 +555,8 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     githubCardTitle: 'Código fuente en GitHub',
     githubCardText: '¿Quieres verificar todo por ti mismo/a? Explora el código, abre un problema o contribuye.',
     githubCardLink: 'Ver en GitHub',
+    transparencyOfficerNote:
+      'Recolectamos información sobre el movimiento del oficial, dirección y uso de señales de emergencia para contextualizar el comportamiento de las agencias y mejorar la seguridad comunitaria. Estos datos son opcionales y no se almacena información identificable del usuario.',
   },
   // Add more languages as needed
 };

@@ -1,23 +1,14 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import AgencyStep from '@/components/wizard/AgencyStep';
 import LocationStep from '@/components/wizard/LocationStep';
 import MediaStep from '@/components/wizard/MediaStep';
-import { getQueuedReports } from '@/utils/reportQueue';
 import Link from 'next/link';
 import { useTranslations } from '@/lib/il8n/useTranslations';
 import { TranslationKey } from '@/lib/il8n/translations';
 import { useWizard } from '@/components/wizard/WizardContext';
 
-function FormDataPreview({}: // queuedReports,
-{
-  queuedReports: {
-    id: string;
-    agency_type: string[];
-    timestamp: string;
-  }[];
-}) {
+function FormDataPreview() {
   const { t } = useTranslations();
   const { formData } = useWizard();
 
@@ -43,6 +34,35 @@ function FormDataPreview({}: // queuedReports,
         {formData.location ? `${formData.location.lat.toFixed(5)}, ${formData.location.lng.toFixed(5)}` : t('notSet')}
       </div>
 
+      {formData.officer_moving !== undefined && (
+        <div>
+          <strong>{t('officerMovement')}:</strong>{' '}
+          {formData.officer_moving === true
+            ? t('moving')
+            : formData.officer_moving === false
+            ? t('stationary')
+            : t('notSet')}
+        </div>
+      )}
+
+      {formData.officer_moving && formData.officer_direction && (
+        <div>
+          <strong>{t('directionOfTravel')}:</strong> {t(`direction.${formData.officer_direction}` as TranslationKey)}
+        </div>
+      )}
+
+      {formData.lights_on !== undefined && (
+        <div>
+          <strong>{t('lights')}:</strong> {formData.lights_on ? t('yes') : t('no')}
+        </div>
+      )}
+
+      {formData.sirens_on !== undefined && (
+        <div>
+          <strong>{t('sirens')}:</strong> {formData.sirens_on ? t('yes') : t('no')}
+        </div>
+      )}
+
       <div>
         <strong>{t('media')}</strong> {formData.media_url ? formData.media_url.name : t('noFileUploaded')}
       </div>
@@ -53,13 +73,6 @@ function FormDataPreview({}: // queuedReports,
 export default function WizardPage() {
   const { t } = useTranslations();
   const { step } = useWizard();
-
-  const [offlineQueue, setOfflineQueue] = useState<{ id: string; agency_type: string[]; timestamp: string }[]>([]);
-
-  useEffect(() => {
-    const queue = getQueuedReports();
-    setOfflineQueue(queue);
-  }, []);
 
   const renderStep = () => {
     switch (step) {
@@ -89,7 +102,7 @@ export default function WizardPage() {
       {renderStep()}
 
       <div className="md:col-span-1">
-        <FormDataPreview queuedReports={offlineQueue} />
+        <FormDataPreview />
       </div>
     </div>
   );

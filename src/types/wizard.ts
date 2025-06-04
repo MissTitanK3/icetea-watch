@@ -6,6 +6,10 @@ export type ReportFormData = {
     lng: number;
   } | null;
   media_url: File | null;
+  officer_moving: boolean | null;
+  officer_direction: 'North' | 'NorthEast' | 'East' | 'SouthEast' | 'South' | 'SouthWest' | 'West' | 'NorthWest' | null;
+  lights_on: boolean | null;
+  sirens_on: boolean | null;
 };
 
 export type Report = {
@@ -17,7 +21,11 @@ export type Report = {
     lng: number;
   };
   media_url: string | null;
-  timestamp: string; // ISO
+  timestamp: string;
+  officer_moving: boolean | null;
+  officer_direction: 'North' | 'NorthEast' | 'East' | 'SouthEast' | 'South' | 'SouthWest' | 'West' | 'NorthWest' | null;
+  lights_on: boolean | null;
+  sirens_on: boolean | null;
 };
 
 export type QueuedReport = ReportFormData & {

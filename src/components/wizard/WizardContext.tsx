@@ -25,6 +25,10 @@ export function WizardProvider({ children }: { children: React.ReactNode }) {
     agency_other: '',
     location: null,
     media_url: null,
+    lights_on: null,
+    officer_direction: null,
+    officer_moving: null,
+    sirens_on: null,
   });
 
   const next = () => {
@@ -36,7 +40,8 @@ export function WizardProvider({ children }: { children: React.ReactNode }) {
   };
 
   const finish = async () => {
-    const { agency_type, agency_other, location, media_url } = formData;
+    const { agency_type, agency_other, location, media_url, lights_on, officer_direction, officer_moving, sirens_on } =
+      formData;
     const timestamp = new Date().toISOString();
     const id = crypto.randomUUID();
 
@@ -47,6 +52,10 @@ export function WizardProvider({ children }: { children: React.ReactNode }) {
       location,
       media_url,
       timestamp,
+      lights_on,
+      officer_direction,
+      officer_moving,
+      sirens_on,
     };
 
     const isOffline = !navigator.onLine;
@@ -67,6 +76,10 @@ export function WizardProvider({ children }: { children: React.ReactNode }) {
           location,
           media_url,
           timestamp,
+          lights_on,
+          officer_direction,
+          officer_moving,
+          sirens_on,
         },
       ]);
 

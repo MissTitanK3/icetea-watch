@@ -26,7 +26,11 @@ export default function TransparencyPage() {
           <li>{t('transparencyCollectList3')}</li>
           <li>{t('transparencyCollectList4')}</li>
           <li>{t('transparencyCollectList5')}</li>
+          <li>{t('transparencyCollectList6')}</li>
+          <li>{t('transparencyCollectList7')}</li>
+          <li>{t('transparencyCollectList8')}</li>
         </ul>
+
         <p className="mt-2">{t('transparencyAnonNote')}</p>
       </section>
 
@@ -44,8 +48,21 @@ export default function TransparencyPage() {
     lng: number;
   } | null;
   media_url: File | null;
+  officer_moving?: boolean;
+  officer_direction?: 
+    | 'North'
+    | 'NorthEast'
+    | 'East'
+    | 'SouthEast'
+    | 'South'
+    | 'SouthWest'
+    | 'West'
+    | 'NorthWest';
+  lights_on?: boolean;
+  sirens_on?: boolean;
 };`}
           </pre>
+
           <p>{t('transparencyFormDataExplain')}</p>
         </div>
 
@@ -62,9 +79,23 @@ export default function TransparencyPage() {
   };
   media_url: string | null;
   timestamp: string; // ISO
+  officer_moving?: boolean;
+  officer_direction?: 
+    | 'North'
+    | 'NorthEast'
+    | 'East'
+    | 'SouthEast'
+    | 'South'
+    | 'SouthWest'
+    | 'West'
+    | 'NorthWest';
+  lights_on?: boolean;
+  sirens_on?: boolean;
 };`}
           </pre>
+
           <p>{t('transparencyReportExplain')}</p>
+          <p className="mt-2">{t('transparencyOfficerNote')}</p>
         </div>
       </section>
 

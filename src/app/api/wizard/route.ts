@@ -30,9 +30,13 @@ export async function POST(req: NextRequest) {
     const location = JSON.parse(formData.get('location') as string);
     const media = formData.get('media') as File | null;
 
+    const officer_moving = formData.get('officer_moving') === 'true';
+    const officer_direction = formData.get('officer_direction') || null;
+    const lights_on = formData.get('lights_on') === 'true';
+    const sirens_on = formData.get('sirens_on') === 'true';
+
     let media_url: string | null = null;
 
-    // Optional: upload media file
     if (media && media.size > 0) {
       const fileExt = media.name.split('.').pop();
       const fileName = `${crypto.randomUUID()}.${fileExt}`;
@@ -52,13 +56,16 @@ export async function POST(req: NextRequest) {
       media_url = publicUrl.publicUrl;
     }
 
-    // Save report to DB
     const { error: insertError } = await supabase.from('wizard').insert([
       {
         agency_type,
         agency_other,
         report_location: location,
         media_url,
+        officer_moving,
+        officer_direction,
+        lights_on,
+        sirens_on,
         timestamp: new Date().toISOString(),
       },
     ]);
