@@ -8,7 +8,8 @@ import { formatAge } from '@/utils/general';
 import { Report } from '@/types/wizard';
 import { useTranslations } from '@/lib/il8n/useTranslations';
 import { TranslationKey } from '@/lib/il8n/translations';
-import { AGENCY_GRADIENTS } from '@/constants/agencies';
+import { AGENCY_GRADIENTS, agencyColors } from '@/constants/agencies';
+import { LocateFixed } from 'lucide-react';
 
 function MapRefForwarder({ onMapReady }: { onMapReady: (map: L.Map) => void }) {
   const map = useMap();
@@ -18,20 +19,21 @@ function MapRefForwarder({ onMapReady }: { onMapReady: (map: L.Map) => void }) {
   return null;
 }
 
-function SetMapCenter({ center }: { center: LatLngExpression }) {
+function SetMapCenter({ center }: { center: LatLngExpression | null }) {
   const map = useMap();
-  const previous = useRef<LatLngExpression | null>(null);
+  const previous = useRef<L.LatLng | null>(null);
 
   useEffect(() => {
-    const [newLat, newLng] = center as [number, number];
-    const currentCenter = map.getCenter();
+    if (!center) return;
 
-    // Check if coordinates are significantly different to avoid micro-jumps
-    const distanceMoved = map.distance(currentCenter, L.latLng(newLat, newLng));
+    const latLng = Array.isArray(center) ? L.latLng(center[0], center[1]) : L.latLng(center.lat, center.lng);
+
+    const currentCenter = map.getCenter();
+    const distanceMoved = map.distance(currentCenter, latLng);
 
     if (!previous.current || distanceMoved > 10) {
-      map.flyTo(center, map.getZoom(), { animate: true, duration: 1 });
-      previous.current = center;
+      map.flyTo(latLng, 17, { animate: true, duration: 1 });
+      previous.current = latLng;
     }
   }, [center, map]);
 
@@ -47,7 +49,6 @@ function VisibleReportsTracker({ reports, onChange }: { reports: Report[]; onCha
     },
   });
 
-  // Initial run
   useEffect(() => {
     const bounds = map.getBounds();
     const visible = reports.filter((r) => bounds.contains(r.location));
@@ -62,7 +63,6 @@ export function HeatLayer({ reports }: { reports: Report[] }) {
   const layersRef = useRef<L.Layer[]>([]);
 
   useEffect(() => {
-    // Clear previous layers
     layersRef.current.forEach((layer) => map.removeLayer(layer));
     layersRef.current = [];
 
@@ -72,7 +72,6 @@ export function HeatLayer({ reports }: { reports: Report[] }) {
       const agency = report.agency_type?.[0] || 'other';
       const key = AGENCY_GRADIENTS[agency] ? agency : 'other';
       const point: [number, number, number?] = [report.location.lat, report.location.lng, 1];
-
       if (!grouped[key]) grouped[key] = [];
       grouped[key].push(point);
     }
@@ -103,14 +102,15 @@ export function HeatLayer({ reports }: { reports: Report[] }) {
 export default function HeatMap({ reports, center }: { reports: Report[]; center: LatLngExpression }) {
   const { t } = useTranslations();
   const [visibleReports, setVisibleReports] = useState<Report[]>(reports);
-
+  const [zoomTarget, setZoomTarget] = useState<LatLngExpression | null>(null);
   const mapRef = useRef<L.Map | null>(null);
+  const mapContainerRef = useRef<HTMLDivElement>(null);
 
   return (
     <div className="rounded overflow-hidden z-0">
-      <div className="relative">
+      <div className="relative" ref={mapContainerRef}>
         <div className="h-[500px]">
-          <MapContainer center={center} zoom={12} scrollWheelZoom style={{ height: '100%', width: '100%', zIndex: 0 }}>
+          <MapContainer center={center} zoom={12} scrollWheelZoom style={{ height: '100%', width: '100%' }}>
             <MapRefForwarder
               onMapReady={(map) => {
                 mapRef.current = map;
@@ -121,12 +121,12 @@ export default function HeatMap({ reports, center }: { reports: Report[]; center
               url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
             />
             <HeatLayer reports={visibleReports} />
-
             <VisibleReportsTracker reports={reports} onChange={setVisibleReports} />
-            <SetMapCenter center={center} />
+            <SetMapCenter center={zoomTarget ?? center} />
           </MapContainer>
         </div>
       </div>
+
       <ul className="flex flex-wrap gap-4 text-sm pt-4 justify-center">
         {Object.entries(AGENCY_GRADIENTS).map(([agency, gradient]) => (
           <li key={agency} className="flex items-center gap-2">
@@ -143,20 +143,52 @@ export default function HeatMap({ reports, center }: { reports: Report[]; center
         {visibleReports.length === 0 ? (
           <p className="text-gray-500">{t('noReports')}</p>
         ) : (
-          <ul className="divide-y divide-gray-200">
+          <ul className="space-y-4">
             {visibleReports.map((r) => {
-              const translatedAgencies = (r.agency_type || []).map((agency) => t(`agency.${agency}` as TranslationKey));
+              const primaryAgency = r.agency_type?.[0] || r.agency_other || 'Other';
+              const translatedAgencies = (r.agency_type || []).map((a) => t(`agency.${a}` as TranslationKey));
+              const agencyColor = agencyColors[primaryAgency] || 'bg-gray-600';
 
               return (
-                <li key={r.id} className="py-2">
-                  <div>
-                    <strong>{t('agencies')}</strong>{' '}
-                    {[...translatedAgencies, r.agency_other].filter(Boolean).join(', ')}
+                <li key={r.id} className="rounded-lg border overflow-hidden shadow">
+                  <div className={`text-white px-4 py-2 text-base font-bold ${agencyColor}`}>
+                    <div className="flex justify-between items-center">
+                      <span>{[...translatedAgencies, r.agency_other].filter(Boolean).join(', ')}</span>
+                      <button
+                        onClick={() => {
+                          setZoomTarget([r.location.lat, r.location.lng]);
+                          mapContainerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }}
+                        className="text-white opacity-80 hover:opacity-100"
+                        title={'Zoom to Report'}>
+                        <LocateFixed size={18} />
+                      </button>
+                    </div>
+                    <div>
+                      <strong>{t('reported')}</strong> {formatAge(r.timestamp)} {t('timeAgo')}
+                    </div>
                   </div>
-                  <div>
-                    <strong>{t('reported')}</strong> {formatAge(r.timestamp)} {t('timeAgo')}
+                  <div className="p-4 space-y-2 text-sm">
+                    <div>
+                      <strong>{t('officerMovement')}:</strong>{' '}
+                      {r.officer_moving === true
+                        ? r.officer_direction
+                          ? t(`direction.${r.officer_direction}` as TranslationKey)
+                          : t('officerDirectionUnknown')
+                        : r.officer_moving === false
+                        ? t('stationary')
+                        : t('movementUnknown')}
+                    </div>
+                    <div className="flex w-full justify-evenly flex-wrap">
+                      <div>
+                        <strong>{t('lightsOn')}:</strong> {r.lights_on ? t('yes') : t('no')}
+                      </div>
+                      <div>
+                        <strong>{t('sirensOn')}:</strong> {r.sirens_on ? t('yes') : t('no')}
+                      </div>
+                    </div>
+                    <div className="text-gray-500 text-xs">{new Date(r.timestamp).toLocaleString()}</div>
                   </div>
-                  <div className="text-gray-500 text-xs">{new Date(r.timestamp).toLocaleString()}</div>
                 </li>
               );
             })}

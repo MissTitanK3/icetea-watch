@@ -140,6 +140,11 @@ export type TranslationKey =
   | 'emergencyIndicators'
   | 'lights'
   | 'sirens'
+  | 'officerDirection'
+  | 'lightsOn'
+  | 'lightsOff'
+  | 'sirensOn'
+  | 'sirensOff'
   | 'haveMedia'
   | 'optionalNote'
   | 'mediaFundingNotice'
@@ -155,6 +160,8 @@ export type TranslationKey =
   | 'direction.NorthWest'
   | 'yes'
   | 'no'
+  | 'movementUnknown'
+  | 'officerDirectionUnknown'
   | 'transparencyOfficerNote';
 
 export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
@@ -196,6 +203,13 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     'agency.Detention Facility': 'Detention Facility',
     'agency.Unmarked': 'Unmarked',
     'agency.Military': 'Military',
+    // English
+    officerDirection: 'Direction of travel',
+    lightsOn: 'Lights On',
+    lightsOff: 'Lights Off',
+    sirensOn: 'Sirens On',
+    sirensOff: 'Sirens Off',
+    movementUnknown: 'Movement not reported',
 
     // Heatlayer
     visibleReports: 'Visible Reports',
@@ -238,6 +252,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     emergencyIndicators: 'Emergency Indicators',
     lights: 'Lights',
     sirens: 'Sirens',
+    officerDirectionUnknown: 'Direction not reported',
 
     // FormPreview
     liveReportPreview: 'Live Report Preview',
@@ -400,6 +415,14 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     'agency.Detention Facility': 'Centro de Detención',
     'agency.Unmarked': 'Sin identificar',
     'agency.Military': 'Militar',
+    // Spanish
+    officerDirection: 'Dirección de viaje',
+    lightsOn: 'Luces encendidas',
+    lightsOff: 'Luces apagadas',
+    sirensOn: 'Sirenas encendidas',
+    sirensOff: 'Sirenas apagadas',
+    movementUnknown: 'Movimiento no reportado',
+    officerDirectionUnknown: 'Dirección no reportada',
 
     // Heatlayer
     visibleReports: 'Reportes visibles',
