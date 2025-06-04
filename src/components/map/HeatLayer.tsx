@@ -110,7 +110,7 @@ export default function HeatMap({ reports, center }: { reports: Report[]; center
     <div className="rounded overflow-hidden z-0">
       <div className="relative" ref={mapContainerRef}>
         <div className="h-[500px]">
-          <MapContainer center={center} zoom={12} scrollWheelZoom style={{ height: '100%', width: '100%' }}>
+          <MapContainer center={center} zoom={12} scrollWheelZoom style={{ height: '100%', width: '100%', zIndex: 0 }}>
             <MapRefForwarder
               onMapReady={(map) => {
                 mapRef.current = map;
