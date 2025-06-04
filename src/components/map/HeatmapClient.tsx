@@ -14,13 +14,27 @@ import { useFindMe } from '@/lib/useFindMe';
 
 const Map = dynamic(() => import('@/components/map/HeatLayer'), { ssr: false });
 
+function filterReports(reports: Report[], timeRange: [number, number], agencyFilter: string[]) {
+  const isAllActive = agencyFilter.length === 0;
+  const now = Date.now();
+
+  return reports.filter((r) => {
+    const ageHr = (now - new Date(r.timestamp).getTime()) / (1000 * 60 * 60);
+    const matchesTime = ageHr >= timeRange[0] && ageHr <= timeRange[1];
+    const matchesAgency = isAllActive || r.agency_type.some((a) => agencyFilter.includes(a));
+    const hasLocation = r.location && typeof r.location.lat === 'number' && typeof r.location.lng === 'number';
+    return matchesTime && matchesAgency && hasLocation;
+  });
+}
+
 export default function HeatmapClient() {
   const { t } = useTranslations();
   const [agencyFilter, setAgencyFilter] = useState<string[]>([]);
   const [reports, setReports] = useState<Report[]>([]);
   const [visibleReports, setVisibleReports] = useState<Report[]>([]);
   const [loading, setLoading] = useState(true);
-  const [center, setCenter] = useState<LatLngExpression>([47.6062, -122.3321]); // Default: Seattle
+  const [center, setCenter] = useState<LatLngExpression>([47.6062, -122.3321]);
+  const [timeRange, setTimeRange] = useState<[number, number]>([0, 168]);
   const { handleFindMe, isLocating, error } = useFindMe((coords) => {
     setCenter(coords);
   });
@@ -28,22 +42,22 @@ export default function HeatmapClient() {
   const isAllActive = agencyFilter.length === 0;
 
   useEffect(() => {
+    // Attempt to load stored agency filter from localStorage
     const storedAgency = localStorage.getItem('agencyFilter');
     if (storedAgency) setAgencyFilter(JSON.parse(storedAgency));
-  }, []);
 
-  useEffect(() => {
-    localStorage.setItem('agencyFilter', JSON.stringify(agencyFilter));
-  }, [agencyFilter]);
+    // Fire location lookup
+    handleFindMe();
 
-  useEffect(() => {
+    // Load reports from API
     async function fetchReports() {
       try {
         const res = await fetch('/api/wizard');
         const json = await res.json();
         if (json.wizard) {
           setReports(json.wizard);
-          setVisibleReports(json.wizard); // initialize with all
+          const initialFiltered = filterReports(json.wizard, timeRange, agencyFilter);
+          setVisibleReports(initialFiltered);
         } else {
           console.error(json.error);
         }
@@ -55,12 +69,17 @@ export default function HeatmapClient() {
     }
 
     fetchReports();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    handleFindMe();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    localStorage.setItem('agencyFilter', JSON.stringify(agencyFilter));
+  }, [agencyFilter]);
+
+  useEffect(() => {
+    const filtered = filterReports(reports, timeRange, agencyFilter);
+    setVisibleReports(filtered);
+  }, [agencyFilter, timeRange, reports]);
 
   return (
     <div className="space-y-4 w-full text-center">
@@ -80,16 +99,7 @@ export default function HeatmapClient() {
         <TimeRangeSlider
           reports={reports}
           onChange={(range) => {
-            const now = Date.now();
-            const filtered = reports.filter((r) => {
-              const ageHr = (now - new Date(r.timestamp).getTime()) / (1000 * 60 * 60);
-              const matchesTime = ageHr >= range[0] && ageHr <= range[1];
-              const matchesAgency = isAllActive || r.agency_type.some((a) => agencyFilter.includes(a));
-              const hasLocation =
-                r.location && typeof r.location.lat === 'number' && typeof r.location.lng === 'number';
-              return matchesTime && matchesAgency && hasLocation;
-            });
-            setVisibleReports(filtered);
+            setTimeRange(range);
           }}
         />
 
@@ -120,6 +130,7 @@ export default function HeatmapClient() {
           })}
         </div>
       </div>
+
       <button
         onClick={handleFindMe}
         disabled={isLocating}

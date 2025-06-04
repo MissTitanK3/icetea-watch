@@ -28,23 +28,19 @@ export default function LocationStep() {
   });
 
   useEffect(() => {
-    if (!mapRef.current) return;
+    if (!position) {
+      handleFindMe();
+    }
 
     const map = mapRef.current;
-    const handleZoom = () => {
-      setZoom(map.getZoom());
-    };
+    if (!map) return;
 
+    const handleZoom = () => setZoom(map.getZoom());
     map.on('zoomend', handleZoom);
+
     return () => {
       map.off('zoomend', handleZoom);
     };
-  }, []);
-
-  useEffect(() => {
-    if (!position) {
-      handleFindMe(); // ⬅️ initial attempt to locate
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -52,6 +48,11 @@ export default function LocationStep() {
     const valid = !!position && (distanceFromUser === null || distanceFromUser <= 2);
     setCanContinue(valid);
   }, [position, distanceFromUser, setCanContinue]);
+
+  const handleMapSelect = (coords: LatLng) => {
+    setPosition(coords);
+    setFormData((prev) => ({ ...prev, location: coords }));
+  };
 
   return (
     <div className="space-y-4 z-0">
@@ -73,17 +74,7 @@ export default function LocationStep() {
       {error && <div className="text-sm text-red-600">{error}</div>}
 
       <div className="h-[500px] rounded overflow-hidden z-0">
-        {position && (
-          <MapWrapper
-            position={position}
-            zoom={zoom}
-            onZoomChange={setZoom}
-            onSelect={(coords) => {
-              setPosition(coords);
-              setFormData((prev) => ({ ...prev, location: coords }));
-            }}
-          />
-        )}
+        {position && <MapWrapper position={position} zoom={zoom} onZoomChange={setZoom} onSelect={handleMapSelect} />}
       </div>
 
       {formData.location && (

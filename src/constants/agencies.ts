@@ -1,4 +1,4 @@
-export const AGENCY_OPTIONS = [
+export const AGENCY_OPTIONS: string[] = [
   'ICE',
   'Police',
   'Sheriff',
@@ -8,3 +8,51 @@ export const AGENCY_OPTIONS = [
   'Unmarked',
   'Military',
 ];
+
+export const AGENCY_GRADIENTS: Record<string, Record<number, string>> = {
+  ICE: {
+    0.2: 'rgba(0, 255, 255, 0.2)', // cyan glow
+    0.4: '#00ffff',
+    0.8: '#ffffff',
+  },
+  Police: {
+    0.2: 'rgba(0, 255, 0, 0.2)', // green glow
+    0.4: '#00ff00',
+    0.8: '#ffffff',
+  },
+  Sheriff: {
+    0.2: 'rgba(255, 255, 0, 0.2)', // yellow glow
+    0.4: '#ffff00',
+    0.8: '#ffffff',
+  },
+  'Border Patrol': {
+    0.2: 'rgba(255, 102, 0, 0.2)', // orange glow
+    0.4: '#ff6600',
+    0.8: '#ffffff',
+  },
+  'Immigration Court': {
+    0.2: 'rgba(255, 0, 255, 0.2)', // magenta glow
+    0.4: '#ff00ff',
+    0.8: '#ffffff',
+  },
+  'Detention Facility': {
+    0.2: 'rgba(255, 0, 0, 0.2)', // red glow
+    0.4: '#ff0000',
+    0.8: '#ffffff',
+  },
+  Unmarked: {
+    0.2: 'rgba(180, 180, 180, 0.2)',
+    0.4: '#dddddd',
+    0.8: '#ffffff',
+  },
+  Military: {
+    0.2: 'rgba(255, 165, 0, 0.2)', // orange glow
+    0.4: '#ffa500',
+    0.8: '#ffffff',
+  },
+  other: {
+    0.2: 'rgba(128, 128, 128, 0.2)',
+    0.4: '#888888',
+    0.8: '#ffffff',
+  },
+};

@@ -8,6 +8,7 @@ import { formatAge } from '@/utils/general';
 import { Report } from '@/types/wizard';
 import { useTranslations } from '@/lib/il8n/useTranslations';
 import { TranslationKey } from '@/lib/il8n/translations';
+import { AGENCY_GRADIENTS } from '@/constants/agencies';
 
 function MapRefForwarder({ onMapReady }: { onMapReady: (map: L.Map) => void }) {
   const map = useMap();
@@ -56,31 +57,45 @@ function VisibleReportsTracker({ reports, onChange }: { reports: Report[]; onCha
   return null;
 }
 
-export function HeatLayer({ points }: { points: [number, number, number?][] }) {
+export function HeatLayer({ reports }: { reports: Report[] }) {
   const map = useMap();
+  const layersRef = useRef<L.Layer[]>([]);
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const heat = (L as any)
-      .heatLayer(points, {
-        radius: 35, // increase for wider glow
-        blur: 20, // higher = softer edges
-        maxZoom: 17,
-        gradient: {
-          0.0: 'rgba(0, 255, 255, 0)', // transparent cyan
-          0.2: '#00ffff', // cyan
-          0.4: '#00ff00', // lime green
-          0.6: '#ffff00', // yellow
-          0.8: '#ff6600', // orange
-          1.0: '#ffffff', // white
-        },
-      })
-      .addTo(map);
+    // Clear previous layers
+    layersRef.current.forEach((layer) => map.removeLayer(layer));
+    layersRef.current = [];
+
+    const grouped: Record<string, [number, number, number?][]> = {};
+
+    for (const report of reports) {
+      const agency = report.agency_type?.[0] || 'other';
+      const key = AGENCY_GRADIENTS[agency] ? agency : 'other';
+      const point: [number, number, number?] = [report.location.lat, report.location.lng, 1];
+
+      if (!grouped[key]) grouped[key] = [];
+      grouped[key].push(point);
+    }
+
+    for (const [agency, points] of Object.entries(grouped)) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const heat = (L as any)
+        .heatLayer(points, {
+          radius: 35,
+          blur: 20,
+          maxZoom: 17,
+          gradient: AGENCY_GRADIENTS[agency],
+        })
+        .addTo(map);
+
+      layersRef.current.push(heat);
+    }
 
     return () => {
-      heat.remove();
+      layersRef.current.forEach((layer) => map.removeLayer(layer));
+      layersRef.current = [];
     };
-  }, [map, points]);
+  }, [map, reports]);
 
   return null;
 }
@@ -90,9 +105,6 @@ export default function HeatMap({ reports, center }: { reports: Report[]; center
   const [visibleReports, setVisibleReports] = useState<Report[]>(reports);
 
   const mapRef = useRef<L.Map | null>(null);
-
-  // Convert reports to LatLng tuples for the heat layer
-  const heatPoints = reports.map<[number, number, number?]>((r) => [r.location.lat, r.location.lng]);
 
   return (
     <div className="rounded overflow-hidden z-0">
@@ -108,12 +120,21 @@ export default function HeatMap({ reports, center }: { reports: Report[]; center
               attribution="© OpenStreetMap contributors"
               url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
             />
-            <HeatLayer points={heatPoints} />
+            <HeatLayer reports={visibleReports} />
+
             <VisibleReportsTracker reports={reports} onChange={setVisibleReports} />
             <SetMapCenter center={center} />
           </MapContainer>
         </div>
       </div>
+      <ul className="flex flex-wrap gap-4 text-sm pt-4 justify-center">
+        {Object.entries(AGENCY_GRADIENTS).map(([agency, gradient]) => (
+          <li key={agency} className="flex items-center gap-2">
+            <span className="w-4 h-4 rounded-full border" style={{ backgroundColor: gradient[0.4] }} />
+            <span>{agency}</span>
+          </li>
+        ))}
+      </ul>
 
       <div className="text-sm space-y-2 mt-4">
         <h3 className="font-semibold">

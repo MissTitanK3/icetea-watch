@@ -44,8 +44,6 @@ export default function HeatmapMap({ reports }: { reports: Report[] }) {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        {/* <HeatLayer points={heatPoints} /> ✅ Heatmap layer */}
-
         {reports.map((r) => (
           <Marker key={r.id} position={r.report_location}>
             <Popup>
