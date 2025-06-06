@@ -29,16 +29,6 @@ const TILE_LAYERS = {
     url: 'https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.jpg',
     attribution: 'Map tiles by Stamen Design, hosted by Stadia Maps',
   },
-  stamenToner: {
-    name: 'Stamen Toner',
-    url: 'https://tiles.stadiamaps.com/tiles/stamen_toner/{z}/{x}/{y}.png',
-    attribution: 'Map tiles by Stamen Design, hosted by Stadia Maps',
-  },
-  stamenTerrain: {
-    name: 'Stamen Terrain',
-    url: 'https://tiles.stadiamaps.com/tiles/stamen_terrain/{z}/{x}/{y}.jpg',
-    attribution: 'Map tiles by Stamen Design, hosted by Stadia Maps',
-  },
   esriStreet: {
     name: 'Esri World Street Map',
     url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
