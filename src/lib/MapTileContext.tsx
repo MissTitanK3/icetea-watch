@@ -24,11 +24,6 @@ const TILE_LAYERS = {
     url: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
     attribution: '© CartoDB',
   },
-  stamenWatercolor: {
-    name: 'Stamen Watercolor',
-    url: 'https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.jpg',
-    attribution: 'Map tiles by Stamen Design, hosted by Stadia Maps',
-  },
   esriStreet: {
     name: 'Esri World Street Map',
     url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
