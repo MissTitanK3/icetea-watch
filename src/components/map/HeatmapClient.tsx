@@ -11,6 +11,7 @@ import { TranslationKey } from '@/lib/il8n/translations';
 import TimeRangeSlider from '@/components/TimeRangeSlider';
 import { LatLngExpression } from 'leaflet';
 import { useFindMe } from '@/lib/useFindMe';
+import TileLayerDropdown from './TileLayerDropdown';
 
 const Map = dynamic(() => import('@/components/map/HeatLayer'), { ssr: false });
 
@@ -137,7 +138,7 @@ export default function HeatmapClient() {
         className="bg-green-800 px-10 py-2 font-bold rounded-md shadow hover:bg-accent-dark transition disabled:opacity-50">
         {isLocating ? 'Locating...' : `📍 ${t('findMe') ?? 'Find Me'}`}
       </button>
-
+      <TileLayerDropdown />
       {loading ? <LoadingSpinner text="Loading reports…" /> : <Map reports={visibleReports} center={center} />}
 
       <p className="text-xs text-gray-500 max-w-md pt-2">{t('warning')}</p>

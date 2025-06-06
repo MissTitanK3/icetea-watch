@@ -7,6 +7,7 @@ import ReportDistanceGuard from './ReportDistanceGuard';
 import { useTranslations } from '@/lib/il8n/useTranslations';
 import { useWizard } from './WizardContext';
 import { useFindMe } from '@/lib/useFindMe';
+import TileLayerDropdown from '../map/TileLayerDropdown';
 
 const MapWrapper = dynamic(() => import('@/components/map/MapWrapper'), { ssr: false });
 
@@ -61,13 +62,14 @@ export default function LocationStep() {
           <h3 className="text-lg font-semibold">{t('locationPrompt')}</h3>
           <p className="text-sm text-gray-600">{t('tapMapOrGPS')}</p>
         </div>
-        <div className="pt-2">
+        <div className="p-2 flex flex-wrap justify-evenly">
           <button
             onClick={handleFindMe}
             disabled={isLocating}
-            className="bg-green-800 px-6 py-2 font-bold rounded-md shadow hover:bg-accent-dark transition disabled:opacity-50">
+            className="bg-green-800 mb-3 px-6 py-2 font-bold rounded-md shadow hover:bg-accent-dark transition disabled:opacity-50">
             {isLocating ? 'Locating...' : `📍 ${t('findMe') ?? 'Find Me'}`}
           </button>
+          <TileLayerDropdown />
         </div>
       </div>
 

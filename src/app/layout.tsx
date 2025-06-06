@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 import { Analytics } from '@vercel/analytics/next';
 import BottomNav from '@/components/BottomNav';
 import { WizardProvider } from '@/components/wizard/WizardContext';
+import { MapTileProvider } from '@/lib/MapTileContext';
 
 export const metadata: Metadata = {
   title: 'ICE Tea Watch',
@@ -18,11 +19,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Analytics />
         <WizardProvider>
           <LanguageProvider>
-            {/* MAIN PAGE CONTENT */}
-            <div className="max-w-4xl mx-auto p-4 min-h-screen pb-24">{children}</div>
+            <MapTileProvider>
+              {/* MAIN PAGE CONTENT */}
+              <div className="max-w-4xl mx-auto p-4 min-h-screen pb-24">{children}</div>
 
-            {/* FIXED BOTTOM NAVBAR - keep outside main */}
-            <BottomNav />
+              {/* FIXED BOTTOM NAVBAR - keep outside main */}
+              <BottomNav />
+            </MapTileProvider>
           </LanguageProvider>
         </WizardProvider>
       </body>

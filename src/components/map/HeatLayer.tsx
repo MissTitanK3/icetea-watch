@@ -10,6 +10,7 @@ import { useTranslations } from '@/lib/il8n/useTranslations';
 import { TranslationKey } from '@/lib/il8n/translations';
 import { AGENCY_GRADIENTS, agencyColors } from '@/constants/agencies';
 import { LocateFixed } from 'lucide-react';
+import { useMapTile } from '@/lib/MapTileContext';
 
 function MapRefForwarder({ onMapReady }: { onMapReady: (map: L.Map) => void }) {
   const map = useMap();
@@ -105,6 +106,7 @@ export default function HeatMap({ reports, center }: { reports: Report[]; center
   const [zoomTarget, setZoomTarget] = useState<LatLngExpression | null>(null);
   const mapRef = useRef<L.Map | null>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
+  const { tile } = useMapTile();
 
   return (
     <div className="rounded overflow-hidden z-0">
@@ -116,10 +118,7 @@ export default function HeatMap({ reports, center }: { reports: Report[]; center
                 mapRef.current = map;
               }}
             />
-            <TileLayer
-              attribution="© OpenStreetMap contributors"
-              url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-            />
+            <TileLayer attribution={tile.attribution} url={tile.url} />
             <HeatLayer reports={visibleReports} />
             <VisibleReportsTracker reports={reports} onChange={setVisibleReports} />
             <SetMapCenter center={zoomTarget ?? center} />

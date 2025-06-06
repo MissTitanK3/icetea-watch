@@ -6,6 +6,7 @@ import { LatLngLiteral, Map as LeafletMap } from 'leaflet';
 
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { useMapTile } from '@/lib/MapTileContext';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -45,7 +46,7 @@ function FlyToCenter({ center }: { center: LatLngLiteral }) {
 
 export default function MapWrapper({ position, zoom, onZoomChange, onSelect }: Props) {
   const mapRef = useRef<LeafletMap | null>(null);
-
+  const { tile } = useMapTile();
   useEffect(() => {
     if (!mapRef.current) return;
     const map = mapRef.current;
@@ -69,10 +70,7 @@ export default function MapWrapper({ position, zoom, onZoomChange, onSelect }: P
       ref={(ref) => {
         if (ref) mapRef.current = ref;
       }}>
-      <TileLayer
-        attribution="© OpenStreetMap contributors"
-        url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-      />
+      <TileLayer attribution={tile.attribution} url={tile.url} />
       <FlyToCenter center={position} />
       <ClickHandler onSelect={onSelect} />
       <Marker position={position} />
