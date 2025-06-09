@@ -9,7 +9,7 @@ type Props = {
   onDistanceChange?: (distance: number | null) => void;
 };
 
-export default function ReportDistanceGuard({ targetLocation, maxDistanceKm = 2, onDistanceChange }: Props) {
+export default function ReportDistanceGuard({ targetLocation, maxDistanceKm = 15, onDistanceChange }: Props) {
   const [userLocation, setUserLocation] = useState<LatLng | null>(null);
   const [distance, setDistance] = useState<number | null>(null);
 
