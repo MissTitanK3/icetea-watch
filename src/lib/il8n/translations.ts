@@ -1,5 +1,5 @@
 // Translation strings for supported languages
-export type StringTranslationKey =
+export type TranslationKey =
   | 'homeTitle'
   | 'reportTitle'
   | 'privacyTagline'
@@ -182,20 +182,7 @@ export type StringTranslationKey =
   | 'joinDispatchRole.tech'
   | 'joinDispatchLanguageNote';
 
-export const roleKeys: StringTranslationKey[] = [
-  'joinDispatchRole.dispatcher',
-  'joinDispatchRole.deescalation',
-  'joinDispatchRole.court',
-  'joinDispatchRole.legal',
-  'joinDispatchRole.mentalHealth',
-  'joinDispatchRole.medic',
-  'joinDispatchRole.checkpoint',
-  'joinDispatchRole.child',
-  'joinDispatchRole.translator',
-  'joinDispatchRole.tech',
-];
-
-export const TRANSLATIONS: Record<string, Record<StringTranslationKey, string>> = {
+export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
   en: {
     // Homepage
     homeTitle: '🧊 ICE Tea Watch',
