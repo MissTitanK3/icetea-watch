@@ -28,6 +28,9 @@ export default function Home() {
         <Link href="/transparency" className="px-6 py-2 border rounded-xl">
           {t('transparencyTitle')}
         </Link>
+        <Link href="/join-dispatch" className="px-6 py-2 border rounded-xl">
+          {t('joinDispatch')}
+        </Link>
         <div className="flex flex-col text-center py-20 justify-center m-auto">
           <h4>{t('troubleWithApp')}</h4>
           <div className="flex flex-col text-center py-5 justify-center m-auto">

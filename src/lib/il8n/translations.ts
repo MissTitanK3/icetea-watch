@@ -1,5 +1,5 @@
 // Translation strings for supported languages
-export type TranslationKey =
+export type StringTranslationKey =
   | 'homeTitle'
   | 'reportTitle'
   | 'privacyTagline'
@@ -162,9 +162,40 @@ export type TranslationKey =
   | 'no'
   | 'movementUnknown'
   | 'officerDirectionUnknown'
-  | 'transparencyOfficerNote';
+  | 'transparencyOfficerNote'
+  | 'joinDispatch'
+  | 'joinDispatchTitle'
+  | 'joinDispatchIntro'
+  | 'joinDispatchNote'
+  | 'joinDispatchContactButton'
+  | 'joinDispatchRolesTitle'
+  | 'joinDispatchFooter'
+  | 'joinDispatchRole.dispatcher'
+  | 'joinDispatchRole.deescalation'
+  | 'joinDispatchRole.court'
+  | 'joinDispatchRole.legal'
+  | 'joinDispatchRole.mentalHealth'
+  | 'joinDispatchRole.medic'
+  | 'joinDispatchRole.checkpoint'
+  | 'joinDispatchRole.child'
+  | 'joinDispatchRole.translator'
+  | 'joinDispatchRole.tech'
+  | 'joinDispatchLanguageNote';
 
-export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
+export const roleKeys: StringTranslationKey[] = [
+  'joinDispatchRole.dispatcher',
+  'joinDispatchRole.deescalation',
+  'joinDispatchRole.court',
+  'joinDispatchRole.legal',
+  'joinDispatchRole.mentalHealth',
+  'joinDispatchRole.medic',
+  'joinDispatchRole.checkpoint',
+  'joinDispatchRole.child',
+  'joinDispatchRole.translator',
+  'joinDispatchRole.tech',
+];
+
+export const TRANSLATIONS: Record<string, Record<StringTranslationKey, string>> = {
   en: {
     // Homepage
     homeTitle: '🧊 ICE Tea Watch',
@@ -371,6 +402,30 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     githubCardLink: 'View on GitHub',
     transparencyOfficerNote:
       'We collect officer movement, direction, and emergency signal use to help contextualize agency behavior and build better patterns for community safety. These are optional, and no identifying info about users is stored.',
+    // Join Dispatch
+    joinDispatch: 'Join Dispatch',
+    joinDispatchTitle: 'Join the ICE Tea Dispatch Network',
+    joinDispatchIntro:
+      'We’re looking for committed community members to serve as dispatchers or respond in the field when law enforcement or ICE activity is reported.',
+    joinDispatchNote: 'This work saves lives. It requires discretion, coordination, and courage.',
+    joinDispatchContactButton: 'Start at dispatch.peoplesrebellion.org',
+
+    joinDispatchRolesTitle: 'Roles We’re Seeking',
+    'joinDispatchRole.dispatcher': 'Dispatcher (remote, verified)',
+    'joinDispatchRole.deescalation': 'De-escalation Lead',
+    'joinDispatchRole.court': 'Court Support',
+    'joinDispatchRole.legal': 'Legal Observer',
+    'joinDispatchRole.mentalHealth': 'Mental Health Support',
+    'joinDispatchRole.medic': 'Medic / First Aid',
+    'joinDispatchRole.checkpoint': 'Checkpoint Monitor',
+    'joinDispatchRole.child': 'Child Specialist',
+    'joinDispatchRole.translator': 'Language Translator',
+    'joinDispatchRole.tech': 'Tech / Signal Jammer',
+
+    joinDispatchFooter:
+      'All roles are volunteer-based. Some involve remote coordination, while others are in-person response. We provide training, peer support, and escalation protocols to keep each other safe.',
+    joinDispatchLanguageNote:
+      '⚠️ Dispatch coordination is currently conducted in English. Spanish-speaking volunteers are welcome, but basic English proficiency is required.',
   },
   es: {
     // Homepage
@@ -580,6 +635,31 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     githubCardLink: 'Ver en GitHub',
     transparencyOfficerNote:
       'Recolectamos información sobre el movimiento del oficial, dirección y uso de señales de emergencia para contextualizar el comportamiento de las agencias y mejorar la seguridad comunitaria. Estos datos son opcionales y no se almacena información identificable del usuario.',
+    // Join Dispatch
+    joinDispatch: 'Únete al Despacho',
+
+    joinDispatchTitle: 'Únete a la Red de Despacho ICE Tea',
+    joinDispatchIntro:
+      'Buscamos personas comprometidas con la comunidad para actuar como despachadoras o responder en el terreno cuando se reporta actividad policial o de ICE.',
+    joinDispatchNote: 'Este trabajo salva vidas. Requiere discreción, coordinación y valentía.',
+    joinDispatchContactButton: 'Comienza en dispatch.peoplesrebellion.org',
+
+    joinDispatchRolesTitle: 'Roles que estamos buscando',
+    'joinDispatchRole.dispatcher': 'Despachador/a (remoto, verificado)',
+    'joinDispatchRole.deescalation': 'Líder de Desescalamiento',
+    'joinDispatchRole.court': 'Apoyo en la Corte',
+    'joinDispatchRole.legal': 'Observador/a Legal',
+    'joinDispatchRole.mentalHealth': 'Apoyo en Salud Mental',
+    'joinDispatchRole.medic': 'Médico/a / Primeros Auxilios',
+    'joinDispatchRole.checkpoint': 'Monitor de Retenes',
+    'joinDispatchRole.child': 'Especialista en Infancia',
+    'joinDispatchRole.translator': 'Traductor/a de Idiomas',
+    'joinDispatchRole.tech': 'Tecnología / Inhibidor de Señales',
+
+    joinDispatchFooter:
+      'Todos los roles son voluntarios. Algunos implican coordinación remota, mientras que otros requieren respuesta presencial. Ofrecemos entrenamiento, apoyo entre pares y protocolos de escalamiento para cuidarnos entre todos.',
+    joinDispatchLanguageNote:
+      '⚠️ La coordinación del despacho actualmente se realiza en inglés. Personas voluntarias que hablen español son bienvenidas, pero se requiere comprensión básica de inglés.',
   },
   // Add more languages as needed
 };
