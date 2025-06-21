@@ -182,6 +182,19 @@ export type TranslationKey =
   | 'joinDispatchRole.tech'
   | 'joinDispatchLanguageNote';
 
+export const roleKeys: TranslationKey[] = [
+  'joinDispatchRole.dispatcher',
+  'joinDispatchRole.deescalation',
+  'joinDispatchRole.court',
+  'joinDispatchRole.legal',
+  'joinDispatchRole.mentalHealth',
+  'joinDispatchRole.medic',
+  'joinDispatchRole.checkpoint',
+  'joinDispatchRole.child',
+  'joinDispatchRole.translator',
+  'joinDispatchRole.tech',
+];
+
 export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
   en: {
     // Homepage
