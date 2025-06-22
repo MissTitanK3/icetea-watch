@@ -26,6 +26,7 @@ export type Report = {
   officer_direction: 'North' | 'NorthEast' | 'East' | 'SouthEast' | 'South' | 'SouthWest' | 'West' | 'NorthWest' | null;
   lights_on: boolean | null;
   sirens_on: boolean | null;
+  submitted_by: string | null;
 };
 
 export type QueuedReport = ReportFormData & {

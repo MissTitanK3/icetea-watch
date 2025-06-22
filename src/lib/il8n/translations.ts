@@ -180,7 +180,8 @@ export type TranslationKey =
   | 'joinDispatchRole.child'
   | 'joinDispatchRole.translator'
   | 'joinDispatchRole.tech'
-  | 'joinDispatchLanguageNote';
+  | 'joinDispatchLanguageNote'
+  | 'verifiedByDispatch';
 
 export const roleKeys: TranslationKey[] = [
   'joinDispatchRole.dispatcher',
@@ -241,6 +242,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     sirensOn: 'Sirens On',
     sirensOff: 'Sirens Off',
     movementUnknown: 'Movement not reported',
+    verifiedByDispatch: 'Verified By Dispatch',
 
     // Heatlayer
     visibleReports: 'Visible Reports',
@@ -478,6 +480,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     sirensOff: 'Sirenas apagadas',
     movementUnknown: 'Movimiento no reportado',
     officerDirectionUnknown: 'Dirección no reportada',
+    verifiedByDispatch: 'Verificado por Despacho',
 
     // Heatlayer
     visibleReports: 'Reportes visibles',

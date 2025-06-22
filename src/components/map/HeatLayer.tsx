@@ -147,12 +147,19 @@ export default function HeatMap({ reports, center }: { reports: Report[]; center
               const primaryAgency = r.agency_type?.[0] || r.agency_other || 'Other';
               const translatedAgencies = (r.agency_type || []).map((a) => t(`agency.${a}` as TranslationKey));
               const agencyColor = agencyColors[primaryAgency] || 'bg-gray-600';
-
               return (
                 <li key={r.id} className="rounded-lg border overflow-hidden shadow">
-                  <div className={`text-white px-4 py-2 text-base font-bold ${agencyColor}`}>
+                  <div
+                    className={`px-4 py-2 text-base font-bold border-b-5 rounded ${
+                      r.submitted_by ? 'border-green-500' : 'border-white'
+                    } text-white ${agencyColor}`}>
                     <div className="flex justify-between items-center">
                       <span>{[...translatedAgencies, r.agency_other].filter(Boolean).join(', ')}</span>
+                      {r.submitted_by && (
+                        <span className="ml-2 text-sm font-semibold bg-green-700 text-white px-2 py-0.5 rounded">
+                          {t('verifiedByDispatch')}
+                        </span>
+                      )}
                       <button
                         onClick={() => {
                           setZoomTarget([r.location.lat, r.location.lng]);
@@ -167,6 +174,7 @@ export default function HeatMap({ reports, center }: { reports: Report[]; center
                       <strong>{t('reported')}</strong> {formatAge(r.timestamp)} {t('timeAgo')}
                     </div>
                   </div>
+
                   <div className="p-4 space-y-2 text-sm">
                     <div>
                       <strong>{t('officerMovement')}:</strong>{' '}
