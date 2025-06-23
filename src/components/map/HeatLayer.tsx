@@ -153,25 +153,32 @@ export default function HeatMap({ reports, center }: { reports: Report[]; center
                     className={`px-4 py-2 text-base font-bold border-b-5 rounded ${
                       r.submitted_by ? 'border-green-500' : 'border-white'
                     } text-white ${agencyColor}`}>
-                    <div className="flex justify-between items-center">
-                      <span>{[...translatedAgencies, r.agency_other].filter(Boolean).join(', ')}</span>
-                      {r.submitted_by && (
-                        <span className="ml-2 text-sm font-semibold bg-green-700 text-white px-2 py-0.5 rounded">
-                          {t('verifiedByDispatch')}
-                        </span>
-                      )}
+                    <div className="mb-1 text-2xl">
+                      {[...translatedAgencies, r.agency_other].filter(Boolean).join(', ')}
+                    </div>
+                    <div className="mb-3">
+                      <span>
+                        <strong>{t('reported')}</strong> {formatAge(r.timestamp)} {t('timeAgo')}
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 items-center font-normal text-white/90 gap-2">
+                      <span
+                        className={`justify-self-center text-xs font-medium px-2 py-0.5 rounded ${
+                          r.submitted_by ? 'bg-green-700 text-white' : 'bg-white text-black'
+                        }`}>
+                        {r.submitted_by ? t('verifiedByDispatch') : t('anonymous')}
+                      </span>
+
                       <button
                         onClick={() => {
                           setZoomTarget([r.location.lat, r.location.lng]);
                           mapContainerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                         }}
-                        className="text-white opacity-80 hover:opacity-100"
-                        title={'Zoom to Report'}>
-                        <LocateFixed size={18} />
+                        className="justify-self-end text-xl text-white opacity-80 hover:opacity-100"
+                        title="Zoom to Report">
+                        <LocateFixed size={24} />
                       </button>
-                    </div>
-                    <div>
-                      <strong>{t('reported')}</strong> {formatAge(r.timestamp)} {t('timeAgo')}
                     </div>
                   </div>
 

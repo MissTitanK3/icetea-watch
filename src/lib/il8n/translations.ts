@@ -181,7 +181,8 @@ export type TranslationKey =
   | 'joinDispatchRole.translator'
   | 'joinDispatchRole.tech'
   | 'joinDispatchLanguageNote'
-  | 'verifiedByDispatch';
+  | 'verifiedByDispatch'
+  | 'anonymous';
 
 export const roleKeys: TranslationKey[] = [
   'joinDispatchRole.dispatcher',
@@ -252,6 +253,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     timeAgo: ' ago',
     findMe: 'Where am I?',
     locationDenied: 'Location access was denied or is unavailable.',
+    anonymous: 'Anonymous',
 
     // Wizard
     reportWizard: 'Report Wizard',
@@ -490,6 +492,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     timeAgo: ' hace',
     findMe: '¿Dónde estoy?',
     locationDenied: 'El acceso a la ubicación fue denegado o no está disponible.',
+    anonymous: 'Anónimo',
 
     // Wizard
     reportWizard: 'Asistente de Reporte',
