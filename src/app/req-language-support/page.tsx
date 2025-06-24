@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { TRANSLATIONS } from '@/lib/il8n/translations';
-import Link from 'next/link';
 import { useTranslations } from '@/lib/il8n/useTranslations';
+import LinkButton from '@/components/ui/FrostedLink';
+import { FrostedButton } from '@/components/ui/FrostedButton';
 
 function CopyTemplateButton({ text }: { text: string }) {
   const [copied, setCopied] = useState(false);
@@ -14,11 +15,7 @@ function CopyTemplateButton({ text }: { text: string }) {
     setTimeout(() => setCopied(false), 1500);
   };
 
-  return (
-    <button onClick={copy} className="text-sm px-3 py-1 rounded bg-blue-600 text-white hover:bg-blue-700 transition">
-      {copied ? 'Copied!' : 'Copy Template'}
-    </button>
-  );
+  return <FrostedButton onClick={copy}>{copied ? 'Copied!' : 'Copy Template'}</FrostedButton>;
 }
 
 function ColorizedJson({ json }: { json: string }) {
@@ -74,11 +71,7 @@ function CollapsibleJson({ label, json }: { label: string; json: object }) {
 
   return (
     <div className="mb-4">
-      <button
-        onClick={() => setOpen((o) => !o)}
-        className="font-semibold text-blue-500 underline text-left w-full mb-1 text-2xl">
-        {open ? `▼ ${label}` : `▶ ${label}`}
-      </button>
+      <FrostedButton onClick={() => setOpen((o) => !o)}>{open ? `▼ ${label}` : `▶ ${label}`}</FrostedButton>
       {open && (
         <div className="bg-gray-900 text-sm text-white p-4 rounded border overflow-x-auto max-h-96">
           {renderLines(json)}
@@ -104,11 +97,7 @@ export default function RequestLanguageSupportPage() {
   return (
     <main className="p-6 max-w-4xl mx-auto space-y-6">
       <div className="flex justify-evenly">
-        <Link
-          href="https://wikipedia.org"
-          className="flex-1 max-w-[40%] px-4 py-3 rounded border text-base font-medium text-center uppercase text-red-500">
-          {t('quickExit')}
-        </Link>
+        <LinkButton size="2xl" variant="red" label={t('quickExit')} href="https://wikipedia.org" />
       </div>
       <h1 className="text-3xl font-bold">🌍 {t('requestLanguageSupport')}</h1>
       <p className="text-lg">
@@ -120,7 +109,7 @@ export default function RequestLanguageSupportPage() {
       </p>
 
       <section>
-        <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center justify-between mb-2 flex-col gap-2">
           <h2 className="text-2xl font-semibold">📝 {t('translationTemplate')}</h2>
           <CopyTemplateButton text={template} />
         </div>

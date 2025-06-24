@@ -6,6 +6,7 @@ import { AGENCY_OPTIONS } from '@/constants/agencies';
 import { TranslationKey } from '@/lib/il8n/translations';
 import { useTranslations } from '@/lib/il8n/useTranslations';
 import { useWizard } from './WizardContext';
+import { FrostedButton } from '../ui/FrostedButton';
 
 export default function AgencyStep() {
   const { t } = useTranslations();
@@ -39,19 +40,18 @@ export default function AgencyStep() {
       <div className="flex flex-col gap-2">
         {AGENCY_OPTIONS.map((agency) => {
           const isSelected = formData.agency_type.includes(agency);
+
           return (
-            <button
+            <FrostedButton
               key={agency}
               type="button"
               onClick={() => toggle(agency)}
-              className={`flex items-center justify-between px-4 py-6 rounded border transition ${
-                isSelected
-                  ? 'bg-blue-600 text-white border-blue-700'
-                  : 'bg-gray-700 border-gray-300 text-gray-100 hover:bg-gray-100 hover:text-black'
-              }`}>
+              variant={isSelected ? 'primary' : 'secondary'}
+              size="md"
+              className="w-full flex items-center justify-between px-4 py-6">
               <span>{t(`agency.${agency}` as TranslationKey)}</span>
-              {isSelected && <Check className="w-4 h-4" />}
-            </button>
+              {isSelected && <Check className="w-4 h-4 text-blue-300" />}
+            </FrostedButton>
           );
         })}
       </div>

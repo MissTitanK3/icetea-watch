@@ -182,7 +182,9 @@ export type TranslationKey =
   | 'joinDispatchRole.tech'
   | 'joinDispatchLanguageNote'
   | 'verifiedByDispatch'
-  | 'anonymous';
+  | 'anonymous'
+  | 'filterAgencies'
+  | 'resetFilters';
 
 export const roleKeys: TranslationKey[] = [
   'joinDispatchRole.dispatcher',
@@ -244,6 +246,8 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     sirensOff: 'Sirens Off',
     movementUnknown: 'Movement not reported',
     verifiedByDispatch: 'Verified By Dispatch',
+    filterAgencies: 'Filter Agencies',
+    resetFilters: 'Reset Filters',
 
     // Heatlayer
     visibleReports: 'Visible Reports',
@@ -483,6 +487,8 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     movementUnknown: 'Movimiento no reportado',
     officerDirectionUnknown: 'Dirección no reportada',
     verifiedByDispatch: 'Verificado por Despacho',
+    filterAgencies: 'Filtrar Agencias',
+    resetFilters: 'Restablecer filtros',
 
     // Heatlayer
     visibleReports: 'Reportes visibles',

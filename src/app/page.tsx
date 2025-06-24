@@ -4,9 +4,10 @@ import CourtAppearance from '@/components/CourtAppearance';
 import KnowYourRights from '@/components/KnowYourRights';
 import LanguageSwitcher from '@/components/language-toggle/LToggle';
 import ICEArrestQuestions from '@/components/Questions';
+import LinkButton from '@/components/ui/FrostedLink';
 import { useTranslations } from '@/lib/il8n/useTranslations';
 import Image from 'next/image';
-import Link from 'next/link';
+// import Link from 'next/link';
 
 export default function Home() {
   const { t } = useTranslations();
@@ -19,18 +20,11 @@ export default function Home() {
       </div>
       <LanguageSwitcher />
       <div className="flex justify-center gap-4 mt-8 flex-col">
-        <Link href="https://ko-fi.com/techwitch" className="px-6 py-2 border rounded-xl" target="_blank">
-          {t('supportProject')}
-        </Link>
-        <Link href="/req-language-support" className="px-6 py-2 border rounded-xl">
-          {t('requestLanguageSupport')}
-        </Link>
-        <Link href="/transparency" className="px-6 py-2 border rounded-xl">
-          {t('transparencyTitle')}
-        </Link>
-        <Link href="/join-dispatch" className="px-6 py-2 border rounded-xl">
-          {t('joinDispatch')}
-        </Link>
+        <LinkButton label={t('supportProject')} variant="primary" target="_blank" />
+        <LinkButton label={t('requestLanguageSupport')} variant="primary" href="/req-language-support" />
+        <LinkButton label={t('transparencyTitle')} variant="primary" href="/transparency" />
+        <LinkButton label={t('joinDispatch')} variant="primary" href="/join-dispatch" />
+
         <div className="flex flex-col text-center py-20 justify-center m-auto">
           <h4>{t('troubleWithApp')}</h4>
           <div className="flex flex-col text-center py-5 justify-center m-auto">

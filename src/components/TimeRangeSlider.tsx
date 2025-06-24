@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Range } from 'react-range';
+import { FrostedButton } from './ui/FrostedButton';
 
 const MAX = 168;
 const STEP = 4;
@@ -70,21 +71,9 @@ export default function TimeRangeSlider({ onChange }: Props) {
     <div className="my-4 flex flex-col justify-center m-auto">
       {/* Presets */}
       <div className="flex gap-2 mb-4 justify-evenly">
-        <button
-          onClick={() => setPreset(24)}
-          className="px-3 py-1 bg-gray-700 text-white rounded hover:bg-gray-600 text-sm">
-          Last 24h
-        </button>
-        <button
-          onClick={() => setPreset(72)}
-          className="px-3 py-1 bg-gray-700 text-white rounded hover:bg-gray-600 text-sm">
-          Last 3d
-        </button>
-        <button
-          onClick={() => setPreset(168)}
-          className="px-3 py-1 bg-gray-700 text-white rounded hover:bg-gray-600 text-sm">
-          Last 7d
-        </button>
+        <FrostedButton onClick={() => setPreset(24)}>Last 24h</FrostedButton>
+        <FrostedButton onClick={() => setPreset(72)}>Last 3d</FrostedButton>
+        <FrostedButton onClick={() => setPreset(168)}>Last 7d</FrostedButton>
       </div>
 
       {/* Label */}
@@ -101,7 +90,16 @@ export default function TimeRangeSlider({ onChange }: Props) {
         max={MAX}
         onChange={(values) => handleSliderChange(values as [number, number])}
         renderTrack={({ props, children }) => (
-          <div {...props} className="w-full h-2 bg-gray-700 rounded relative" style={props.style}>
+          <div
+            {...props}
+            style={{
+              ...props.style,
+              height: '0.5rem', // h-2 equivalent
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              borderRadius: '9999px', // fully rounded
+              backdropFilter: 'blur(4px)',
+            }}
+            className="relative">
             <div
               className="absolute top-0 bottom-0 bg-blue-500 rounded"
               style={{
@@ -123,7 +121,7 @@ export default function TimeRangeSlider({ onChange }: Props) {
       focus:outline-none focus:ring-2 focus:ring-blue-500`}>
               {/* Label above the thumb */}
               <div
-                className="absolute -top-7 text-xs font-medium text-white bg-gray-800 px-2 py-1 rounded shadow"
+                className="absolute -top-7 text-xs font-medium text-white bg-black/60 backdrop-blur-sm px-2 py-1 rounded shadow"
                 style={{ whiteSpace: 'nowrap' }}>
                 {Math.floor(value / 24)}d {value % 24}h
               </div>

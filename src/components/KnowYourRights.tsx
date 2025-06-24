@@ -3,7 +3,7 @@
 import { TranslationKey } from '@/lib/il8n/translations';
 import { useTranslations } from '@/lib/il8n/useTranslations';
 import Image from 'next/image';
-import Link from 'next/link';
+import FrostedLink from '@/components/ui/FrostedLink';
 
 const KYR_GROUPS = {
   section1: [
@@ -63,11 +63,16 @@ export default function KnowYourRights() {
         <Image src="/ICE-Detainer-Sample.jpg" height={500} width={375} alt="Ice Admin Warrant" />
         <Image src="/Judicial-warrant-sample2.jpg" height={500} width={375} alt="Ice Admin Warrant" />
       </div>
-      <div className="mt-6 border-t py-4 space-y-3 text-lg text-center mx-auto w-full flex flex-col justify-center items-center bg-red-600 text-white rounded-2xl">
-        <p>Source:</p>
-        <Link href="https://immigrantjustice.org/know-your-rights/ice-encounter" target="_blank">
-          https://immigrantjustice.org/know-your-rights/ice-encounter
-        </Link>
+      <div
+        className="mt-6 py-4 space-y-3 text-lg text-center mx-auto w-full flex flex-col justify-center items-center
+  rounded-2xl backdrop-blur-md bg-red-600/30 border border-red-400 text-white shadow-md">
+        <p className="text-base font-semibold">Source:</p>
+        <FrostedLink
+          label="https://immigrantjustice.org/know-your-rights/ice-encounter"
+          href="https://immigrantjustice.org/know-your-rights/ice-encounter"
+          target="_blank"
+          variant="secondary"
+        />
       </div>
     </section>
   );

@@ -10,14 +10,19 @@ export default function TileLayerDropdown() {
       <label htmlFor="tileSelector" className="text-sm font-semibold text-white mb-1">
         🗺️ Basemap
       </label>
+
       <div className="relative w-full">
         <select
           id="tileSelector"
           value={tileKey}
           onChange={(e) => setTileKey(e.target.value as keyof typeof MAP_TILE_OPTIONS)}
-          className="appearance-none bg-green-800 text-white font-semibold px-4 py-2 pr-10 rounded-md shadow hover:bg-accent-dark transition w-full border border-green-700 focus:outline-none focus:ring-2 focus:ring-accent">
+          className="appearance-none w-full px-4 py-2 pr-10 text-white text-sm font-medium rounded-lg  bg-white/10 backdrop-blur-md border border-white/20 shadow transition  hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-blue-400/50">
           {Object.entries(MAP_TILE_OPTIONS).map(([key, layer]) => (
-            <option key={key} value={key}>
+            <option
+              key={key}
+              value={key}
+              className="bg-[#1e1e1e] text-white/90" // softened from bright white/black
+            >
               {layer.name}
             </option>
           ))}

@@ -8,6 +8,7 @@ import { useTranslations } from '@/lib/il8n/useTranslations';
 import { useWizard } from './WizardContext';
 import { useFindMe } from '@/lib/useFindMe';
 import TileLayerDropdown from '../map/TileLayerDropdown';
+import { FrostedButton } from '../ui/FrostedButton';
 
 const MapWrapper = dynamic(() => import('@/components/map/MapWrapper'), { ssr: false });
 
@@ -63,12 +64,9 @@ export default function LocationStep() {
           <p className="text-sm text-gray-600">{t('tapMapOrGPS')}</p>
         </div>
         <div className="p-2 flex flex-wrap justify-evenly">
-          <button
-            onClick={handleFindMe}
-            disabled={isLocating}
-            className="bg-green-800 mb-3 px-6 py-2 font-bold rounded-md shadow hover:bg-accent-dark transition disabled:opacity-50">
+          <FrostedButton onClick={handleFindMe} disabled={isLocating}>
             {isLocating ? 'Locating...' : `📍 ${t('findMe') ?? 'Find Me'}`}
-          </button>
+          </FrostedButton>
           <TileLayerDropdown />
         </div>
       </div>

@@ -3,10 +3,10 @@
 import AgencyStep from '@/components/wizard/AgencyStep';
 import LocationStep from '@/components/wizard/LocationStep';
 import MediaStep from '@/components/wizard/MediaStep';
-import Link from 'next/link';
 import { useTranslations } from '@/lib/il8n/useTranslations';
 import { TranslationKey } from '@/lib/il8n/translations';
 import { useWizard } from '@/components/wizard/WizardContext';
+import LinkButton from '@/components/ui/FrostedLink';
 
 function FormDataPreview() {
   const { t } = useTranslations();
@@ -90,11 +90,7 @@ export default function WizardPage() {
   return (
     <div className="space-y-6">
       <div className="flex justify-evenly items-center">
-        <Link
-          href="https://wikipedia.org"
-          className="flex-1 max-w-[40%] px-4 py-3 rounded border text-base font-medium text-center uppercase text-red-500">
-          {t('quickExit')}
-        </Link>
+        <LinkButton size="2xl" variant="red" label={t('quickExit')} href="https://wikipedia.org" />
       </div>
 
       <h2 className="text-xl font-bold">{t('reportWizard')}</h2>

@@ -148,18 +148,18 @@ export default function HeatMap({ reports, center }: { reports: Report[]; center
               const translatedAgencies = (r.agency_type || []).map((a) => t(`agency.${a}` as TranslationKey));
               const agencyColor = agencyColors[primaryAgency] || 'bg-gray-600';
               return (
-                <li key={r.id} className="rounded-lg border overflow-hidden shadow">
+                <li
+                  key={r.id}
+                  className="rounded-xl border border-white/20 bg-white/10 backdrop-blur-md shadow-md text-white overflow-hidden transition hover:shadow-lg">
                   <div
-                    className={`px-4 py-2 text-base font-bold border-b-5 rounded ${
-                      r.submitted_by ? 'border-green-500' : 'border-white'
-                    } text-white ${agencyColor}`}>
+                    className={`px-4 py-2 text-base font-bold border-b-4 ${
+                      r.submitted_by ? 'border-green-500' : 'border-white/20'
+                    } ${agencyColor}`}>
                     <div className="mb-1 text-2xl">
                       {[...translatedAgencies, r.agency_other].filter(Boolean).join(', ')}
                     </div>
-                    <div className="mb-3">
-                      <span>
-                        <strong>{t('reported')}</strong> {formatAge(r.timestamp)} {t('timeAgo')}
-                      </span>
+                    <div className="mb-3 text-sm font-normal text-white/80">
+                      <strong>{t('reported')}</strong> {formatAge(r.timestamp)} {t('timeAgo')}
                     </div>
 
                     <div className="grid grid-cols-2 items-center font-normal text-white/90 gap-2">
@@ -182,7 +182,7 @@ export default function HeatMap({ reports, center }: { reports: Report[]; center
                     </div>
                   </div>
 
-                  <div className="p-4 space-y-2 text-sm">
+                  <div className="p-4 space-y-2 text-sm text-white/90">
                     <div>
                       <strong>{t('officerMovement')}:</strong>{' '}
                       {r.officer_moving === true
@@ -193,7 +193,7 @@ export default function HeatMap({ reports, center }: { reports: Report[]; center
                         ? t('stationary')
                         : t('movementUnknown')}
                     </div>
-                    <div className="flex w-full justify-evenly flex-wrap">
+                    <div className="flex w-full justify-evenly flex-wrap gap-4">
                       <div>
                         <strong>{t('lightsOn')}:</strong> {r.lights_on ? t('yes') : t('no')}
                       </div>
@@ -201,7 +201,7 @@ export default function HeatMap({ reports, center }: { reports: Report[]; center
                         <strong>{t('sirensOn')}:</strong> {r.sirens_on ? t('yes') : t('no')}
                       </div>
                     </div>
-                    <div className="text-gray-500 text-xs">{new Date(r.timestamp).toLocaleString()}</div>
+                    <div className="text-white/50 text-xs">{new Date(r.timestamp).toLocaleString()}</div>
                   </div>
                 </li>
               );
