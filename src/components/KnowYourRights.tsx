@@ -31,7 +31,7 @@ export default function KnowYourRights() {
   const { t } = useTranslations();
 
   return (
-    <section className="max-w-3xl mx-auto px-4 text-base leading-relaxed text-gray-900 dark:text-gray-100">
+    <section className="max-w-3xl mx-auto px-4 text-base leading-relaxe text-gray-300">
       <h1 className="text-3xl font-bold mb-4">{t('kyrTitle')}</h1>
       <p className="mb-6">{t('kyrIntro')}</p>
 
