@@ -184,7 +184,22 @@ export type TranslationKey =
   | 'verifiedByDispatch'
   | 'anonymous'
   | 'filterAgencies'
-  | 'resetFilters';
+  | 'resetFilters'
+  | 'immigrantResourcesTitle'
+  | 'noResourcesYet'
+  | 'Donations'
+  | 'Report ICE Activity'
+  | 'Legal Aid & Attorneys'
+  | 'Preparation & Planning'
+  | 'Foster Care & Guardianship'
+  | 'Legal Documents'
+  | 'Notary Services'
+  | 'LGBTQ+ Resources'
+  | 'Self Care'
+  | 'Translation & Interpretation'
+  | 'Rapid Response Networks'
+  | 'Organizations/Coalitions'
+  | 'Volunteering';
 
 export const roleKeys: TranslationKey[] = [
   'joinDispatchRole.dispatcher',
@@ -201,7 +216,23 @@ export const roleKeys: TranslationKey[] = [
 
 export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
   en: {
+    Donations: 'Donations',
+    'Report ICE Activity': 'Report ICE Activity',
+    'Legal Aid & Attorneys': 'Legal Aid & Attorneys',
+    'Preparation & Planning': 'Preparation & Planning',
+    'Foster Care & Guardianship': 'Foster Care & Guardianship',
+    'Legal Documents': 'Legal Documents',
+    'Notary Services': 'Notary Services',
+    'LGBTQ+ Resources': 'LGBTQ+ Resources',
+    'Self Care': 'Self Care',
+    'Translation & Interpretation': 'Translation & Interpretation',
+    'Rapid Response Networks': 'Rapid Response Networks',
+    'Organizations/Coalitions': 'Organizations/Coalitions',
+    Volunteering: 'Volunteering',
+
     // Homepage
+    immigrantResourcesTitle: 'Immigrant Action Resources by State & Category',
+    noResourcesYet: 'No Resources Yet',
     homeTitle: '🧊 ICE Tea Watch',
     privacyTagline: 'Privacy-safe community reporting for ICE and law enforcement activity.',
     startReport: 'Start Report',
@@ -436,7 +467,23 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
       '⚠️ Dispatch coordination is currently conducted in English. Spanish-speaking volunteers are welcome, but basic English proficiency is required.',
   },
   es: {
+    Donations: 'Donaciones',
+    'Report ICE Activity': 'Reportar Actividad de ICE',
+    'Legal Aid & Attorneys': 'Asistencia Legal y Abogados',
+    'Preparation & Planning': 'Preparación y Planificación',
+    'Foster Care & Guardianship': 'Cuidado Temporal y Tutela',
+    'Legal Documents': 'Documentos Legales',
+    'Notary Services': 'Servicios de Notaría',
+    'LGBTQ+ Resources': 'Recursos LGBTQ+',
+    'Self Care': 'Cuidado Personal',
+    'Translation & Interpretation': 'Traducción e Interpretación',
+    'Rapid Response Networks': 'Redes de Respuesta Rápida',
+    'Organizations/Coalitions': 'Organizaciones/Coaliciones',
+    Volunteering: 'Voluntariado',
     // Homepage
+    immigrantResourcesTitle: 'Recursos de Acción para Inmigrantes por Estado y Categoría',
+    noResourcesYet: 'Aún no hay recursos',
+
     homeTitle: '🧊 Vigilancia ICE Tea',
     privacyTagline: 'Reportes comunitarios seguros y privados sobre ICE y actividad policial.',
     startReport: 'Iniciar reporte',
