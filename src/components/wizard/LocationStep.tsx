@@ -47,12 +47,13 @@ export default function LocationStep() {
   }, []);
 
   useEffect(() => {
-    const valid = !!position && (distanceFromUser === null || distanceFromUser <= 2);
-    setCanContinue(valid);
+    const isValid = !!position && distanceFromUser !== null && distanceFromUser <= 15;
+    setCanContinue(isValid);
   }, [position, distanceFromUser, setCanContinue]);
 
   const handleMapSelect = (coords: LatLng) => {
     setPosition(coords);
+    setDistanceFromUser(null);
     setFormData((prev) => ({ ...prev, location: coords }));
   };
 

@@ -14,22 +14,41 @@ export default function ReportDistanceGuard({ targetLocation, maxDistanceKm = 15
   const [distance, setDistance] = useState<number | null>(null);
 
   useEffect(() => {
-    if (!targetLocation) return;
+    if (!targetLocation) {
+      onDistanceChange?.(null);
+      return;
+    }
 
-    navigator.geolocation.getCurrentPosition((pos) => {
-      const current = {
-        lat: pos.coords.latitude,
-        lng: pos.coords.longitude,
-      };
-      setUserLocation(current);
-      const dist = getDistanceKm(current, targetLocation);
-      setDistance(dist);
-      onDistanceChange?.(dist);
-    });
+    let cancelled = false;
+
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        if (cancelled) return;
+        const current = {
+          lat: pos.coords.latitude,
+          lng: pos.coords.longitude,
+        };
+        const dist = getDistanceKm(current, targetLocation);
+        setUserLocation(current);
+        setDistance(dist);
+        onDistanceChange?.(dist);
+      },
+      () => {
+        onDistanceChange?.(null);
+      },
+    );
+
+    return () => {
+      cancelled = true;
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [targetLocation]);
 
   if (!userLocation || distance === null) return null;
+
+  if (distance === null) {
+    return <p className="text-sm text-gray-500">Validating your location to be within {maxDistanceKm}km...</p>;
+  }
 
   if (distance > maxDistanceKm) {
     return (
