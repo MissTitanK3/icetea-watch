@@ -80,6 +80,8 @@ create table public.wizard (
   constraint wizard_submitted_by_fkey foreign KEY (submitted_by) references dispatch_profiles (id) on delete set null
 ) TABLESPACE pg_default;
 ```
+> **Note:** The `submitted_by` field is optional and is used by ICE Tea Dispatch for verifying reports from trusted users. It is included here for transparency and schema compatibility but is not required for ICE Tea Watch to function.
+
 
 ## 🧱 Project Structure
 
