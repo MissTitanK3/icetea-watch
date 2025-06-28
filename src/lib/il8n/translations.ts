@@ -199,7 +199,10 @@ export type TranslationKey =
   | 'Translation & Interpretation'
   | 'Rapid Response Networks'
   | 'Organizations/Coalitions'
-  | 'Volunteering';
+  | 'Volunteering'
+  | 'locationNoticePrefix'
+  | 'transparencyPage'
+  | 'locationNoticeSuffix';
 
 export const roleKeys: TranslationKey[] = [
   'joinDispatchRole.dispatcher',
@@ -229,6 +232,10 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     'Rapid Response Networks': 'Rapid Response Networks',
     'Organizations/Coalitions': 'Organizations/Coalitions',
     Volunteering: 'Volunteering',
+    locationNoticePrefix:
+      'To load the map and help you place the pin, this step needs temporary access to your location. When your device prompts you, we recommend choosing “Allow this time.” Your location is used only to center the map — it is never stored, collected, or shared. Learn more on our',
+    transparencyPage: 'Transparency page',
+    locationNoticeSuffix: '.',
 
     // Homepage
     immigrantResourcesTitle: 'Immigrant Action Resources by State & Category',
@@ -483,6 +490,10 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     // Homepage
     immigrantResourcesTitle: 'Recursos de Acción para Inmigrantes por Estado y Categoría',
     noResourcesYet: 'Aún no hay recursos',
+    locationNoticePrefix:
+      'Para cargar el mapa y ayudarte a colocar el marcador, este paso necesita acceso temporal a tu ubicación. Cuando tu dispositivo lo pida, te recomendamos seleccionar “Permitir solo esta vez”. Tu ubicación se usa únicamente para centrar el mapa — nunca se almacena, recopila ni comparte. Más información en nuestra',
+    transparencyPage: 'página de transparencia',
+    locationNoticeSuffix: '.',
 
     homeTitle: '🧊 Vigilancia ICE Tea',
     privacyTagline: 'Reportes comunitarios seguros y privados sobre ICE y actividad policial.',

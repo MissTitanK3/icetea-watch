@@ -98,6 +98,20 @@ export default function WizardPage() {
       {renderStep()}
 
       <div className="md:col-span-1">
+        <div className="px-4 py-2 my-4 text-sm text-gray-800 bg-white/60 rounded shadow max-w-2xl mx-auto">
+          <p>
+            {t('locationNoticePrefix')}{' '}
+            <a
+              href="/transparency"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline text-blue-800 hover:text-blue-900">
+              {t('transparencyPage')}
+            </a>
+            {t('locationNoticeSuffix')}
+          </p>
+        </div>
+
         <FormDataPreview />
       </div>
     </div>
