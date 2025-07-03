@@ -202,7 +202,44 @@ export type TranslationKey =
   | 'Volunteering'
   | 'locationNoticePrefix'
   | 'transparencyPage'
-  | 'locationNoticeSuffix';
+  | 'locationNoticeSuffix'
+  | 'dataSeizureTitle'
+  | 'dataSeizureLawsTitle'
+  | 'dataSeizureLawCLOUD'
+  | 'dataSeizureLawFISA'
+  | 'dataSeizureLawPatriot'
+  | 'dataSeizureMitigationTitle'
+  | 'dataSeizureMitigationEncryption'
+  | 'dataSeizureMitigationForeignHost'
+  | 'dataSeizureMitigationMinimalData'
+  | 'dataSeizureMitigationLocalTools'
+  | 'dataSeizureGDPRTitle'
+  | 'dataSeizureGDPRDesc'
+  | 'dataSeizureTLDR'
+  | 'transparencySafeTitle'
+  | 'transparencySafeIntro1'
+  | 'transparencySafeIntro2'
+  | 'transparencySafeIntro3'
+  | 'transparencySafeIntro4'
+  | 'transparencySafeWhyTitle'
+  | 'transparencySafeWhyDesc'
+  | 'transparencySafeWhyBullet1'
+  | 'transparencySafeWhyBullet2'
+  | 'transparencySafeWhyBullet3'
+  | 'transparencySafeWhyBullet4'
+  | 'transparencySafeWhyOutro'
+  | 'transparencySafeProtectTitle'
+  | 'transparencySafeProtectIntro'
+  | 'transparencySafeProtectBullet1'
+  | 'transparencySafeProtectBullet2'
+  | 'transparencySafeProtectBullet3'
+  | 'transparencySafeProtectBullet4'
+  | 'transparencySafeProtectBullet5'
+  | 'transparencySafeLessonTitle'
+  | 'transparencySafeLesson1'
+  | 'transparencySafeLesson2'
+  | 'transparencySafeOutro'
+  | 'contactUs';
 
 export const roleKeys: TranslationKey[] = [
   'joinDispatchRole.dispatcher',
@@ -441,6 +478,56 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     transparencyFormDataExplain:
       'This is what your device creates when you fill out the report form. No personal info is included.',
     transparencyReportExplain: 'This is the final format saved in our secure Supabase database.',
+
+    dataSeizureTitle: 'U.S. Government Access to Your Data',
+    dataSeizureLawsTitle: '🔒 Laws That Allow U.S. Data Seizure',
+    dataSeizureLawCLOUD: 'CLOUD Act: U.S. law enforcement can compel U.S. providers to hand over data stored anywhere.',
+    dataSeizureLawFISA: 'FISA §702: Enables warrantless surveillance on non-U.S. persons outside the U.S.',
+    dataSeizureLawPatriot: 'Patriot Act: Allows secret court orders for certain surveillance operations.',
+
+    dataSeizureMitigationTitle: '🛡️ Can You Prevent or Resist This?',
+    dataSeizureMitigationEncryption: 'Use strong encryption (with user-held keys) to make seized data unreadable.',
+    dataSeizureMitigationForeignHost: 'Host outside the U.S. only if the provider has no U.S. legal presence.',
+    dataSeizureMitigationMinimalData: 'Store only what you absolutely need — no data, no seizure.',
+    dataSeizureMitigationLocalTools: 'Prefer local-first and open-source tools to avoid cloud exposure.',
+
+    dataSeizureGDPRTitle: 'GDPR and Schrems II',
+    dataSeizureGDPRDesc:
+      'Legal safeguards like SCCs and the DPF help with GDPR compliance but do not stop U.S. surveillance.',
+    dataSeizureTLDR: 'If it’s hosted in the U.S., assume it can be accessed. Encrypt or limit what you store.',
+    transparencySafeTitle: '🔍 Is This Website Safe?',
+    transparencySafeIntro1: 'Someone used a tool called',
+    transparencySafeIntro2:
+      'to check if our website is dangerous. That tool guessed that our site *might* be “suspicious” — like a scam or a trick. But that’s just a guess, not proof.',
+    transparencySafeIntro3: 'So, we double-checked using a much bigger tool called',
+    transparencySafeIntro4:
+      '. It uses 90+ security companies to test websites — like a giant team of digital watchdogs. All of them agreed: our site is safe. No malware. No scams. No trickery.',
+
+    transparencySafeWhyTitle: '🤔 Why Did FileScan Say That?',
+    transparencySafeWhyDesc: 'FileScan didn’t find anything bad — it just got confused. It flagged our site because:',
+    transparencySafeWhyBullet1: 'Our site uses a lot of code (which is normal for modern websites)',
+    transparencySafeWhyBullet2: 'We have buttons that ask you to take action (like “Submit a report”)',
+    transparencySafeWhyBullet3: 'We use standard web tags that help your browser load pages properly',
+    transparencySafeWhyBullet4: 'We link to social media (like Facebook or TikTok)',
+    transparencySafeWhyOutro:
+      "These are all totally normal things for websites that help people share or take action. But FileScan's robot might not know that.",
+
+    transparencySafeProtectTitle: '🔒 How We Keep You Safe',
+    transparencySafeProtectIntro: 'Here’s what we do to protect your privacy and safety:',
+    transparencySafeProtectBullet1: 'You don’t have to make an account to use our site',
+    transparencySafeProtectBullet2: 'We don’t show ads or track you',
+    transparencySafeProtectBullet3:
+      'We don’t collect names, phone numbers, or personal details — only what’s happening and where',
+    transparencySafeProtectBullet4: 'We host our site with trusted, secure tools (like Vercel and Supabase)',
+    transparencySafeProtectBullet5: 'We build this project openly, so others can see how it works',
+
+    transparencySafeLessonTitle: '📚 A Quick Lesson',
+    transparencySafeLesson1:
+      'Just like a smoke detector can go off from burnt toast, some website scanners give “false alarms.” That’s why it’s important to double-check using more than one tool.',
+    transparencySafeLesson2:
+      'Not every red flag means danger — sometimes, it just means “let’s look closer.” And that’s what we did.',
+    transparencySafeOutro: 'If you still have questions or want to learn more, feel free to',
+    contactUs: 'contact us',
 
     // Github Card
     githubCardTitle: 'Source Code on GitHub',
@@ -698,6 +785,58 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
       'Esto es lo que tu dispositivo genera cuando llenas el formulario. No incluye información personal.',
     transparencyReportExplain:
       'Este es el formato final guardado de forma segura en nuestra base de datos en Supabase.',
+    dataSeizureTitle: 'Acceso del Gobierno de EE.UU. a tus datos',
+    dataSeizureLawsTitle: '🔒 Leyes que permiten la incautación de datos en EE.UU.',
+    dataSeizureLawCLOUD:
+      'Ley CLOUD: Las autoridades pueden exigir datos a proveedores de EE.UU., aunque estén almacenados en el extranjero.',
+    dataSeizureLawFISA: 'FISA §702: Permite vigilancia sin orden judicial a personas fuera de EE.UU.',
+    dataSeizureLawPatriot: 'Ley Patriota: Permite órdenes judiciales secretas para ciertos tipos de vigilancia.',
+
+    dataSeizureMitigationTitle: '🛡️ ¿Se puede prevenir o resistir esto?',
+    dataSeizureMitigationEncryption:
+      'Usa cifrado fuerte (con claves del usuario) para que los datos incautados no sean legibles.',
+    dataSeizureMitigationForeignHost:
+      'Alojar fuera de EE.UU. solo ayuda si el proveedor no tiene presencia legal en EE.UU.',
+    dataSeizureMitigationMinimalData: 'Guarda solo lo esencial — si no hay datos, no hay nada que incautar.',
+    dataSeizureMitigationLocalTools: 'Prefiere herramientas locales y de código abierto para evitar la nube.',
+
+    dataSeizureGDPRTitle: 'GDPR y Schrems II',
+    dataSeizureGDPRDesc:
+      'Las garantías legales como SCC y DPF ayudan con el cumplimiento del RGPD, pero no detienen la vigilancia de EE.UU.',
+    dataSeizureTLDR: 'Si está alojado en EE.UU., asume que puede ser accedido. Cifra o minimiza lo que almacenas.',
+    transparencySafeTitle: '🔍 ¿Este sitio web es seguro?',
+    transparencySafeIntro1: 'Alguien usó una herramienta llamada',
+    transparencySafeIntro2:
+      'para verificar si nuestro sitio era peligroso. Esa herramienta supuso que nuestro sitio *podría* ser “sospechoso”, como una estafa. Pero eso es solo una suposición, no una prueba.',
+    transparencySafeIntro3: 'Así que revisamos nuevamente con una herramienta mucho más grande llamada',
+    transparencySafeIntro4:
+      '. Usa más de 90 compañías de seguridad para analizar sitios web — como un gran equipo de guardianes digitales. Todas coincidieron: nuestro sitio es seguro. Sin malware. Sin estafas. Sin engaños.',
+
+    transparencySafeWhyTitle: '🤔 ¿Por qué FileScan dijo eso?',
+    transparencySafeWhyDesc: 'FileScan no encontró nada malo — solo se confundió. Marcó nuestro sitio porque:',
+    transparencySafeWhyBullet1: 'Usamos mucho código (lo cual es normal en sitios modernos)',
+    transparencySafeWhyBullet2: 'Tenemos botones que invitan a tomar acción (como “Enviar un reporte”)',
+    transparencySafeWhyBullet3: 'Usamos etiquetas web estándar para que tu navegador cargue bien las páginas',
+    transparencySafeWhyBullet4: 'Enlazamos a redes sociales (como Facebook o TikTok)',
+    transparencySafeWhyOutro:
+      'Todo esto es completamente normal en sitios que ayudan a compartir o tomar acción. Pero el robot de FileScan tal vez no lo sepa.',
+
+    transparencySafeProtectTitle: '🔒 Cómo te protegemos',
+    transparencySafeProtectIntro: 'Esto es lo que hacemos para cuidar tu privacidad y seguridad:',
+    transparencySafeProtectBullet1: 'No necesitas crear una cuenta para usar nuestro sitio',
+    transparencySafeProtectBullet2: 'No mostramos anuncios ni te rastreamos',
+    transparencySafeProtectBullet3: 'No recopilamos nombres, teléfonos ni datos personales — solo lo que pasó y dónde',
+    transparencySafeProtectBullet4: 'Alojamos el sitio con herramientas seguras y confiables (como Vercel y Supabase)',
+    transparencySafeProtectBullet5:
+      'Construimos este proyecto de forma abierta, para que cualquiera pueda ver cómo funciona',
+
+    transparencySafeLessonTitle: '📚 Una lección rápida',
+    transparencySafeLesson1:
+      'Igual que una alarma de humo puede sonar por una tostada quemada, algunas herramientas dan “falsas alarmas”. Por eso es importante revisar con más de una.',
+    transparencySafeLesson2:
+      'No toda bandera roja significa peligro — a veces solo quiere decir “miremos más de cerca”. Y eso fue lo que hicimos.',
+    transparencySafeOutro: 'Si aún tienes preguntas o quieres saber más, puedes',
+    contactUs: 'contactarnos',
 
     // Github Card
     githubCardTitle: 'Código fuente en GitHub',

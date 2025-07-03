@@ -1,6 +1,8 @@
 'use client';
 
+import { DataAccessExplainer } from '@/components/DataAccessExplainer';
 import GitHubCard from '@/components/GithubCard';
+import TransparencyNotice from '@/components/TransparencyNotice';
 import { useTranslations } from '@/lib/il8n/useTranslations';
 
 export default function TransparencyPage() {
@@ -9,7 +11,8 @@ export default function TransparencyPage() {
   return (
     <div className="p-6 max-w-4xl mx-auto text-base leading-relaxed">
       <h1 className="text-3xl font-bold mb-6">{t('transparencyTitle')}</h1>
-
+      <TransparencyNotice />
+      <DataAccessExplainer />
       <section className="mb-8">
         <h2 className="text-2xl font-semibold mb-2">{t('transparencyWhyTitle')}</h2>
         <p> {t('transparencyWhyText')}</p>

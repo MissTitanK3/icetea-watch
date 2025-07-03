@@ -2,7 +2,6 @@
 import { LanguageProvider } from '@/lib/il8n/provider';
 import './globals.css';
 import type { Metadata } from 'next';
-import { Analytics } from '@vercel/analytics/next';
 import BottomNav from '@/components/BottomNav';
 import { WizardProvider } from '@/components/wizard/WizardContext';
 import { MapTileProvider } from '@/lib/MapTileContext';
@@ -16,7 +15,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className="bg-zinc-900 text-white">
-        <Analytics />
         <WizardProvider>
           <LanguageProvider>
             <MapTileProvider>
