@@ -1,4 +1,5 @@
 'use client';
+import AddToHomescreenTutorial from '@/components/AddToHomescreenTutorial';
 import CopyEmail from '@/components/CopyEmail';
 import CourtAppearance from '@/components/CourtAppearance';
 import KnowYourRights from '@/components/KnowYourRights';
@@ -31,6 +32,7 @@ export default function Home() {
           <div className="flex flex-col text-center py-5 justify-center m-auto">
             <CopyEmail />
           </div>
+          <AddToHomescreenTutorial />
           <CourtAppearance />
           <ICEArrestQuestions />
         </div>
