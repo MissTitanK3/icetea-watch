@@ -1743,6 +1743,10 @@ export const resourceData: GroupedResources = {
         title: 'Immigration Counseling Service (ICS)',
         url: 'https://www.ics-law.org/',
       },
+      {
+        title: 'Legal Aid Services of Oregon',
+        url: 'https://lasoregon.org',
+      },
     ],
     'Organizations/Coalitions': [
       {
@@ -1756,6 +1760,14 @@ export const resourceData: GroupedResources = {
       {
         title: 'Innovation Law Lab',
         url: 'https://innovationlawlab.org/',
+      },
+      {
+        title: 'Unidos- Bridging Communities',
+        url: 'https://unidosyamhillcounty.org',
+      },
+      {
+        title: 'Campo Uno- St. Matthew Catholic Church & School',
+        url: 'https://www.stmatthewhillsboro.org/migrant-camp',
       },
     ],
     Donations: [],
