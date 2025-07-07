@@ -1,6 +1,7 @@
 export const AGENCY_OPTIONS: string[] = [
   'ICE',
   'Police',
+  'State Police',
   'Sheriff',
   'Border Patrol',
   'Immigration Court',
@@ -16,6 +17,11 @@ export const AGENCY_GRADIENTS: Record<string, Record<number, string>> = {
     0.8: '#ffffff',
   },
   Police: {
+    0.2: 'rgba(0, 255, 0, 0.2)',
+    0.4: '#00ff00',
+    0.8: '#ffffff',
+  },
+  'State Police': {
     0.2: 'rgba(0, 255, 0, 0.2)',
     0.4: '#00ff00',
     0.8: '#ffffff',
@@ -60,6 +66,7 @@ export const AGENCY_GRADIENTS: Record<string, Record<number, string>> = {
 export const agencyColors: Record<string, string> = {
   ICE: 'bg-cyan-700',
   Police: 'bg-green-700',
+  'State Police': 'bg-green-700',
   Sheriff: 'bg-yellow-700',
   'Border Patrol': 'bg-orange-700',
   'Immigration Court': 'bg-pink-600',

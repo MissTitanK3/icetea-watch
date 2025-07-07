@@ -92,6 +92,7 @@ export type TranslationKey =
   | 'requestLanguageSupport'
   | 'agency.ICE'
   | 'agency.Police'
+  | 'agency.State Police'
   | 'agency.Sheriff'
   | 'agency.Border Patrol'
   | 'agency.Immigration Court'
@@ -307,6 +308,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     reportTitle: 'Community Report Heatmap',
     'agency.ICE': 'ICE',
     'agency.Police': 'Police',
+    'agency.State Police': 'State Police',
     'agency.Sheriff': 'Sheriff',
     'agency.Border Patrol': 'Border Patrol',
     'agency.Immigration Court': 'Immigration Court',
@@ -314,7 +316,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     'agency.Unmarked': 'Unmarked',
     'agency.Military': 'Military',
     // English
-    officerDirection: 'Direction of travel',
+    officerDirection: 'Direction of Travel',
     lightsOn: 'Lights On',
     lightsOff: 'Lights Off',
     sirensOn: 'Sirens On',
@@ -354,7 +356,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     officerMovement: 'Officer Movement',
     moving: 'Moving',
     stationary: 'Stationary',
-    directionOfTravel: 'Direction of travel',
+    directionOfTravel: 'Direction of Travel',
     'direction.North': 'North',
     'direction.NorthEast': 'Northeast',
     'direction.East': 'East',
@@ -617,6 +619,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     reportTitle: 'Mapa de Reportes Comunitarios',
     'agency.ICE': 'ICE',
     'agency.Police': 'Policía',
+    'agency.State Police': 'Policía Estatal',
     'agency.Sheriff': 'Alguacil',
     'agency.Border Patrol': 'Patrulla Fronteriza',
     'agency.Immigration Court': 'Tribunal de Inmigración',

@@ -45,7 +45,7 @@ function FormDataPreview() {
         </div>
       )}
 
-      {formData.officer_moving && formData.officer_direction && (
+      {formData.officer_direction !== undefined && (
         <div>
           <strong>{t('directionOfTravel')}:</strong> {t(`direction.${formData.officer_direction}` as TranslationKey)}
         </div>

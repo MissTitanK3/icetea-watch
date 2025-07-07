@@ -47,34 +47,32 @@ export default function MediaStep() {
           </FrostedButton>
         </div>
 
-        {formData.officer_moving && (
-          <div>
-            <label className="block text-sm font-medium mb-2">{t('directionOfTravel')}</label>
-            <div className="grid grid-cols-3 gap-3 text-center">
-              {directionOptions.map((dir) =>
-                dir ? (
-                  <FrostedButton
-                    key={dir}
-                    type="button"
-                    onClick={() =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        officer_direction: dir as typeof prev.officer_direction,
-                      }))
-                    }
-                    variant={formData.officer_direction === dir ? 'primary' : 'secondary'}
-                    size="altLg" // larger padding
-                    className="w-full justify-center text-sm" // smaller font
-                  >
-                    {t(`direction.${dir}` as TranslationKey)}
-                  </FrostedButton>
-                ) : (
-                  <div key="spacer" />
-                ),
-              )}
-            </div>
+        <div>
+          <label className="block text-sm font-medium mb-2">{t('directionOfTravel')}</label>
+          <div className="grid grid-cols-3 gap-3 text-center">
+            {directionOptions.map((dir) =>
+              dir ? (
+                <FrostedButton
+                  key={dir}
+                  type="button"
+                  onClick={() =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      officer_direction: dir as typeof prev.officer_direction,
+                    }))
+                  }
+                  variant={formData.officer_direction === dir ? 'primary' : 'secondary'}
+                  size="altLg" // larger padding
+                  className="w-full justify-center text-sm" // smaller font
+                >
+                  {t(`direction.${dir}` as TranslationKey)}
+                </FrostedButton>
+              ) : (
+                <div key="spacer" />
+              ),
+            )}
           </div>
-        )}
+        </div>
       </div>
 
       <hr className="my-4" />
