@@ -241,7 +241,9 @@ export type TranslationKey =
   | 'transparencySafeLesson2'
   | 'transparencySafeOutro'
   | 'contactUs'
-  | 'test';
+  | 'test'
+  | 'testReport'
+  | 'testReportDescription';
 
 export const roleKeys: TranslationKey[] = [
   'joinDispatchRole.dispatcher',
@@ -259,6 +261,9 @@ export const roleKeys: TranslationKey[] = [
 export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
   en: {
     test: 'TEST',
+    testReport: 'Test Report',
+    testReportDescription:
+      'Toggle this on to test submitting reports. The report will be visible for 5 minutes before auto-deleting.',
     Donations: 'Donations',
     'Report ICE Activity': 'Report ICE Activity',
     'Legal Aid & Attorneys': 'Legal Aid & Attorneys',
@@ -566,6 +571,9 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
   },
   es: {
     test: 'Prueba',
+    testReport: 'Reporte de prueba',
+    testReportDescription:
+      'Activa esto para probar el envío de reportes. El reporte será visible durante 5 minutos y luego se eliminará automáticamente.',
     Donations: 'Donaciones',
     'Report ICE Activity': 'Reportar Actividad de ICE',
     'Legal Aid & Attorneys': 'Asistencia Legal y Abogados',

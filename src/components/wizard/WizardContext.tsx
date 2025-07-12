@@ -60,7 +60,6 @@ export function WizardProvider({ children }: { children: React.ReactNode }) {
       sirens_on,
       test: testReportEnabled,
     };
-    console.log(report);
 
     const isOffline = !navigator.onLine;
     const { addReportToQueue } = await import('@/utils/reportQueue');
