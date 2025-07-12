@@ -12,6 +12,8 @@ type WizardContextType = {
   setCanContinue: (val: boolean) => void;
   formData: ReportFormData;
   setFormData: React.Dispatch<React.SetStateAction<ReportFormData>>;
+  testReportEnabled: boolean;
+  setTestReportEnabled: (enabled: boolean) => void;
   finish: () => Promise<void>;
 };
 
@@ -20,6 +22,8 @@ const WizardContext = createContext<WizardContextType | null>(null);
 export function WizardProvider({ children }: { children: React.ReactNode }) {
   const [step, setStep] = useState(0);
   const [canContinue, setCanContinue] = useState(false);
+  const [testReportEnabled, setTestReportEnabled] = useState(false);
+
   const [formData, setFormData] = useState<ReportFormData>({
     agency_type: [],
     agency_other: '',
@@ -42,11 +46,9 @@ export function WizardProvider({ children }: { children: React.ReactNode }) {
   const finish = async () => {
     const { agency_type, agency_other, location, media_url, lights_on, officer_direction, officer_moving, sirens_on } =
       formData;
-    const timestamp = new Date().toISOString();
-    const id = crypto.randomUUID();
 
+    const timestamp = new Date().toISOString();
     const report = {
-      id,
       agency_type,
       agency_other,
       location,
@@ -56,7 +58,9 @@ export function WizardProvider({ children }: { children: React.ReactNode }) {
       officer_direction,
       officer_moving,
       sirens_on,
+      test: testReportEnabled,
     };
+    console.log(report);
 
     const isOffline = !navigator.onLine;
     const { addReportToQueue } = await import('@/utils/reportQueue');
@@ -69,20 +73,7 @@ export function WizardProvider({ children }: { children: React.ReactNode }) {
     }
 
     try {
-      const { error } = await supabase.from('wizard').insert([
-        {
-          agency_type,
-          agency_other,
-          location,
-          media_url,
-          timestamp,
-          lights_on,
-          officer_direction,
-          officer_moving,
-          sirens_on,
-        },
-      ]);
-
+      const { error } = await supabase.from('wizard').insert([report]);
       if (error) {
         console.error('Insert failed:', error);
         addReportToQueue(report);
@@ -92,7 +83,7 @@ export function WizardProvider({ children }: { children: React.ReactNode }) {
       addReportToQueue(report);
     }
 
-    window.location.href = '/report/wizard'; // redirect or show confirmation screen
+    window.location.href = '/heatmap';
   };
 
   return (
@@ -106,6 +97,8 @@ export function WizardProvider({ children }: { children: React.ReactNode }) {
         setCanContinue,
         formData,
         setFormData,
+        testReportEnabled,
+        setTestReportEnabled,
         finish,
       }}>
       {children}

@@ -27,6 +27,7 @@ export type Report = {
   lights_on: boolean | null;
   sirens_on: boolean | null;
   submitted_by: string | null;
+  test: boolean | null;
 };
 
 export type QueuedReport = ReportFormData & {

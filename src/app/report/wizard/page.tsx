@@ -7,15 +7,15 @@ import { useTranslations } from '@/lib/il8n/useTranslations';
 import { TranslationKey } from '@/lib/il8n/translations';
 import { useWizard } from '@/components/wizard/WizardContext';
 import LinkButton from '@/components/ui/FrostedLink';
+import TestReportToggle from '@/components/wizard/TestReportToggle';
 
 function FormDataPreview() {
   const { t } = useTranslations();
   const { formData } = useWizard();
 
   return (
-    <div className="p-4 rounded border text-sm space-y-2">
+    <div className={`p-4 rounded border text-sm space-y-2`}>
       <h3 className="font-semibold text-base">{t('liveReportPreview')}</h3>
-
       <div>
         <strong>{t('agencies')}:</strong>{' '}
         {formData.agency_type.length > 0
@@ -92,8 +92,7 @@ export default function WizardPage() {
       <div className="flex justify-evenly items-center">
         <LinkButton size="2xl" variant="red" label={t('quickExit')} href="https://wikipedia.org" />
       </div>
-
-      <h2 className="text-xl font-bold">{t('reportWizard')}</h2>
+      <TestReportToggle />
 
       {renderStep()}
 

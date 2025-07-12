@@ -158,6 +158,11 @@ export default function HeatMap({ reports, center }: { reports: Report[]; center
                     <div className="mb-1 text-2xl">
                       {[...translatedAgencies, r.agency_other].filter(Boolean).join(', ')}
                     </div>
+                    {r.test && (
+                      <span>
+                        !!! {t('test')} !!! {t('test')} !!!
+                      </span>
+                    )}
                     <div className="mb-3 text-sm font-normal text-white/80">
                       <strong>{t('reported')}</strong> {formatAge(r.timestamp)} {t('timeAgo')}
                     </div>
@@ -182,7 +187,7 @@ export default function HeatMap({ reports, center }: { reports: Report[]; center
                     </div>
                   </div>
 
-                  <div className="p-4 space-y-2 text-sm text-white/90">
+                  <div className={`p-4 space-y-2 text-sm ${r.test ? 'bg-red-900' : ''} text-white/90`}>
                     <div>
                       <strong>{t('officerMovement')}:</strong>{' '}
                       {r.officer_moving === true

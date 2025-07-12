@@ -9,7 +9,7 @@ import { useWizard } from './wizard/WizardContext';
 export default function BottomNav() {
   const { t } = useTranslations();
   const pathname = usePathname();
-  const { step, back, next, canContinue, finish } = useWizard();
+  const { step, back, next, canContinue, finish, testReportEnabled } = useWizard();
 
   const isWizard = pathname.startsWith('/report/wizard');
 
@@ -54,7 +54,9 @@ export default function BottomNav() {
         <button
           onClick={handleNextOrFinish}
           disabled={!canContinue}
-          className={`${wizardButtonBase} ${canContinue ? wizardButtonActive : wizardButtonDisabled}`}>
+          className={`${wizardButtonBase} 
+    ${canContinue ? wizardButtonActive : wizardButtonDisabled} 
+    ${testReportEnabled ? 'border-red-500 shadow-red-500/40 border-2' : ''}`}>
           {step === 2 ? t('submit') : t('next')}
           {step === 2 ? <SendHorizonal className="h-5 w-5" /> : <ArrowRight className="h-5 w-5" />}
         </button>

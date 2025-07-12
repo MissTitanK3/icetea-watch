@@ -240,7 +240,8 @@ export type TranslationKey =
   | 'transparencySafeLesson1'
   | 'transparencySafeLesson2'
   | 'transparencySafeOutro'
-  | 'contactUs';
+  | 'contactUs'
+  | 'test';
 
 export const roleKeys: TranslationKey[] = [
   'joinDispatchRole.dispatcher',
@@ -257,6 +258,7 @@ export const roleKeys: TranslationKey[] = [
 
 export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
   en: {
+    test: 'TEST',
     Donations: 'Donations',
     'Report ICE Activity': 'Report ICE Activity',
     'Legal Aid & Attorneys': 'Legal Aid & Attorneys',
@@ -563,6 +565,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
       '⚠️ Dispatch coordination is currently conducted in English. Spanish-speaking volunteers are welcome, but basic English proficiency is required.',
   },
   es: {
+    test: 'Prueba',
     Donations: 'Donaciones',
     'Report ICE Activity': 'Reportar Actividad de ICE',
     'Legal Aid & Attorneys': 'Asistencia Legal y Abogados',
