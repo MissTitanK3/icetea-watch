@@ -36,11 +36,13 @@ export default function HeatmapClient() {
   const [reports, setReports] = useState<Report[]>([]);
   const [visibleReports, setVisibleReports] = useState<Report[]>([]);
   const [loading, setLoading] = useState(true);
-  const [center, setCenter] = useState<LatLngExpression>([47.6062, -122.3321]);
   const [timeRange, setTimeRange] = useState<[number, number]>([0, 168]);
-  const { handleFindMe, isLocating, error } = useFindMe((coords) => {
+  const [center, setCenter] = useState<LatLngExpression | null>([37.7749, -122.4194]); // default: SF or whatever fallback you prefer
+
+  const { handleFindMe } = useFindMe((coords) => {
     setCenter(coords);
   });
+
   const [filtersOpen, setFiltersOpen] = useState(false);
 
   const isAllActive = agencyFilter.length === 0;
@@ -92,8 +94,6 @@ export default function HeatmapClient() {
       </div>
 
       <h2 className="text-2xl font-bold">{t('reportTitle')}</h2>
-
-      {error && <p className="text-red-500 text-sm">{error}</p>}
 
       <div className="flex gap-4 flex-wrap items-center w-full">
         <TimeRangeSlider
@@ -156,13 +156,13 @@ export default function HeatmapClient() {
 
       <div className="flex gap-1 w-full justify-evenly">
         <FrostedButton onClick={() => setFiltersOpen(true)}>{t('filterAgencies')}</FrostedButton>
-
-        <FrostedButton onClick={handleFindMe} disabled={isLocating}>
-          {isLocating ? 'Locating...' : `📍 ${t('findMe') ?? 'Find Me'}`}
-        </FrostedButton>
       </div>
       <TileLayerDropdown />
-      {loading ? <LoadingSpinner text="Loading reports…" /> : <Map reports={visibleReports} center={center} />}
+      {loading || !center ? (
+        <LoadingSpinner text="Loading reports…" />
+      ) : (
+        <Map reports={visibleReports} center={center} />
+      )}
 
       <p className="text-xs text-gray-500 max-w-md pt-2">{t('warning')}</p>
     </div>

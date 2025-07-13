@@ -12,6 +12,8 @@ import { AGENCY_GRADIENTS, agencyColors } from '@/constants/agencies';
 import { LocateFixed } from 'lucide-react';
 import { useMapTile } from '@/lib/MapTileContext';
 import { FrostedButton } from '../ui/FrostedButton';
+import { MapControlsLegend } from './MapControlsLegend';
+import { useFindMe } from '@/lib/useFindMe';
 
 function MapRefForwarder({ onMapReady }: { onMapReady: (map: L.Map) => void }) {
   const map = useMap();
@@ -101,19 +103,67 @@ export function HeatLayer({ reports }: { reports: Report[] }) {
   return null;
 }
 
-export default function HeatMap({ reports, center }: { reports: Report[]; center: LatLngExpression }) {
+export default function HeatMap({ reports, center: initialCenter }: { reports: Report[]; center: LatLngExpression }) {
   const { t } = useTranslations();
+  const [center, setCenter] = useState<LatLngExpression>(initialCenter);
   const [visibleReports, setVisibleReports] = useState<Report[]>(reports);
   const [zoomTarget, setZoomTarget] = useState<LatLngExpression | null>(null);
   const mapRef = useRef<L.Map | null>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const { tile } = useMapTile();
 
+  const { handleFindMe, isLocating } = useFindMe((coords) => {
+    setCenter(coords);
+  });
+
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (!mapRef.current) return;
+
+      switch (e.key) {
+        case '+':
+        case '=': // on some keyboards, = means +
+          mapRef.current.zoomIn();
+          break;
+        case '-':
+          mapRef.current.zoomOut();
+          break;
+        case '1':
+          mapRef.current.setZoom(7);
+          break;
+        case '2':
+          mapRef.current.setZoom(10);
+          break;
+        case '3':
+          mapRef.current.setZoom(13);
+          break;
+        case '4':
+          mapRef.current.setZoom(16);
+          break;
+        case '0':
+          mapRef.current.setView(center, 9);
+          break;
+        default:
+          break;
+      }
+    };
+
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="rounded overflow-hidden z-0">
       <div className="relative" ref={mapContainerRef}>
         <div className="h-[500px]">
-          <MapContainer center={center} zoom={9} scrollWheelZoom style={{ height: '100%', width: '100%', zIndex: 0 }}>
+          <MapContainer
+            center={center}
+            zoom={9}
+            aria-label="Heatmap of ICE and law enforcement reports"
+            scrollWheelZoom
+            zoomControl
+            style={{ height: '100%', width: '100%', zIndex: 0 }}>
             <MapRefForwarder
               onMapReady={(map) => {
                 mapRef.current = map;
@@ -125,20 +175,26 @@ export default function HeatMap({ reports, center }: { reports: Report[]; center
             <SetMapCenter center={zoomTarget ?? center} />
           </MapContainer>
         </div>
+        <MapControlsLegend />
       </div>
       <div className="flex my-2 gap-3 flex-wrap justify-center text-center">
-        <FrostedButton className="w-40" onClick={() => mapRef.current?.setZoom(14)}>
-          Neighborhood
+        <FrostedButton onClick={handleFindMe} disabled={isLocating}>
+          {isLocating ? 'Locating...' : `📍 ${t('findMe') ?? 'Find Me'}`}
         </FrostedButton>
-        <FrostedButton className="w-40" onClick={() => mapRef.current?.setZoom(11)}>
-          City
-        </FrostedButton>
-        <FrostedButton className="w-40" onClick={() => mapRef.current?.setZoom(8)}>
-          Region
-        </FrostedButton>
-        <FrostedButton className="w-40" onClick={() => mapRef.current?.setZoom(3)}>
-          US
-        </FrostedButton>
+        <div className="flex my-2 gap-3 flex-wrap justify-center text-center">
+          <FrostedButton className="w-56" onClick={() => mapRef.current?.setZoom(14)}>
+            {t('mapControlsNeighborhood')} {/* Street (Zoom 13–14) */}
+          </FrostedButton>
+          <FrostedButton className="w-56" onClick={() => mapRef.current?.setZoom(11)}>
+            {t('mapControlsCity')}
+          </FrostedButton>
+          <FrostedButton className="w-56" onClick={() => mapRef.current?.setZoom(8)}>
+            {t('mapControlsRegion')}
+          </FrostedButton>
+          <FrostedButton className="w-56" onClick={() => mapRef.current?.setZoom(3)}>
+            {t('mapControlsUS') ?? 'US'}
+          </FrostedButton>
+        </div>
       </div>
 
       <ul className="flex flex-wrap gap-4 text-sm pt-4 justify-center">

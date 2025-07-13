@@ -243,7 +243,18 @@ export type TranslationKey =
   | 'contactUs'
   | 'test'
   | 'testReport'
-  | 'testReportDescription';
+  | 'testReportDescription'
+  | 'mapControlsTitle'
+  | 'mapControlsOpen'
+  | 'mapControlsZoomIn'
+  | 'mapControlsZoomOut'
+  | 'mapControlsRegion'
+  | 'mapControlsCity'
+  | 'mapControlsNeighborhood'
+  | 'mapControlsStreet'
+  | 'mapControlsReset'
+  | 'mapControlsUS'
+  | 'mapControlsClose';
 
 export const roleKeys: TranslationKey[] = [
   'joinDispatchRole.dispatcher',
@@ -260,6 +271,17 @@ export const roleKeys: TranslationKey[] = [
 
 export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
   en: {
+    mapControlsTitle: 'Map Controls',
+    mapControlsOpen: 'Open map keyboard controls',
+    mapControlsClose: 'Close map keyboard controls',
+    mapControlsZoomIn: 'Zoom In',
+    mapControlsZoomOut: 'Zoom Out',
+    mapControlsUS: 'US View (Zoom 3)',
+    mapControlsRegion: 'Region View (Zoom 7)',
+    mapControlsCity: 'City View (Zoom 10)',
+    mapControlsNeighborhood: 'Street (Zoom 13)',
+    mapControlsStreet: 'Street Level (Zoom 16)',
+    mapControlsReset: 'Reset Zoom',
     test: 'TEST',
     testReport: 'Test Report',
     testReportDescription:
@@ -570,6 +592,17 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
       '⚠️ Dispatch coordination is currently conducted in English. Spanish-speaking volunteers are welcome, but basic English proficiency is required.',
   },
   es: {
+    mapControlsTitle: 'Controles del Mapa',
+    mapControlsOpen: 'Abrir controles del mapa con el teclado',
+    mapControlsClose: 'Cerrar controles del mapa',
+    mapControlsZoomIn: 'Acercar',
+    mapControlsZoomOut: 'Alejar',
+    mapControlsUS: 'Vista EE.UU. (Zoom 3)',
+    mapControlsRegion: 'Vista regional (Zoom 7)',
+    mapControlsCity: 'Vista de ciudad (Zoom 10)',
+    mapControlsNeighborhood: 'Calle (Zoom 13)',
+    mapControlsStreet: 'Nivel de calle (Zoom 16)',
+    mapControlsReset: 'Restablecer zoom',
     test: 'Prueba',
     testReport: 'Reporte de prueba',
     testReportDescription:
