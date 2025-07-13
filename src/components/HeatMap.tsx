@@ -38,7 +38,7 @@ export default function HeatmapMap({ reports }: { reports: Report[] }) {
 
   return (
     <div className="h-[500px] rounded overflow-hidden">
-      <MapContainer key={mapKey} center={center} zoom={12} scrollWheelZoom style={{ height: '100%', width: '100%' }}>
+      <MapContainer key={mapKey} center={center} zoom={9} scrollWheelZoom style={{ height: '100%', width: '100%' }}>
         <TileLayer
           attribution="© OpenStreetMap contributors"
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

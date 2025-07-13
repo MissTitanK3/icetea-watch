@@ -18,7 +18,7 @@ export default function LocationStep() {
   const { t } = useTranslations();
   const { setCanContinue, formData, setFormData } = useWizard();
   const [position, setPosition] = useState<LatLng | null>(formData.location || null);
-  const [zoom, setZoom] = useState(17);
+  const [zoom, setZoom] = useState(16);
   const [distanceFromUser, setDistanceFromUser] = useState<number | null>(null);
   const mapRef = useRef<LeafletMap | null>(null);
 

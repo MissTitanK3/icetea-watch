@@ -11,6 +11,7 @@ import { TranslationKey } from '@/lib/il8n/translations';
 import { AGENCY_GRADIENTS, agencyColors } from '@/constants/agencies';
 import { LocateFixed } from 'lucide-react';
 import { useMapTile } from '@/lib/MapTileContext';
+import { FrostedButton } from '../ui/FrostedButton';
 
 function MapRefForwarder({ onMapReady }: { onMapReady: (map: L.Map) => void }) {
   const map = useMap();
@@ -33,7 +34,7 @@ function SetMapCenter({ center }: { center: LatLngExpression | null }) {
     const distanceMoved = map.distance(currentCenter, latLng);
 
     if (!previous.current || distanceMoved > 10) {
-      map.flyTo(latLng, 17, { animate: true, duration: 1 });
+      map.flyTo(latLng, 9, { animate: true, duration: 1 });
       previous.current = latLng;
     }
   }, [center, map]);
@@ -112,7 +113,7 @@ export default function HeatMap({ reports, center }: { reports: Report[]; center
     <div className="rounded overflow-hidden z-0">
       <div className="relative" ref={mapContainerRef}>
         <div className="h-[500px]">
-          <MapContainer center={center} zoom={12} scrollWheelZoom style={{ height: '100%', width: '100%', zIndex: 0 }}>
+          <MapContainer center={center} zoom={9} scrollWheelZoom style={{ height: '100%', width: '100%', zIndex: 0 }}>
             <MapRefForwarder
               onMapReady={(map) => {
                 mapRef.current = map;
@@ -124,6 +125,20 @@ export default function HeatMap({ reports, center }: { reports: Report[]; center
             <SetMapCenter center={zoomTarget ?? center} />
           </MapContainer>
         </div>
+      </div>
+      <div className="flex my-2 gap-3 flex-wrap justify-center text-center">
+        <FrostedButton className="w-40" onClick={() => mapRef.current?.setZoom(14)}>
+          Neighborhood
+        </FrostedButton>
+        <FrostedButton className="w-40" onClick={() => mapRef.current?.setZoom(11)}>
+          City
+        </FrostedButton>
+        <FrostedButton className="w-40" onClick={() => mapRef.current?.setZoom(8)}>
+          Region
+        </FrostedButton>
+        <FrostedButton className="w-40" onClick={() => mapRef.current?.setZoom(3)}>
+          US
+        </FrostedButton>
       </div>
 
       <ul className="flex flex-wrap gap-4 text-sm pt-4 justify-center">
