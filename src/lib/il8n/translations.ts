@@ -254,7 +254,9 @@ export type TranslationKey =
   | 'mapControlsStreet'
   | 'mapControlsReset'
   | 'mapControlsUS'
-  | 'mapControlsClose';
+  | 'mapControlsClose'
+  | 'goToAcademy'
+  | 'goToDispatch';
 
 export const roleKeys: TranslationKey[] = [
   'joinDispatchRole.dispatcher',
@@ -271,6 +273,8 @@ export const roleKeys: TranslationKey[] = [
 
 export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
   en: {
+    goToAcademy: 'Go To Academy',
+    goToDispatch: 'Go To Dispatch',
     mapControlsTitle: 'Map Controls',
     mapControlsOpen: 'Open map keyboard controls',
     mapControlsClose: 'Close map keyboard controls',
@@ -592,6 +596,8 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
       '⚠️ Dispatch coordination is currently conducted in English. Spanish-speaking volunteers are welcome, but basic English proficiency is required.',
   },
   es: {
+    goToAcademy: 'Ir a la Academia',
+    goToDispatch: 'Ir al Despacho',
     mapControlsTitle: 'Controles del Mapa',
     mapControlsOpen: 'Abrir controles del mapa con el teclado',
     mapControlsClose: 'Cerrar controles del mapa',

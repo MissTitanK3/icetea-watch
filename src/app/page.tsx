@@ -26,6 +26,18 @@ export default function Home() {
         <LinkButton label={t('transparencyTitle')} variant="primary" href="/transparency" />
         <LinkButton label={t('joinDispatch')} variant="primary" href="/join-dispatch" />
         <LinkButton label={t('immigrantResourcesTitle')} variant="primary" href="/resources" />
+        <LinkButton
+          label={t('goToAcademy')}
+          variant="primary"
+          target="_blank"
+          href="https://academy.peoplesrebellion.org"
+        />
+        <LinkButton
+          label={t('goToDispatch')}
+          variant="primary"
+          target="_blank"
+          href="https://dispatch.peoplesrebellion.org"
+        />
 
         <div className="flex flex-col text-center py-20 justify-center m-auto">
           <h4>{t('troubleWithApp')}</h4>
