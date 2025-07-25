@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState, useRef } from 'react';
+import { getCachedLocation, setCachedLocation } from '@/lib/locationCache';
 
 type LatLng = { lat: number; lng: number };
 
@@ -20,50 +21,56 @@ export default function ReportDistanceGuard({
 }: Props) {
   const [userLocation, setUserLocation] = useState<LatLng | null>(null);
   const [distance, setDistance] = useState<number | null>(null);
+  const [active, setActive] = useState(true);
 
-  const lastCoords = useRef<LatLng | null>(null);
-  const lastFetch = useRef<number>(0);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Track visibility to pause GPS polling when backgrounded
+  useEffect(() => {
+    const handleVisibility = () => setActive(!document.hidden);
+
+    // Only run on client
+    if (typeof document !== 'undefined') {
+      setActive(!document.hidden);
+      document.addEventListener('visibilitychange', handleVisibility);
+    }
+
+    return () => {
+      if (typeof document !== 'undefined') {
+        document.removeEventListener('visibilitychange', handleVisibility);
+      }
+    };
+  }, []);
 
   useEffect(() => {
-    if (!targetLocation) {
+    if (!targetLocation || !active) {
       onDistanceChange?.(null);
       return;
     }
 
-    let cancelled = false;
-
-    async function fetchLocation() {
+    function fetchLocation() {
+      const { coords: cachedCoords, timestamp } = getCachedLocation();
       const now = Date.now();
-      const shouldFetch = !lastCoords.current || now - lastFetch.current > refreshIntervalMs;
+      const shouldFetch = !cachedCoords || now - timestamp > refreshIntervalMs;
 
-      if (!shouldFetch && lastCoords.current) {
-        const dist = safeDistanceKm(lastCoords.current, targetLocation);
-        setUserLocation(lastCoords.current);
+      const updateDistance = (coords: LatLng) => {
+        setCachedLocation([coords.lat, coords.lng]);
+        const dist = safeDistanceKm(coords, targetLocation);
+        setUserLocation(coords);
         setDistance(dist);
         onDistanceChange?.(dist);
+      };
+
+      if (!shouldFetch && cachedCoords) {
+        const [lat, lng] = cachedCoords as [number, number];
+        updateDistance({ lat, lng });
         return;
       }
 
       navigator.geolocation.getCurrentPosition(
         (pos) => {
-          if (cancelled) return;
-          const current = {
-            lat: pos.coords.latitude,
-            lng: pos.coords.longitude,
-          };
-
-          const movedEnough =
-            !lastCoords.current || (safeDistanceKm(lastCoords.current, current) ?? 0) * 1000 > movementThresholdM;
-
-          if (movedEnough || !lastCoords.current) {
-            lastCoords.current = current;
-            lastFetch.current = now;
-          }
-
-          const dist = safeDistanceKm(current, targetLocation);
-          setUserLocation(current);
-          setDistance(dist);
-          onDistanceChange?.(dist);
+          const coords = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+          updateDistance(coords);
         },
         () => {
           onDistanceChange?.(null);
@@ -73,12 +80,12 @@ export default function ReportDistanceGuard({
     }
 
     fetchLocation();
+    intervalRef.current = setInterval(fetchLocation, refreshIntervalMs);
 
     return () => {
-      cancelled = true;
+      if (intervalRef.current) clearInterval(intervalRef.current);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [targetLocation]);
+  }, [targetLocation, refreshIntervalMs, movementThresholdM, onDistanceChange, active]);
 
   if (!userLocation || distance === null) {
     return <p className="text-sm text-gray-500">Validating your location to be within {maxDistanceKm}km...</p>;
@@ -96,16 +103,14 @@ export default function ReportDistanceGuard({
   return null;
 }
 
-// Null-safe Haversine
+// Null-safe Haversine (km)
 function safeDistanceKm(a: LatLng | null, b: LatLng | null): number | null {
   if (!a || !b) return null;
-
   const R = 6371;
   const dLat = ((b.lat - a.lat) * Math.PI) / 180;
   const dLng = ((b.lng - a.lng) * Math.PI) / 180;
   const lat1 = (a.lat * Math.PI) / 180;
   const lat2 = (b.lat * Math.PI) / 180;
-
   const x = Math.sin(dLat / 2) ** 2 + Math.sin(dLng / 2) ** 2 * Math.cos(lat1) * Math.cos(lat2);
   return R * 2 * Math.atan2(Math.sqrt(x), Math.sqrt(1 - x));
 }
